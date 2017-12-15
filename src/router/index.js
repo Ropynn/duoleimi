@@ -1,9 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import home from '../components/massage/home/home.vue'
-import member from '../components/massage/member/member.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import home from '../components/massage/home/home.vue';
+import member from '../components/massage/member/member.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export default new VueRouter({
   linkActiveClass:'active',
@@ -17,7 +17,7 @@ export default new VueRouter({
       component:home
     },
     {
-      path:'/member',
+      path:'/member/:price',
       component:member
     }
   ]

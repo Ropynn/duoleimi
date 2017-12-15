@@ -70,7 +70,7 @@
           </div>
           <div class="mint-cell-right"></div>
         </router-link>
-        <h4>本次支付：6.00</h4>
+        <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
           <mt-button>
             <router-link to="javascript:;">立即启动</router-link>
