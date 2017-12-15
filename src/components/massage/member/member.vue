@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="member">
-      <p class="title">{{ member.headings }}</p>
+      <p class="title">{{member.headings}}</p>
       <div class="line"></div>
 
       <div class="balance">
@@ -30,7 +30,7 @@
         </div>
         <ul class="preference">
           <li class="particulars" v-for="item in member.recharges">
-            <router-link to="/">充 {{ item.charge }}送{{ item.send }}</router-link>
+            <router-link to="/">充 {{item.charge}} 送{{item.send}} </router-link>
           </li>
 
           <!-- <li class="particulars">
@@ -84,20 +84,17 @@
 
 <script>
 export default {
-  props: {
-    member: {
-      type: Object
-    }
+  data() {
+    return {
+      member: {}
+    };
+  },
+  created() {
+    this.axios.get("/api/member").then(res => {
+      console.log(res);
+      this.member = res.data.data;
+    });
   }
-  // created() {
-  //   this.axios.get("/api/member").then(response => {
-  //     const result = response.data;
-  //     console.log(result);
-  //     if (result.code === ok) {
-  //       this.member = result.data;
-  //     }
-  //   });
-  // }
 };
 </script>
 
