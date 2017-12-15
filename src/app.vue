@@ -19,7 +19,7 @@
   created () {
     axios.get('/api/home').then((response=>{
       const result=response.data
-      console.log(result)
+      // console.log(result)
       if(result.code===ok){
         this.home=result.data
       }

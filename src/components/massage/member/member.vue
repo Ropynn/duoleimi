@@ -91,7 +91,7 @@ export default {
   },
   created() {
     this.axios.get("/api/member").then(res => {
-      console.log(res);
+      // console.log(res);
       this.member = res.data.data;
     });
   }
