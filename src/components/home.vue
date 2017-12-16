@@ -7,7 +7,7 @@
     </div>
     <!-- 套餐选择 -->
     <ul class="selective-type">
-      <li class="set-meal" v-for="item in home.projects">
+      <li class="set-meal" v-for="item in home.projects" @click="loading">
         <router-link class="chaining" :to="'/member/'+ item.price">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
@@ -21,10 +21,6 @@
     </ul>
     <!-- 协议 -->
     <div class="service">
-      <!-- <router-link to="">
-        <span class="attention">！</span>
-        <span class="protocol">{{home.considerations}}</span>
-      </router-link> -->
       <label class="agreementm" for="agreement">
         <input class="agreement" type="checkbox" :value="val" id="agreement" :checked="checked" @click="isCheck">
         <router-link to="/detail" class="agreementSure">同意用户协议</router-link>
@@ -42,12 +38,14 @@ export default {
       type: Object
     }
   },
+
   data() {
     return {
       checked: "checked",
       val: "1"
     };
   },
+
   methods: {
     //点击是否同意协议
     isCheck() {
@@ -57,6 +55,13 @@ export default {
       } else {
         this.checked = "checked";
         this.val = "1";
+      }
+    },
+
+    loading() {
+      if (this.val != '1') {
+
+        alert('11')
       }
     }
   },
