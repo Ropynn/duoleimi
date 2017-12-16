@@ -5,10 +5,12 @@ import router from "./router";
 import "./common/stylus/mixins.styl";
 import "./mock/mockServer";
 import "./common/stylus/mixins.styl";
+
 import { Cell } from "mint-ui";
 import { Switch } from "mint-ui";
 import { Button } from "mint-ui";
 import "mint-ui/lib/style.css";
+
 import axios from "axios";
 
 //启用插件

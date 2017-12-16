@@ -10,7 +10,7 @@
         <router-link class="chaining" :to="'/member/'+ item.price">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
-            <span class="lengthTime">6分钟</span>
+            <span class="lengthTime">{{item.time}}分钟</span>
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
@@ -41,8 +41,14 @@
       <!--</li>-->
     </ul>
     <div class="service">
-      <span class="attention">！</span>
-      <span class="protocol">摩摩哒服务协议</span>
+      <!-- <router-link to="">
+        <span class="attention">！</span>
+        <span class="protocol">{{home.considerations}}</span>
+      </router-link> -->
+      <label class="agreementm" for="agreement">
+        <input class="agreement" type="checkbox" value="agreement" id="agreement" checked="checked"> 我已阅读并同意
+        <router-link to="/detail" class="agreementSure">《{{home.considerations}}》</router-link>
+      </label>
     </div>
   </div>
 
@@ -62,6 +68,7 @@ export default {
   }
 };
 </script>
+
 
 <style lang="stylus" rel="stylesheet/stylus">
 .container {
@@ -183,6 +190,15 @@ export default {
   .protocol {
     font-size: 18px;
     color: #737373;
+  }
+
+  label {
+    height: 100%;
+  }
+
+  .agreementSure {
+    color: blue;
+    color: #26a2ff;
   }
 }
 </style>
