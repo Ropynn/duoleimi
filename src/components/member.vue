@@ -47,7 +47,7 @@
         <div class="service">
           <label class="agreementm" for="agreement">
             <input class="agreement" type="checkbox" value="agreement" id="agreement"> 我已阅读并同意
-            <router-link to="javascript:;">《摩摩哒充返协议》</router-link>
+            <router-link to="">《摩摩哒充返协议》</router-link>
           </label>
         </div>
 

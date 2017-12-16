@@ -13,7 +13,7 @@
             <span class="lengthTime">6分钟</span>
           </div>
           <div class="functions">
-            <span class="function">唤醒身体</span>
+            <span class="function">{{item.name}}</span>
           </div>
         </router-link>
       </li>
