@@ -38,7 +38,8 @@ export default {};
   margin-top: -200px;
   position: relative;
   z-index: 100;
-  height: 100%;
+  height: 100vh;
+  background-color: #2f7bc7;
 
   .mint-header {
     -webkit-box-align: center;
@@ -62,12 +63,11 @@ export default {};
   .router-link-active {
     width: 50px;
     height: 100%;
-    display inline-block
+    display: inline-block;
   }
 
   article {
-    min-height: 100vh;
-    background-color: #2f7bc7;
+
   }
 }
 </style>

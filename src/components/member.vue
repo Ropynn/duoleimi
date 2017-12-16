@@ -73,7 +73,7 @@
         <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
           <mt-button>
-            <router-link to="javascript:;">立即启动</router-link>
+            <router-link to="/detail">立即启动</router-link>
           </mt-button>
         </div>
 

@@ -5,6 +5,7 @@
       <span class="txt">{{home.setMeal}}</span>
       <span class="line"></span>
     </div>
+    <!-- 套餐选择 -->
     <ul class="selective-type">
       <li class="set-meal" v-for="item in home.projects">
         <router-link class="chaining" :to="'/member/'+ item.price">
@@ -17,37 +18,16 @@
           </div>
         </router-link>
       </li>
-      <!--<li class="set-meal">-->
-      <!--<router-link class="chaining" to="/member">-->
-      <!--<div class="single">-->
-      <!--<span class="unitPice">￥10</span>-->
-      <!--<span class="lengthTime">12分钟</span>-->
-      <!--</div>-->
-      <!--<div class="functions">-->
-      <!--<span class="function">通行气血</span>-->
-      <!--</div>-->
-      <!--</router-link>-->
-      <!--</li>-->
-      <!--<li class="set-meal">-->
-      <!--<router-link class="chaining" to="member">-->
-      <!--<div class="single">-->
-      <!--<span class="unitPice">￥15</span>-->
-      <!--<span class="lengthTime">20分钟</span>-->
-      <!--</div>-->
-      <!--<div class="functions">-->
-      <!--<span class="function">舒张筋骨</span>-->
-      <!--</div>-->
-      <!--</router-link>-->
-      <!--</li>-->
     </ul>
+    <!-- 协议 -->
     <div class="service">
       <!-- <router-link to="">
         <span class="attention">！</span>
         <span class="protocol">{{home.considerations}}</span>
       </router-link> -->
       <label class="agreementm" for="agreement">
-        <input class="agreement" type="checkbox" value="agreement" id="agreement" checked="checked"> 我已阅读并同意
-        <router-link to="/detail" class="agreementSure">《{{home.considerations}}》</router-link>
+        <input class="agreement" type="checkbox" :value="val" id="agreement" :checked="checked" @click="isCheck">
+        <router-link to="/detail" class="agreementSure">同意用户协议</router-link>
       </label>
     </div>
   </div>
@@ -62,10 +42,25 @@ export default {
       type: Object
     }
   },
-  methods() {},
-  components: {
-    member
-  }
+  data() {
+    return {
+      checked: "checked",
+      val: "1"
+    };
+  },
+  methods: {
+    //点击是否同意协议
+    isCheck() {
+      if (this.checked == "checked") {
+        this.checked = "";
+        this.val = "0";
+      } else {
+        this.checked = "checked";
+        this.val = "1";
+      }
+    }
+  },
+  components: { member }
 };
 </script>
 
@@ -176,29 +171,13 @@ export default {
   button: 0;
   left: 0;
 
-  .attention {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    line-height: 16px;
-    border: 1px solid #737373;
-    border-radius: 50%;
-    color: #737373;
-    font-size: 16px;
-  }
-
-  .protocol {
-    font-size: 18px;
-    color: #737373;
-  }
-
   label {
     height: 100%;
   }
 
   .agreementSure {
     color: blue;
-    color: #26a2ff;
+    color: #ccc;
   }
 }
 </style>
