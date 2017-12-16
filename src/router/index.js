@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import home from '../components/massage/home/home.vue';
-import member from '../components/massage/member/member.vue';
+import home from '../components/home.vue';
+import member from '../components/member.vue';
 
 Vue.use(VueRouter);
 

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import member from "../member/member";
+import member from "./member";
 export default {
   props: {
     home: {
@@ -174,15 +174,15 @@ export default {
     height: 16px;
     display: inline-block;
     line-height: 16px;
-    border: 1px solid #AEAEAE;
+    border: 1px solid #737373;
     border-radius: 50%;
-    color: #AEAEAE;
+    color: #737373;
     font-size: 16px;
   }
 
   .protocol {
     font-size: 18px;
-    color: #B0B0B0;
+    color: #737373;
   }
 }
 </style>

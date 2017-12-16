@@ -1,13 +1,12 @@
 <template>
   <div>
-    <div class="header">
-      <img src="" alt="">
-    </div>
+    <banner-header :home="home"></banner-header>
     <router-view :home="home"></router-view>
   </div>
 </template>
 
 <script>
+  import bannerHeader from "./components/header"
   import axios from "axios"
   const ok=0
   export default {
@@ -26,16 +25,12 @@
     }))
   },
   components: {
-    // 'ele-header': shouye,
-    // member
+    bannerHeader
   }
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "./common/stylus/mixins.styl"
-  .header
-    width: 100%
-    height: 200px
-    background-color:#C43D39
+
 </style>

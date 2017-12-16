@@ -102,7 +102,8 @@ export default {
 .member {
   margin-top: -50px;
   background-color: #ddd;
-
+  position relative
+  z-index 10
   .title {
     width: 100%;
     height: 50px;
