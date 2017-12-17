@@ -29,11 +29,19 @@
         </router-link>
       </li>
     </ul>
+
     <!-- 确认层 -->
-    <div class="makeSure">
-      <div class="sureTop">
-
-
+    <div class="makeSure" v-if="isShow">
+      <div class="box">
+        <div class="alert">
+          提示
+        </div>
+        <div class="message">
+          请点击同意!
+        </div>
+        <div class="btn" @click="show">
+          确定
+        </div>
       </div>
     </div>
 
@@ -62,7 +70,8 @@ export default {
       checked: "checked",
       val: "1",
       flag: true,
-      flc: false
+      flc: false,
+      isShow: false
     };
   },
 
@@ -83,10 +92,11 @@ export default {
     },
 
     loading() {
-      alert("请点击同意");
+      this.isShow = true;
     },
-    test() {
-      alert("111");
+
+    show() {
+      this.isShow = false;
     }
   },
   components: { member }
@@ -186,6 +196,50 @@ export default {
           color: #74716D;
         }
       }
+    }
+  }
+}
+
+// 遮罩层
+.makeSure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+
+  .box {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin-top: -100px;
+    margin-left: -75px;
+    width: 300px;
+    height: 150px;
+    background-color: #fff;
+    color: red;
+    text-align: center;
+
+    .alert {
+      height: 50px;
+      line-height: 50px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .message {
+      height: 50px;
+      line-height: 50px;
+      color: #666;
+    }
+
+    .btn {
+      height: 50px;
+      line-height: 50px;
+      color: #26a2ff;
+      border-top: 1px solid #666;
     }
   }
 }
