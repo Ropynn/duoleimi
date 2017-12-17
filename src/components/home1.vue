@@ -7,18 +7,8 @@
     </div>
     <!-- 套餐选择 -->
     <ul class="selective-type">
-      <li class="set-meal" v-for="item in home.projects">
-        <router-link v-if="flag" class="chaining" :to="'/member/'+item.price">
-          <div class="single">
-            <span class="unitPice">￥{{item.price}}</span>
-            <span class="lengthTime">{{item.time}}分钟</span>
-          </div>
-          <div class="functions">
-            <span class="function">{{item.name}}</span>
-          </div>
-        </router-link>
-        <!-- 如果没选中，路由跳转的地址就为home -->
-        <router-link v-if="flc" class="chaining" :to="'/home/'" @click.native='loading'>
+      <li class="set-meal" v-for="item in home.projects" @click="loading">
+        <router-link class="chaining" :to="'/member/'+ item.price">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime">{{item.time}}分钟</span>
@@ -29,14 +19,6 @@
         </router-link>
       </li>
     </ul>
-    <!-- 确认层 -->
-    <div class="makeSure">
-      <div class="sureTop">
-
-
-      </div>
-    </div>
-
     <!-- 协议 -->
     <div class="service">
       <label class="agreementm" for="agreement">
@@ -60,9 +42,7 @@ export default {
   data() {
     return {
       checked: "checked",
-      val: "1",
-      flag: true,
-      flc: false
+      val: "1"
     };
   },
 
@@ -72,21 +52,16 @@ export default {
       if (this.checked == "checked") {
         this.checked = "";
         this.val = "0";
-        this.flag = false;
-        this.flc = true;
       } else {
         this.checked = "checked";
         this.val = "1";
-        this.flag = true;
-        this.flc = false;
       }
     },
 
     loading() {
-      alert("请点击同意");
-    },
-    test() {
-      alert("111");
+      if (this.val != "1") {
+        alert("11");
+      }
     }
   },
   components: { member }
