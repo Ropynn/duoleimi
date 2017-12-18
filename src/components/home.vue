@@ -9,10 +9,10 @@
     <!-- 套餐选择 -->
     <ul class="selective-type">
       <li class="set-meal" v-for="item in home.projects">
-        <router-link v-if="flag" class="chaining" :to="'/member/'+item.price">
+        <router-link v-if="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
-            <span class="lengthTime">{{item.time}}分钟</span>
+            <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
@@ -61,6 +61,8 @@
 import bannerHeader from "./header";
 import member from "./member";
 
+import wx from "weixin-js-sdk"; //引入微信接口
+
 export default {
   data() {
     return {
@@ -103,7 +105,10 @@ export default {
       // console.log(res);
       this.home = res.data.data;
     });
+
+    console.log(wx);
   },
+
   components: {
     member,
     bannerHeader

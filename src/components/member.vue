@@ -1,6 +1,6 @@
 <template>
   <div>
-  <banner-header></banner-header>
+    <banner-header></banner-header>
     <div class="member">
       <p class="title">{{member.headings}}</p>
       <div class="line"></div>
@@ -33,21 +33,11 @@
           <li class="particulars" v-for="item in member.recharges">
             <router-link to="/">充 {{item.charge}} 送{{item.send}} </router-link>
           </li>
-
-          <!-- <li class="particulars">
-            <router-link to="/">充50送11.11</router-link>
-          </li>
-          <li class="particulars">
-            <router-link to="/">充100送22.22</router-link>
-          </li>
-          <li class="particulars">
-            <router-link to="/">充200送50</router-link>
-          </li> -->
         </ul>
 
         <div class="service">
           <label class="agreementm" for="agreement">
-            <input class="agreement" type="checkbox" value="agreement" id="agreement"> 我已阅读并同意
+            <input class="agreement" type="checkbox" value="agreement" id="agreement" checked="checked"> 我已阅读并同意
             <router-link to="">《摩摩哒充返协议》</router-link>
           </label>
         </div>
@@ -73,9 +63,9 @@
         </router-link>
         <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
-          <mt-button>
-            <router-link to="/detail">立即启动</router-link>
-          </mt-button>
+          <button>
+            <router-link :to="'/payment/'+this.minutes">立即启动</router-link>
+          </button>
         </div>
 
       </div>
@@ -89,7 +79,8 @@ import bannerHeader from "./header";
 export default {
   data() {
     return {
-      member: {}
+      member: {},
+      minutes: this.$route.params.minutes
     };
   },
   created() {
@@ -97,6 +88,7 @@ export default {
       // console.log(res);
       this.member = res.data.data;
     });
+    console.log(this.time);
   },
 
   components: {

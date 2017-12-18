@@ -46,6 +46,15 @@
         "type":3
       }
     ]
+  },
+
+  "payment":{
+    "time":"09",
+    "secondc":"00",
+    "ordernumber":"9354545454",
+    "pay":"已付款",
+    "packageType":"6元/6分钟",
+    "date":"2017.12.16"
   }
 
 }
