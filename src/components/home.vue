@@ -1,5 +1,6 @@
 <template>
   <div>
+    <banner-header></banner-header>
     <div class="container">
       <span class="line"></span>
       <span class="txt">{{home.setMeal}}</span>
@@ -34,10 +35,10 @@
     <div class="makeSure" v-if="isShow">
       <div class="box">
         <div class="alert">
-          提示
+          系统提示
         </div>
         <div class="message">
-          请点击同意!
+          使用前请同意用户协议!
         </div>
         <div class="btn" @click="show">
           确定
@@ -57,14 +58,10 @@
 </template>
 
 <script>
+import bannerHeader from "./header";
 import member from "./member";
-export default {
-  // props: {
-  //   home: {
-  //     type: Object
-  //   }
-  // },
 
+export default {
   data() {
     return {
       home: {},
@@ -107,7 +104,10 @@ export default {
       this.home = res.data.data;
     });
   },
-  components: { member }
+  components: {
+    member,
+    bannerHeader
+  }
 };
 </script>
 
@@ -239,7 +239,7 @@ export default {
 
     .message {
       height: 50px;
-      line-height: 50px;
+      // line-height: 50px;
       color: #666;
     }
 

@@ -1,5 +1,6 @@
 <template>
   <div>
+  <banner-header></banner-header>
     <div class="member">
       <p class="title">{{member.headings}}</p>
       <div class="line"></div>
@@ -83,6 +84,8 @@
 </template>
 
 <script>
+import bannerHeader from "./header";
+
 export default {
   data() {
     return {
@@ -94,6 +97,10 @@ export default {
       // console.log(res);
       this.member = res.data.data;
     });
+  },
+
+  components: {
+    bannerHeader
   }
 };
 </script>
@@ -102,8 +109,9 @@ export default {
 .member {
   margin-top: -50px;
   background-color: #ddd;
-  position relative
-  z-index 10
+  position: relative;
+  z-index: 10;
+
   .title {
     width: 100%;
     height: 50px;
