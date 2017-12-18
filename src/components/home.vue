@@ -59,14 +59,15 @@
 <script>
 import member from "./member";
 export default {
-  props: {
-    home: {
-      type: Object
-    }
-  },
+  // props: {
+  //   home: {
+  //     type: Object
+  //   }
+  // },
 
   data() {
     return {
+      home: {},
       checked: "checked",
       val: "1",
       flag: true,
@@ -98,6 +99,13 @@ export default {
     show() {
       this.isShow = false;
     }
+  },
+
+  created() {
+    this.axios.get("/api/home").then(res => {
+      // console.log(res);
+      this.home = res.data.data;
+    });
   },
   components: { member }
 };
