@@ -6,8 +6,10 @@ import "./common/stylus/mixins.styl";
 
 //引入mock模拟后台数据
 import "./mock/mockServer";
+
 //引入微信js-sdk
 import wx from "weixin-js-sdk";
+
 //引入mint-ui的组件
 import { Cell } from "mint-ui";
 import { Switch } from "mint-ui";

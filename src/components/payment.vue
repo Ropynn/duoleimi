@@ -1,3 +1,4 @@
+/* 支付组件 */
 <template>
   <div class="payment-time">
     <div class="time">
@@ -16,7 +17,7 @@
           <span class="particulars">{{payment.pay}}</span>
         </p>
         <p class="subsection">套餐：
-          <span class="particulars">{{payment.packageType}}</span>
+          <span class="particulars">{{price}}元 / {{minutes}}分钟</span>
         </p>
         <p class="subsection">启动时间：
           <span class="particulars">{{payment.date}}</span>
@@ -30,19 +31,20 @@
 </template>
 
 <script>
-import countDown from "./countDown.vue";
+// import Bus from "../common/js/bus.js";  //引入eventbus
+import countDown from "./countDown.vue";   //引入倒计时组件
+
 export default {
   components: {
     countDown
   },
   data() {
     return {
-      payment: {},
-      minutes: this.$route.params.minutes,
-      seconds: 0,
-      nowTime: Number(this.$route.params.nowTime),
-      endTime: "",
-      callback: {}
+      price: this.$route.params.price, //获取传递过来的价钱
+      minutes: this.$route.params.minutes, //获取传递过来的按摩时间
+      currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
+      endTime: "", //按摩结束的时间
+      payment: {}
     };
   },
 
@@ -50,13 +52,17 @@ export default {
     this.axios.get("/api/payment").then(res => {
       this.payment = res.data.data;
     });
-    // this.nowTime = new Date().getTime();
-    // console.log("当前时间:" + this.nowTime);
-    this.endTime = (this.nowTime + this.minutes * 1000 * 60) / 1000;
-    // console.log("结束时间" + this.eTime);
-    // this.endTime = this.eTime;
+
+    //通过eventbus接收按摩开始的时间
+    // Bus.$on("currentTime", currentTime => {
+    //   this.currentTime = currentTime;
+    //   // console.log(this.currentTime + 'a' );
+    // });
+
+
+    // console.log(this.currentTime);
+    this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
   },
-  mounted() {},
   methods: {
     callback() {
       alert("完成");
@@ -69,7 +75,7 @@ export default {
 .time {
   width: 100%;
   height: 118px;
-  background-color: #eaead1;
+  background-color: #fff;
   z-index: 10;
   position: absolute;
   top: 0;
@@ -105,7 +111,7 @@ export default {
   position: absolute;
   top: 120px;
   bottom: 120px;
-  background-color: #d0d9ff;
+  background-color: #fff;
 
   .particulars {
     width: 100%;
@@ -140,7 +146,7 @@ export default {
   width: 100%;
   height: 118px;
   z-index: 10;
-  background-color: beige;
+  background-color: #fff;
   border-top: 2px dashed #E90000;
   position: absolute;
   bottom: 0;

@@ -1,3 +1,4 @@
+/* 套餐组件 */
 <template>
   <div>
     <banner-header></banner-header>
@@ -63,8 +64,10 @@
         </router-link>
         <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
-          <button>
-            <router-link :to="'/payment/'+this.minutes+'/'+this.nowTime ">立即启动</router-link>
+          <button @click="getCurrentTime">
+            <!-- <router-link :to="'/payment/'+this.price+'/'+this.minutes+'/'+this.nowTime">立即启动</router-link> -->
+            立即启动
+            <!-- <router-link :to="'/payment/'+this.price+'/'+this.minutes">立即启动</router-link> -->
           </button>
         </div>
 
@@ -74,14 +77,16 @@
 </template>
 
 <script>
-import bannerHeader from "./header";
+// import Bus from "../common/js/bus.js";
+import bannerHeader from "./header";  //引入倒计时组件
 
 export default {
   data() {
     return {
       member: {},
-      minutes: this.$route.params.minutes,
-      nowTime: ""
+      price: this.$route.params.price,     //获取前一个页面传过来的价钱
+      minutes: this.$route.params.minutes,  //获取前一个页面传过来的时间
+      currentTime: ""             //当前时间
     };
   },
   created() {
@@ -90,10 +95,25 @@ export default {
       this.member = res.data.data;
     });
     // console.log(this.time);
-    this.nowTime = new Date().getTime();
-    console.log(this.nowTime);
+    // this.nowTime = new Date().getTime();
+    // console.log(this.nowTime);
+  },
+  methods: {
+    //点击获取按摩开始的时间
+    getCurrentTime() {
+      this.currentTime = new Date().getTime();
+      // console.log(this.nowTime);
+
+      this.$router.push({
+        path: "/payment/" + this.price + "/" + this.minutes + "/" + this.currentTime
+      });
+
+      //通过eventBus传递按摩开始的时间
+      // Bus.$emit("currentTime", this.currentTime);
+    }
   },
 
+  //使用header公共组件
   components: {
     bannerHeader
   }
@@ -259,14 +279,15 @@ export default {
       width: 100%;
       height: 45px;
       background-color: #E0BC74;
+      color: #fff;
 
-      a {
-        color: #fff;
-        display: inline-block;
-        width: 100%;
-        height: 45px;
-        line-height: 45px;
-      }
+      // a {
+      //   color: #fff;
+      //   display: inline-block;
+      //   width: 100%;
+      //   height: 45px;
+      //   line-height: 45px;
+      // }
     }
   }
 }

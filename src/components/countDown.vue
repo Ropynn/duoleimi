@@ -1,3 +1,4 @@
+/* 倒计时组件 */
 <template>
   <span :endTime="endTime" :callback="callback" :endText="endText" class="countTime">
     <slot>
@@ -13,10 +14,14 @@ export default {
     };
   },
   props: {
-    endTime: {
-      type: String,
-      default: ""
-    },
+
+    // endTime: {
+    //   type: String,
+    //   default: ""
+    // },
+
+    endTime: "",
+
     endText: {
       type: String,
       default: "已结束"
