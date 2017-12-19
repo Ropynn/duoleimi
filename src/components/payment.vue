@@ -41,7 +41,6 @@ export default {
       minutes: this.$route.params.minutes,
       seconds: 0,
       nowTime: Number(this.$route.params.nowTime),
-      eTime: "",
       endTime: "",
       callback: {}
     };
@@ -53,15 +52,14 @@ export default {
     });
     // this.nowTime = new Date().getTime();
     // console.log("当前时间:" + this.nowTime);
-    this.eTime = (this.nowTime + this.minutes * 1000 * 60) / 1000;
+    this.endTime = (this.nowTime + this.minutes * 1000 * 60) / 1000;
     // console.log("结束时间" + this.eTime);
-    this.endTime = this.eTime;
+    // this.endTime = this.eTime;
   },
-
   mounted() {},
   methods: {
     callback() {
-      alert('完成')
+      alert("完成");
     }
   }
 };

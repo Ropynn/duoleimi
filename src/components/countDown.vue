@@ -49,10 +49,10 @@ export default {
             format = `${day}天${hour}小时${min}分${sec}秒`;
           }
           if (day <= 0 && hour > 0) {
-            format = `${hour}:${min}:${sec}秒`;
+            format = `${hour}:${min}:${sec}`;
           }
           if (day <= 0 && hour <= 0) {
-            format = `${hour}:${min}:${sec}秒`;
+            format = `${hour}:${min}:${sec}`;
           }
           self.content = format;
         } else {
@@ -73,7 +73,7 @@ export default {
 <style lang="stylus" scoped>
 .countTime {
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
 }
 </style>
 
