@@ -2,6 +2,7 @@
 <template>
   <div>
     <banner-header></banner-header>
+    <app-shadow v-if="isShow" :change='change' :isShow='isShow'></app-shadow>
     <div class="member">
       <p class="title">{{member.headings}}</p>
       <div class="line"></div>
@@ -32,13 +33,14 @@
         </div>
         <ul class="preference">
           <li class="particulars" v-for="item in member.recharges">
-            <router-link to="/">充 {{item.charge}} 送{{item.send}} </router-link>
+            <router-link to="/" v-if="flag">充 {{item.charge}} 送{{item.send}} </router-link>
+            <router-link to="" v-if="flc" @click.native='loading'>充 {{item.charge}} 送{{item.send}} </router-link>
           </li>
         </ul>
 
         <div class="service">
           <label class="agreementm" for="agreement">
-            <input class="agreement" type="checkbox" value="agreement" id="agreement" checked="checked"> 我已阅读并同意
+            <input class="agreement" type="checkbox" :value="val" id="agreement" :checked="checked" @click='isCheck'> 我已阅读并同意
             <router-link to="">《摩摩哒充返协议》</router-link>
           </label>
         </div>
@@ -78,22 +80,28 @@
 
 <script>
 // import Bus from "../common/js/bus.js";
-import bannerHeader from "./header";  //引入倒计时组件
+import bannerHeader from "./header"; //引入倒计时组件
+import appShadow from "./common/shadow.vue"; //引入遮罩层
 
 export default {
   data() {
     return {
       member: {},
-      price: this.$route.params.price,     //获取前一个页面传过来的价钱
-      minutes: this.$route.params.minutes,  //获取前一个页面传过来的时间
-      currentTime: ""             //当前时间
+      price: this.$route.params.price, //获取前一个页面传过来的价钱
+      minutes: this.$route.params.minutes, //获取前一个页面传过来的时间
+      currentTime: "", //当前时间,
+      checked: "checked",
+      isShow: false,
+      val: "1",
+      flag: true,
+      flc: false
     };
   },
   created() {
     this.axios.get("/api/member").then(res => {
-      // console.log(res);
       this.member = res.data.data;
     });
+
     // console.log(this.time);
     // this.nowTime = new Date().getTime();
     // console.log(this.nowTime);
@@ -105,17 +113,42 @@ export default {
       // console.log(this.nowTime);
 
       this.$router.push({
-        path: "/payment/" + this.price + "/" + this.minutes + "/" + this.currentTime
+        path:
+          "/payment/" + this.price + "/" + this.minutes + "/" + this.currentTime
       });
 
       //通过eventBus传递按摩开始的时间
       // Bus.$emit("currentTime", this.currentTime);
+    },
+
+    //确认是否勾上协议
+    isCheck() {
+      if (this.checked == "checked") {
+        this.checked = "";
+        this.val = "0";
+        this.flag = false;
+        this.flc = true;
+      } else {
+        this.checked = "checked";
+        this.val = "1";
+        this.flag = true;
+        this.flc = false;
+      }
+    },
+    loading() {
+      this.isShow = true;
+    },
+
+    change(data) {
+      console.log(data);
+      // isShow = false;
     }
   },
 
   //使用header公共组件
   components: {
-    bannerHeader
+    bannerHeader,
+    appShadow
   }
 };
 </script>
@@ -280,14 +313,6 @@ export default {
       height: 45px;
       background-color: #E0BC74;
       color: #fff;
-
-      // a {
-      //   color: #fff;
-      //   display: inline-block;
-      //   width: 100%;
-      //   height: 45px;
-      //   line-height: 45px;
-      // }
     }
   }
 }

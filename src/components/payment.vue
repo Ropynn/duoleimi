@@ -2,8 +2,9 @@
 <template>
   <div class="payment-time">
     <div class="time">
-      <span class="residue">剩余时间</span>
-      <count-down :endTime="endTime" :callback="callback" endText="已经结束了"></count-down>
+      <span class="residue" v-if="isShow">剩余时间</span>
+      <count-down :endTime="endTime" :callback="callback" endText="按摩完成，欢迎继续使用"></count-down>
+      <span></span>
     </div>
     <div class="paid">
       <div class="particulars">
@@ -32,7 +33,7 @@
 
 <script>
 // import Bus from "../common/js/bus.js";  //引入eventbus
-import countDown from "./countDown.vue";   //引入倒计时组件
+import countDown from "./countDown.vue"; //引入倒计时组件
 
 export default {
   components: {
@@ -44,7 +45,8 @@ export default {
       minutes: this.$route.params.minutes, //获取传递过来的按摩时间
       currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
       endTime: "", //按摩结束的时间
-      payment: {}
+      payment: {},
+      isShow: true
     };
   },
 
@@ -59,13 +61,12 @@ export default {
     //   // console.log(this.currentTime + 'a' );
     // });
 
-
     // console.log(this.currentTime);
     this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
   },
   methods: {
     callback() {
-      alert("完成");
+      (this.isShow = false), console.log("完成");
     }
   }
 };

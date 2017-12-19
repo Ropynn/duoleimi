@@ -24,7 +24,7 @@ export default {
 
     endText: {
       type: String,
-      default: "已结束"
+      default: "按摩完成，欢迎继续使用"
     },
     callback: {
       type: Function,
