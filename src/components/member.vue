@@ -64,7 +64,7 @@
         <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
           <button>
-            <router-link :to="'/payment/'+this.minutes">立即启动</router-link>
+            <router-link :to="'/payment/'+this.minutes+'/'+this.nowTime ">立即启动</router-link>
           </button>
         </div>
 
@@ -80,7 +80,8 @@ export default {
   data() {
     return {
       member: {},
-      minutes: this.$route.params.minutes
+      minutes: this.$route.params.minutes,
+      nowTime: ""
     };
   },
   created() {
@@ -88,7 +89,9 @@ export default {
       // console.log(res);
       this.member = res.data.data;
     });
-    console.log(this.time);
+    // console.log(this.time);
+    this.nowTime = new Date().getTime();
+    console.log(this.nowTime);
   },
 
   components: {

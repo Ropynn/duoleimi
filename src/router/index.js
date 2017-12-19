@@ -27,7 +27,7 @@ export default new VueRouter({
       component: detail
     },
     {
-      path: "/payment/:minutes",
+      path: "/payment/:minutes/:nowTime",
       component: payment
     }
   ]

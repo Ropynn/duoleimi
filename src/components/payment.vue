@@ -2,7 +2,7 @@
   <div class="payment-time">
     <div class="time">
       <span class="residue">剩余时间</span>
-      <p class="timepiece">00:{{minutes}}:{{second}}</p>
+      <count-down :endTime="endTime" :callback="callback" endText="已经结束了"></count-down>
     </div>
     <div class="paid">
       <div class="particulars">
@@ -30,70 +30,39 @@
 </template>
 
 <script>
+import countDown from "./countDown.vue";
 export default {
+  components: {
+    countDown
+  },
   data() {
     return {
       payment: {},
-      minutes: Number(this.$route.params.minutes),
-      seconds: 0
+      minutes: this.$route.params.minutes,
+      seconds: 0,
+      nowTime: Number(this.$route.params.nowTime),
+      eTime: "",
+      endTime: "",
+      callback: {}
     };
-  },
-
-  methods: {
-    num: function(n) {
-      return n < 10 ? "0" + n : "" + n;
-    }
-  },
-  computed: {
-    second: function() {
-      return this.num(this.seconds);
-    },
-    minute: function() {
-      return this.num(this.minutes);
-    }
-  },
-
-  watch: {
-    second: {
-      handler(newVal) {
-        this.num(newVal);
-      }
-    },
-    minute: {
-      handler(newVal) {
-        this.num(newVal);
-      }
-    }
-  },
-  computed: {
-    second: function() {
-      return this.num(this.seconds);
-    },
-    minute: function() {
-      return this.num(this.minutes);
-    }
   },
 
   created() {
     this.axios.get("/api/payment").then(res => {
       this.payment = res.data.data;
     });
+    // this.nowTime = new Date().getTime();
+    // console.log("当前时间:" + this.nowTime);
+    this.eTime = (this.nowTime + this.minutes * 1000 * 60) / 1000;
+    // console.log("结束时间" + this.eTime);
+    this.endTime = this.eTime;
   },
 
-  mounted() {
-    console.log(this.minutes);
-
-    let timing = setInterval(() => {
-      if (this.seconds == 0 ) {
-        this.seconds = 59;
-        this.minutes -= 1;
-      } else if (this.minutes == 0) {
-        this.seconds = 0;
-        clearInterval(timing);
-      } else {
-        this.seconds -= 1;
-      }
-    }, 60);
+  mounted() {},
+  methods: {
+    callback() {
+      alert('完成')
+    }
   }
 };
 </script>
