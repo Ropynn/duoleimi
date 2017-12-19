@@ -35,7 +35,6 @@ export default {};
 
 <style lang="stylus" scoped>
 .agreement {
-  margin-top: -200px;
   position: relative;
   z-index: 100;
   height: 100vh;

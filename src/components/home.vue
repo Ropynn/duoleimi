@@ -1,5 +1,6 @@
 <template>
   <div>
+    <banner-header></banner-header>
     <div class="container">
       <span class="line"></span>
       <span class="txt">{{home.setMeal}}</span>
@@ -8,10 +9,10 @@
     <!-- 套餐选择 -->
     <ul class="selective-type">
       <li class="set-meal" v-for="item in home.projects">
-        <router-link v-if="flag" class="chaining" :to="'/member/'+item.price">
+        <router-link v-if="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
-            <span class="lengthTime">{{item.time}}分钟</span>
+            <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
@@ -34,10 +35,10 @@
     <div class="makeSure" v-if="isShow">
       <div class="box">
         <div class="alert">
-          提示
+          系统提示
         </div>
         <div class="message">
-          请点击同意!
+          使用前请同意用户协议!
         </div>
         <div class="btn" @click="show">
           确定
@@ -57,16 +58,15 @@
 </template>
 
 <script>
+import bannerHeader from "./header";
 import member from "./member";
-export default {
-  props: {
-    home: {
-      type: Object
-    }
-  },
 
+import wx from "weixin-js-sdk"; //引入微信接口
+
+export default {
   data() {
     return {
+      home: {},
       checked: "checked",
       val: "1",
       flag: true,
@@ -99,7 +99,20 @@ export default {
       this.isShow = false;
     }
   },
-  components: { member }
+
+  created() {
+    this.axios.get("/api/home").then(res => {
+      // console.log(res);
+      this.home = res.data.data;
+    });
+
+    console.log(wx);
+  },
+
+  components: {
+    member,
+    bannerHeader
+  }
 };
 </script>
 
@@ -231,7 +244,7 @@ export default {
 
     .message {
       height: 50px;
-      line-height: 50px;
+      // line-height: 50px;
       color: #666;
     }
 
