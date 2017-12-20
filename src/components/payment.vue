@@ -21,7 +21,8 @@
           <span class="particulars">{{price}}元 / {{minutes}}分钟</span>
         </p>
         <p class="subsection">启动时间：
-          <span class="particulars">{{payment.date}}</span>
+          <!-- <span class="particulars">{{payment.date}}</span> -->
+          <span class="particulars">{{startTime}}</span>
         </p>
       </div>
     </div>
@@ -46,7 +47,8 @@ export default {
       currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
       endTime: "", //按摩结束的时间
       payment: {},
-      isShow: true
+      isShow: true,
+      startTime: ''
     };
   },
 
@@ -63,6 +65,8 @@ export default {
 
     // console.log(this.currentTime);
     this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
+
+    this.startTime = new Date(this.currentTime).toLocaleString();  //启动时间
   },
   methods: {
     callback() {

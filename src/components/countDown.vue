@@ -65,7 +65,7 @@ export default {
           self.content = self.endText;
           self._callback();
         }
-      }, 1000);
+      }, 100);
     },
     _callback() {
       if (this.callback && this.callback instanceof Function) {

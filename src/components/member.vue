@@ -2,7 +2,7 @@
 <template>
   <div>
     <banner-header></banner-header>
-    <app-shadow v-if="isShow" :change='change' :isShow='isShow'></app-shadow>
+    <!-- <app-shadow v-if="isShow" :change='change' :isShow='isShow'></app-shadow> -->
     <div class="member">
       <p class="title">{{member.headings}}</p>
       <div class="line"></div>
@@ -33,8 +33,8 @@
         </div>
         <ul class="preference">
           <li class="particulars" v-for="item in member.recharges">
-            <router-link to="/" v-if="flag">充 {{item.charge}} 送{{item.send}} </router-link>
-            <router-link to="" v-if="flc" @click.native='loading'>充 {{item.charge}} 送{{item.send}} </router-link>
+            <router-link to="/" v-show="flag">充 {{item.charge}} 送{{item.send}} </router-link>
+            <router-link to="" v-show="flc" @click.native='loading'>充 {{item.charge}} 送{{item.send}} </router-link>
           </li>
         </ul>
 
@@ -44,7 +44,6 @@
             <router-link to="">《摩摩哒充返协议》</router-link>
           </label>
         </div>
-
       </div>
 
       <!-- 优惠券 -->
@@ -75,13 +74,28 @@
 
       </div>
     </div>
+
+    <!-- 确认层 -->
+    <div class="makeSure" v-show="isShow">
+      <div class="box">
+        <div class="alert">
+          系统提示
+        </div>
+        <div class="message">
+          使用前请同意用户协议!
+        </div>
+        <div class="btn" @click="show">
+          确定
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 // import Bus from "../common/js/bus.js";
-import bannerHeader from "./header"; //引入倒计时组件
-import appShadow from "./common/shadow.vue"; //引入遮罩层
+import bannerHeader from "./header"; //引入头部组件
+// import appShadow from "./common/shadow.vue"; //引入遮罩层
 
 export default {
   data() {
@@ -139,6 +153,10 @@ export default {
       this.isShow = true;
     },
 
+    show() {
+      this.isShow = false;
+    },
+
     change(data) {
       console.log(data);
       // isShow = false;
@@ -147,8 +165,8 @@ export default {
 
   //使用header公共组件
   components: {
-    bannerHeader,
-    appShadow
+    bannerHeader
+    // ,appShadow
   }
 };
 </script>
@@ -270,6 +288,50 @@ export default {
 
       a {
         color: #E0BC74;
+      }
+    }
+  }
+
+  /* 遮罩层 */
+  .makeSure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 30;
+
+    .box {
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      margin-top: -100px;
+      margin-left: -75px;
+      width: 300px;
+      height: 150px;
+      background-color: #fff;
+      color: red;
+      text-align: center;
+
+      .alert {
+        height: 50px;
+        line-height: 50px;
+        color: #000;
+        font-weight: bold;
+      }
+
+      .message {
+        height: 50px;
+        // line-height: 50px;
+        color: #666;
+      }
+
+      .btn {
+        height: 50px;
+        line-height: 50px;
+        color: #26a2ff;
+        border-top: 1px solid #666;
       }
     }
   }

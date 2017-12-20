@@ -1,6 +1,6 @@
   <!-- 确认层 -->
 <template>
-  <div class="makeSure" v-if="isShow">
+  <div class="makeSure" v-show="isShow" v-model="isShow">
     <div class="box">
       <div class="alert">
         系统提示
@@ -20,7 +20,7 @@ export default {
   props:['isShow'],
   data() {
     return {
-      isShow: true
+      // isShow: true
     };
   },
   mounted () {
@@ -29,7 +29,7 @@ export default {
   methods: {
     show:function() {
       this.$emit("change","aaa");
-      this.isShow = false;
+      // this.isShow = false;
     }
   }
 };

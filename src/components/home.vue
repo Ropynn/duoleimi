@@ -8,8 +8,22 @@
     </div>
     <!-- 套餐选择 -->
     <ul class="selective-type">
+      <!-- 测试专用 -->
+      <li class="set-meak">
+         <router-link class="chaining" :to="'/member/'+5+'/'+0.1">
+          <div class="single">
+            <span class="unitPice">￥5</span>
+            <span class="lengthTime" time='0+0.1'>5分钟</span>
+          </div>
+          <div class="functions">
+            <span class="function">111</span>
+          </div>
+        </router-link>
+      </li>
+
+
       <li class="set-meal" v-for="item in home.projects">
-        <router-link v-if="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
+        <router-link v-show="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
@@ -18,8 +32,9 @@
             <span class="function">{{item.name}}</span>
           </div>
         </router-link>
+
         <!-- 如果没选中，路由跳转的地址就为home -->
-        <router-link v-if="flc" class="chaining" :to="'/home/'" @click.native='loading'>
+        <router-link v-show="flc" class="chaining" :to="'/home/'" @click.native='loading'>
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime">{{item.time}}分钟</span>
@@ -29,10 +44,11 @@
           </div>
         </router-link>
       </li>
+
     </ul>
 
     <!-- 确认层 -->
-    <div class="makeSure" v-if="isShow">
+    <div class="makeSure" v-show="isShow">
       <div class="box">
         <div class="alert">
           系统提示
