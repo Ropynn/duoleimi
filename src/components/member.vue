@@ -1,6 +1,8 @@
+/* 套餐组件 */
 <template>
   <div>
     <banner-header></banner-header>
+    <!-- <app-shadow v-if="isShow" :change='change' :isShow='isShow'></app-shadow> -->
     <div class="member">
       <p class="title">{{member.headings}}</p>
       <div class="line"></div>
@@ -31,17 +33,17 @@
         </div>
         <ul class="preference">
           <li class="particulars" v-for="item in member.recharges">
-            <router-link to="/">充 {{item.charge}} 送{{item.send}} </router-link>
+            <router-link to="/" v-show="flag">充 {{item.charge}} 送{{item.send}} </router-link>
+            <router-link to="" v-show="flc" @click.native='loading'>充 {{item.charge}} 送{{item.send}} </router-link>
           </li>
         </ul>
 
         <div class="service">
           <label class="agreementm" for="agreement">
-            <input class="agreement" type="checkbox" value="agreement" id="agreement" checked="checked"> 我已阅读并同意
+            <input class="agreement" type="checkbox" :value="val" id="agreement" :checked="checked" @click='isCheck'> 我已阅读并同意
             <router-link to="">《摩摩哒充返协议》</router-link>
           </label>
         </div>
-
       </div>
 
       <!-- 优惠券 -->
@@ -63,39 +65,108 @@
         </router-link>
         <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
-          <button>
-            <router-link :to="'/payment/'+this.minutes+'/'+this.nowTime ">立即启动</router-link>
+          <button @click="getCurrentTime">
+            <!-- <router-link :to="'/payment/'+this.price+'/'+this.minutes+'/'+this.nowTime">立即启动</router-link> -->
+            立即启动
+            <!-- <router-link :to="'/payment/'+this.price+'/'+this.minutes">立即启动</router-link> -->
           </button>
         </div>
 
+      </div>
+    </div>
+
+    <!-- 确认层 -->
+    <div class="makeSure" v-show="isShow">
+      <div class="box">
+        <div class="alert">
+          系统提示
+        </div>
+        <div class="message">
+          使用前请同意用户协议!
+        </div>
+        <div class="btn" @click="show">
+          确定
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import bannerHeader from "./header";
+// import Bus from "../common/js/bus.js";
+import bannerHeader from "./header"; //引入头部组件
+// import appShadow from "./common/shadow.vue"; //引入遮罩层
 
 export default {
   data() {
     return {
       member: {},
-      minutes: this.$route.params.minutes,
-      nowTime: ""
+      price: this.$route.params.price, //获取前一个页面传过来的价钱
+      minutes: this.$route.params.minutes, //获取前一个页面传过来的时间
+      currentTime: "", //当前时间,
+      checked: "checked",
+      isShow: false,
+      val: "1",
+      flag: true,
+      flc: false
     };
   },
   created() {
     this.axios.get("/api/member").then(res => {
-      // console.log(res);
       this.member = res.data.data;
     });
+
     // console.log(this.time);
-    this.nowTime = new Date().getTime();
-    console.log(this.nowTime);
+    // this.nowTime = new Date().getTime();
+    // console.log(this.nowTime);
+  },
+  methods: {
+    //点击获取按摩开始的时间
+    getCurrentTime() {
+      this.currentTime = new Date().getTime();
+      // console.log(this.nowTime);
+
+      this.$router.push({
+        path:
+          "/payment/" + this.price + "/" + this.minutes + "/" + this.currentTime
+      });
+
+      //通过eventBus传递按摩开始的时间
+      // Bus.$emit("currentTime", this.currentTime);
+    },
+
+    //确认是否勾上协议
+    isCheck() {
+      if (this.checked == "checked") {
+        this.checked = "";
+        this.val = "0";
+        this.flag = false;
+        this.flc = true;
+      } else {
+        this.checked = "checked";
+        this.val = "1";
+        this.flag = true;
+        this.flc = false;
+      }
+    },
+    loading() {
+      this.isShow = true;
+    },
+
+    show() {
+      this.isShow = false;
+    },
+
+    change(data) {
+      console.log(data);
+      // isShow = false;
+    }
   },
 
+  //使用header公共组件
   components: {
     bannerHeader
+    // ,appShadow
   }
 };
 </script>
@@ -221,6 +292,50 @@ export default {
     }
   }
 
+  /* 遮罩层 */
+  .makeSure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 30;
+
+    .box {
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      margin-top: -100px;
+      margin-left: -75px;
+      width: 300px;
+      height: 150px;
+      background-color: #fff;
+      color: red;
+      text-align: center;
+
+      .alert {
+        height: 50px;
+        line-height: 50px;
+        color: #000;
+        font-weight: bold;
+      }
+
+      .message {
+        height: 50px;
+        // line-height: 50px;
+        color: #666;
+      }
+
+      .btn {
+        height: 50px;
+        line-height: 50px;
+        color: #26a2ff;
+        border-top: 1px solid #666;
+      }
+    }
+  }
+
   /* 优惠券 */
   .coupon {
     background-color: #fff;
@@ -259,10 +374,7 @@ export default {
       width: 100%;
       height: 45px;
       background-color: #E0BC74;
-
-      a {
-        color: #fff;
-      }
+      color: #fff;
     }
   }
 }

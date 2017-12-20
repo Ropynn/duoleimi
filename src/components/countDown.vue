@@ -1,3 +1,4 @@
+/* 倒计时组件 */
 <template>
   <span :endTime="endTime" :callback="callback" :endText="endText" class="countTime">
     <slot>
@@ -13,13 +14,17 @@ export default {
     };
   },
   props: {
-    endTime: {
-      type: String,
-      default: ""
-    },
+
+    // endTime: {
+    //   type: String,
+    //   default: ""
+    // },
+
+    endTime: "",
+
     endText: {
       type: String,
-      default: "已结束"
+      default: "按摩完成，欢迎继续使用"
     },
     callback: {
       type: Function,
@@ -49,10 +54,10 @@ export default {
             format = `${day}天${hour}小时${min}分${sec}秒`;
           }
           if (day <= 0 && hour > 0) {
-            format = `${hour}:${min}:${sec}秒`;
+            format = `${hour}:${min}:${sec}`;
           }
           if (day <= 0 && hour <= 0) {
-            format = `${hour}:${min}:${sec}秒`;
+            format = `${hour}:${min}:${sec}`;
           }
           self.content = format;
         } else {
@@ -60,7 +65,7 @@ export default {
           self.content = self.endText;
           self._callback();
         }
-      }, 1000);
+      }, 100);
     },
     _callback() {
       if (this.callback && this.callback instanceof Function) {
@@ -73,7 +78,7 @@ export default {
 <style lang="stylus" scoped>
 .countTime {
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
 }
 </style>
 

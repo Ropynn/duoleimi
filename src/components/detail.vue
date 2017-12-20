@@ -1,3 +1,4 @@
+/* 协议详情组件 */
 <template>
   <div class="agreement">
     <!-- 引入mint-ui的header -->
@@ -19,8 +20,9 @@
         </button>
       </div>
     </header>
+    
     <article>
-
+        <!-- 协议详情 -->
     </article>
 
   </div>
