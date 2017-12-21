@@ -3,58 +3,56 @@
     "setMeal": "套餐选择",
     "projects": [
       {
-        "name":"唤醒身体",
-        "price":"6",
-        "time":"6"
+        "name": "唤醒身体",
+        "price": "6",
+        "time": "6"
       },
       {
-        "name":"通行气血",
-        "price":"10",
-        "time":"12"
+        "name": "通行气血",
+        "price": "10",
+        "time": "12"
       },
       {
-        "name":"舒张筋骨",
-        "price":"15",
-        "time":"20"
+        "name": "舒张筋骨",
+        "price": "15",
+        "time": "20"
       }
-    ] ,
-    "considerations":"摩摩哒服务协议"
+    ],
+    "considerations": "摩摩哒服务协议"
   },
-
-  "member":{
-    "headings":"摩摩哒微SPA——6元唤醒身体",
-    "balances":"0000",
-    "recharges":[
+  "member": {
+    "headings": "摩摩哒微SPA——6元唤醒身体",
+    "balances": "0000",
+    "recharges": [
       {
-        "charge":"30",
-        "send":"3",
-        "type":0
+        "charge": "30",
+        "send": "3",
+        "type": 0
       },
       {
-        "charge":"50",
-        "send":"11.11",
-        "type":1
+        "charge": "50",
+        "send": "11.11",
+        "type": 1
       },
       {
-        "charge":"100",
-        "send":"22.22",
-        "type":2
+        "charge": "100",
+        "send": "22.22",
+        "type": 2
       },
       {
-        "charge":"200",
-        "send":"50",
-        "type":3
+        "charge": "200",
+        "send": "50",
+        "type": 3
       }
     ]
   },
-
-  "payment":{
-    "time":"09",
-    "secondc":"00",
-    "ordernumber":"9354545454",
-    "pay":"已付款",
-    "packageType":"6元/6分钟",
-    "date":"2017.12.16"
+  "payment": {
+    "time": "09",
+    "secondc": "00",
+    "ordernumber": "9354545454",
+    "pay": "已付款",
+    "completed": "已完成",
+    "packageType": "6元/6分钟",
+    "date": "2017.12.16"
   }
-
 }
