@@ -369,6 +369,7 @@ export default {
       padding: 0 20px;
     }
 
+    // 立即支付按钮
     button {
       text-align: center;
       width: 100%;

@@ -67,6 +67,8 @@ export default {
     this.axios.get("/api/payment").then(res => {
       this.payment = res.data.data;
     });
+
+    //计算结束时间
     this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
   },
   mounted(){
@@ -82,18 +84,20 @@ export default {
       let newtime=time*1000;
       function gettime(t){
         let _time=new Date(t);
-        let   year=_time.getFullYear();   //2017
-        let   month=_time.getMonth()+1;   //12
-        let   date=_time.getDate();       //20
-        let   hour=_time.getHours();    //10
-        let   minute=_time.getMinutes();//56
-        let   second=_time.getSeconds();//15
+        let   year=_time.getFullYear();         //获取年份
+        let   month=_time.getMonth()+1;         //获取月份
+        let   date=_time.getDate();             //获取日期
+        let   hour=_time.getHours();            //获取小时
+        let   minute=_time.getMinutes();        //获取分钟
+        let   second=_time.getSeconds();        //获取秒钟
         minute = minute < 10 ? "0" + minute : minute;
         second = second < 10 ? "0" + second : second;
         return   year+"-"+month+"-"+date+"-"+"  "+hour+":"+minute+":"+second; //这里自己按自己需要的格式拼接
       };
       this.startTime=gettime(newtime/1000)
     },
+
+    //倒计时完成后的回调函数
      callback(){
       // todo 完成后动态改变计时器、订单状态等
       this.isShow=!this.isShow
