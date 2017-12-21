@@ -76,19 +76,22 @@
     </div>
 
     <!-- 确认层 -->
-    <div class="makeSure" v-show="isShow">
-      <div class="box">
-        <div class="alert">
-          系统提示
-        </div>
-        <div class="message">
-          使用前请同意用户协议!
-        </div>
-        <div class="btn" @click="show">
-          确定
+    <transition name="fade">
+      <div class="makeSure" v-show="isShow">
+        <div class="box">
+          <div class="alert">
+            系统提示
+          </div>
+          <div class="message">
+            使用前请同意协议!
+          </div>
+          <div class="btn" @click="show">
+            确定
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
+
   </div>
 </template>
 
@@ -172,6 +175,15 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+// 过渡效果
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to { /* .fade-leave-active in below version 2.1.8 */
+  opacity: 0;
+}
+
 .member {
   margin-top: -50px;
   background-color: #ddd;

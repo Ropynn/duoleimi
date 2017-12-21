@@ -10,7 +10,7 @@
     <ul class="selective-type">
       <!-- 测试专用 -->
       <li class="set-meak">
-         <router-link class="chaining" :to="'/member/'+5+'/'+0.1">
+        <router-link class="chaining" :to="'/member/'+5+'/'+0.1">
           <div class="single">
             <span class="unitPice">￥5</span>
             <span class="lengthTime" time='0+0.1'>5分钟</span>
@@ -20,7 +20,6 @@
           </div>
         </router-link>
       </li>
-
 
       <li class="set-meal" v-for="item in home.projects">
         <router-link v-show="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
@@ -48,19 +47,21 @@
     </ul>
 
     <!-- 确认层 -->
-    <div class="makeSure" v-show="isShow">
-      <div class="box">
-        <div class="alert">
-          系统提示
-        </div>
-        <div class="message">
-          使用前请同意用户协议!
-        </div>
-        <div class="btn" @click="show">
-          确定
+    <transition name="fade">
+      <div class="makeSure" v-show="isShow">
+        <div class="box">
+          <div class="alert">
+            系统提示
+          </div>
+          <div class="message">
+            使用前请同意用户协议!
+          </div>
+          <div class="btn" @click="show">
+            确定
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
 
     <!-- 协议 -->
     <div class="service">
@@ -230,6 +231,15 @@ export default {
 }
 
 // 遮罩层
+// 过渡效果
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to { /* .fade-leave-active in below version 2.1.8 */
+  opacity: 0;
+}
+
 .makeSure {
   position: absolute;
   top: 0;
