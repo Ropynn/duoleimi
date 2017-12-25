@@ -78,7 +78,7 @@
 import bannerHeader from "./header";
 import member from "./member";
 
-import wx from "weixin-js-sdk"; //引入微信接口
+// import wx from "weixin-js-sdk"; //引入微信接口
 
 export default {
   data() {
@@ -117,13 +117,26 @@ export default {
     }
   },
 
+  mounted() {
+    console.log(wx);
+    // console.log(wx.config);
+    wx.config({
+      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      appId: "111", // 必填，公众号的唯一标识
+      timestamp: "", // 必填，生成签名的时间戳
+      nonceStr: "", // 必填，生成签名的随机串
+      signature: "", // 必填，签名，见附录1
+      jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+  },
   created() {
     this.axios.get("/api/home").then(res => {
       // console.log(res);
       this.home = res.data.data;
     });
 
-    console.log(wx);
+    // console.log(wx);
+    // console.log(wx.config);
   },
 
   components: {
@@ -134,17 +147,17 @@ export default {
 </script>
 
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
 .container {
   width: 100%;
-  height: 60px;
-  line-height: 60px;
+  height: 60*2px;
+  line-height: 60*2px;
   text-align: center;
 
   .line {
     display: inline-block;
-    width: 130px;
-    border-top: 1px solid black;
+    width: 130*2px;
+    border-top: 1*2px solid black;
     /* margin-bottom 13px */
   }
 
@@ -158,66 +171,66 @@ export default {
 
 .selective-type {
   width: 100%;
-  padding: 0px 60px;
+  padding: 0px 60*2px;
   box-sizing: border-box;
 
   .set-meal {
-    width: 200px;
-    height: 60px;
+    width: 200*2px;
+    height: 60*2px;
     /* line-height 60px */
-    margin: 30px auto;
-    border: 2px solid #DEB882;
-    border-radius: 10px;
+    margin: 30*2px auto;
+    border: 2*2px solid #DEB882;
+    border-radius: 10*2px;
 
     .chaining {
       width: 100%;
-      height: 60px;
+      height: 60*2px;
       display: flex;
       justify-content: center;
 
       .single {
-        width: 100px;
-        height: 60px;
+        width: 100*2px;
+        height: 60*2px;
         display: flex;
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        border-right: 2px dashed #DFCB86;
+        border-right: 2*2px dashed #DFCB86;
 
         .unitPice {
-          width: 100px;
-          height: 30px;
+          width: 100*2px;
+          height: 30*2px;
           display: block;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 22px;
+          font-size: 22*2px;
           font-weight: border;
           color: #E2B963;
         }
 
         .lengthTime {
-          width: 100px;
-          height: 30px;
+          width: 100*2px;
+          height: 30*2px;
           display: block;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 16px;
+          font-size: 16*2px;
           color: #E2B963;
         }
       }
 
       .functions {
-        width: 100px;
-        height: 60px;
+        width: 100*2px;
+        height: 60*2px;
         display: flex;
         align-items: center;
         justify-content: center;
 
         .function {
-          width: 100px;
-          height: 60px;
+          width: 100*2px;
+          height: 60*2px;
           display: block;
           display: flex;
           justify-content: center;
@@ -244,39 +257,43 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vh;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 30;
 
   .box {
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    margin-top: -100px;
-    margin-left: -75px;
-    width: 300px;
-    height: 150px;
+    // position: absolute;
+    // top: 50%;
+    // right: 50%;
+    // margin-top: -100px;
+    // margin-left: -75px;
+    width: 250*2px;
+    height: 150*2px;
+          position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     background-color: #fff;
     color: red;
     text-align: center;
 
     .alert {
-      height: 50px;
-      line-height: 50px;
+      height: 50*2px;
+      line-height: 50*2px;
       color: #000;
       font-weight: bold;
     }
 
     .message {
-      height: 50px;
+      height: 50*2px;
       // line-height: 50px;
       color: #666;
     }
 
     .btn {
-      height: 50px;
-      line-height: 50px;
+      height: 50*2px;
+      line-height: 50*2px;
       color: #26a2ff;
       border-top: 1px solid #666;
     }
@@ -285,9 +302,9 @@ export default {
 
 .service {
   width: 100%;
-  height: 80px;
+  height: 80*2px;
   /* background-color deeppink */
-  line-height: 80px;
+  line-height: 80*2px;
   text-align: center;
   position: absolute;
   button: 0;

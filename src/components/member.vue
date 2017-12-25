@@ -2,7 +2,7 @@
 <template>
   <div>
     <banner-header></banner-header>
-    <!-- <app-shadow v-if="isShow" :change='change' :isShow='isShow'></app-shadow> -->
+    <!-- <app-shadow v-show="isShow" :change='change'></app-shadow> -->
     <div class="member">
       <p class="title">{{member.headings}}</p>
       <div class="line"></div>
@@ -143,21 +143,21 @@ export default {
       if (this.checked == "checked") {
         this.checked = "";
         this.val = "0";
-        this.flag = false;
-        this.flc = true;
+        this.flag = !this.flag;
+        this.flc = !this.flc;
       } else {
         this.checked = "checked";
         this.val = "1";
-        this.flag = true;
-        this.flc = false;
+        this.flag = !this.flag;
+        this.flc = !this.flc;
       }
     },
     loading() {
-      this.isShow = true;
+      this.isShow = !this.isShow;
     },
 
     show() {
-      this.isShow = false;
+      this.isShow = !this.isShow;
     },
 
     change(data) {
@@ -174,7 +174,50 @@ export default {
 };
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+/* 遮罩层 */
+.makeSure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+
+  .box {
+    width: 250*2px;
+    height: 150*2px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    color: red;
+    text-align: center;
+
+    .alert {
+      height: 50*2px;
+      line-height: 50*2px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .message {
+      height: 50*2px;
+      // line-height: 50px;
+      color: #666;
+    }
+
+    .btn {
+      height: 50*2px;
+      line-height: 50*2px;
+      color: #26a2ff;
+      border-top: 1*2px solid #666;
+    }
+  }
+}
+
 // 过渡效果
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
@@ -185,35 +228,35 @@ export default {
 }
 
 .member {
-  margin-top: -50px;
+  margin-top: -50*2px;
   background-color: #ddd;
   position: relative;
   z-index: 10;
 
   .title {
     width: 100%;
-    height: 50px;
-    line-height: 50px;
+    height: 50*2px;
+    line-height: 50*2px;
     text-align: center;
-    font-size: 18px;
+    font-size: 18*2px;
     color: #E2C99F;
     background-color: #FFFFFF;
   }
 
   .line {
-    border: 2px solid #E0BC74;
+    border: 2*2px solid #E0BC74;
   }
 
   /* 可用余额及其按钮 */
   .balance {
     width: 100%;
-    height: 50px;
-    line-height: 50px;
-    border-bottom: 1px solid #D7D7D7;
+    height: 50*2px;
+    line-height: 50*2px;
+    border-bottom: 1*2px solid #D7D7D7;
     background-color: #fff;
 
     .mint-cell-wrapper {
-      line-height: 50px;
+      line-height: 50*2px;
     }
 
     .mint-switch-input:checked + .mint-switch-core {
@@ -224,19 +267,19 @@ export default {
     .mint-switch-core {
       display: inline-block;
       position: relative;
-      width: 44px;
-      height: 24px;
-      border: 1px solid #d9d9d9;
-      border-radius: 16px;
+      width: 44*2px;
+      height: 24*2px;
+      border: 1*2px solid #d9d9d9;
+      border-radius: 16*2px;
       box-sizing: border-box;
       background: #d9d9d9;
     }
 
     .mint-switch-core::after {
-      width: 22px;
-      height: 22px;
+      width: 22*2px;
+      height: 22*2px;
       background-color: #fff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 1*2px 3*2px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -245,14 +288,14 @@ export default {
     width: 100%;
     overflow: hidden;
     background-color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 10*2px;
 
     .re-charge {
       width: 100%;
-      height: 30px;
-      line-height: 30px;
-      font-size: 18px;
-      padding-left: 30px;
+      height: 30*2px;
+      line-height: 30*2px;
+      font-size: 18*2px;
+      padding-left: 30*2px;
       box-sizing: border-box;
 
       .recharge {
@@ -261,7 +304,7 @@ export default {
     }
 
     .preference {
-      padding: 10px 36px;
+      padding: 10*2px 36*2px;
       width: 100%;
       box-sizing: border-box;
       overflow: hidden;
@@ -274,16 +317,16 @@ export default {
 
       li {
         float: left;
-        width: 125px;
-        line-height: 39px;
+        width: 125*2px;
+        line-height: 39*2px;
         text-align: center;
-        margin: 10px 10px;
-        border: 2px solid #554c4d;
-        border-radius: 5px;
+        margin: 10*2px 10*2px;
+        border: 2*2px solid #554c4d;
+        border-radius: 5*2px;
 
         a {
           display: block;
-          font-size: 14px;
+          font-size: 14*2px;
           color: #A19C99;
         }
       }
@@ -292,58 +335,14 @@ export default {
     /* 协议 */
     .service {
       width: 100%;
-      height: 40px;
-      line-height: 40px;
+      height: 40*2px;
+      line-height: 40*2px;
       text-align: center;
-      font-size: 16px;
+      font-size: 16*2px;
       position: relative;
 
       a {
         color: #E0BC74;
-      }
-    }
-  }
-
-  /* 遮罩层 */
-  .makeSure {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vh;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 30;
-
-    .box {
-      position: absolute;
-      top: 50%;
-      right: 50%;
-      margin-top: -100px;
-      margin-left: -75px;
-      width: 300px;
-      height: 150px;
-      background-color: #fff;
-      color: red;
-      text-align: center;
-
-      .alert {
-        height: 50px;
-        line-height: 50px;
-        color: #000;
-        font-weight: bold;
-      }
-
-      .message {
-        height: 50px;
-        // line-height: 50px;
-        color: #666;
-      }
-
-      .btn {
-        height: 50px;
-        line-height: 50px;
-        color: #26a2ff;
-        border-top: 1px solid #666;
       }
     }
   }
@@ -358,38 +357,38 @@ export default {
       border-left-width: 0;
       content: ' ';
       top: 50%;
-      right: 20px;
+      right: 20*2px;
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: 10*2px;
+      height: 10*2px;
       -webkit-transform: translateY(-50%) rotate(45deg);
       transform: translateY(-50%) rotate(45deg);
     }
 
     .mint-cell {
-      border-bottom: 2px solid #D7D7D7;
+      border-bottom: 2*2px solid #D7D7D7;
     }
 
     h4 {
       text-align: center;
-      font-size: 20px;
-      height: 50px;
-      line-height: 50px;
+      font-size: 20*2px;
+      height: 50*2px;
+      line-height: 50*2px;
     }
 
     .btn {
-      padding: 0 20px;
+      padding: 0 20*2px;
     }
 
     // 立即支付按钮
     button {
       text-align: center;
       width: 100%;
-      height: 45px;
-      border: 2px solid #E0BC74;
-      border-radius: 10px;
+      height: 45*2px;
+      border: 2*2px solid #E0BC74;
+      border-radius: 10*2px;
       background-color: #E0BC74;
-      font-size: 20px;
+      font-size: 20*2px;
       color: #fff;
     }
   }

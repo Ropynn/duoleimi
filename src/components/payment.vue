@@ -1,8 +1,15 @@
 /* 支付组件 */
 <template>
+
   <div class="payment-time">
+
+    <!-- 广告 -->
+    <transition name="fade">
+      <advertising class="detail" v-show="isAdvertising"></advertising>
+    </transition>
+
     <div class="time">
-      <span class="residue" v-show="isShow" >剩余时间</span>
+      <span class="residue" v-show="isShow">剩余时间</span>
       <count-down :endTime="endTime" :callback="callback" :endText="endText" class="countTime"></count-down>
     </div>
     <div class="paid">
@@ -32,32 +39,34 @@
 </template>
 
 <script>
-import countDown from "./countDown.vue";   //引入倒计时组件
-
+import countDown from "./countDown.vue"; //引入倒计时组件
+import advertising from "./advertising"; //引入广告层组件
 export default {
-  components:{
-    countDown
+  components: {
+    countDown,
+    advertising
   },
   data() {
     return {
       price: this.$route.params.price, //获取传递过来的价钱
       minutes: this.$route.params.minutes, //获取传递过来的按摩时间
       currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
-      endTime: "", //按摩结束的时间
       payment: {},
-      startTime:"", //客户开始的时间
-      isShow:true,
-      isShowp:true,
-      isShowc:false,
+      endTime: "", //按摩结束的时间
+      startTime: "", //客户开始的时间
+      isShow: true,
+      isShowp: true,
+      isShowc: false,
+      isAdvertising: false,
       content: ""
     };
   },
   props: {
-    hided:"",
+    hided: "",
     endText: {
       type: String,
       default: "按摩完成，欢迎继续使用"
-    },
+    }
     // callback: {
     //   type: Function,
     //   default: ""
@@ -67,118 +76,171 @@ export default {
     this.axios.get("/api/payment").then(res => {
       this.payment = res.data.data;
     });
-
-    //计算结束时间
     this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
   },
-  mounted(){
+  mounted() {
     //按摩开始时间
-    this.openingTime()
+    this.openingTime();
     // this.countdowm(this.endTime);
-
+    // this.callback()
   },
   methods: {
     //todo 服务开始时间
-     openingTime:function () {
-      let time=this.currentTime;
-      let newtime=time*1000;
-      function gettime(t){
-        let _time=new Date(t);
-        let   year=_time.getFullYear();         //获取年份
-        let   month=_time.getMonth()+1;         //获取月份
-        let   date=_time.getDate();             //获取日期
-        let   hour=_time.getHours();            //获取小时
-        let   minute=_time.getMinutes();        //获取分钟
-        let   second=_time.getSeconds();        //获取秒钟
+    openingTime: function() {
+      let time = this.currentTime;
+      let newtime = time * 1000;
+      function gettime(t) {
+        let _time = new Date(t);
+        let year = _time.getFullYear(); //2017
+        let month = _time.getMonth() + 1; //12
+        let date = _time.getDate(); //20
+        let hour = _time.getHours(); //10
+        let minute = _time.getMinutes(); //56
+        let second = _time.getSeconds(); //15
         minute = minute < 10 ? "0" + minute : minute;
         second = second < 10 ? "0" + second : second;
-        return   year+"-"+month+"-"+date+"-"+"  "+hour+":"+minute+":"+second; //这里自己按自己需要的格式拼接
-      };
-      this.startTime=gettime(newtime/1000)
+        return (
+          year +
+          "年" +
+          month +
+          "月" +
+          date +
+          "日   " +
+          hour +
+          ":" +
+          minute +
+          ":" +
+          second
+        ); //这里自己按自己需要的格式拼接
+      }
+      this.startTime = gettime(newtime / 1000);
     },
-
-    //倒计时完成后的回调函数
-     callback(){
+    callback() {
       // todo 完成后动态改变计时器、订单状态等
-      this.isShow=!this.isShow
-      this.isShowp=!this.isShowp
-      this.isShowc=!this.isShowc
-      console.log("nimeimei")
-      //  this.$router.push({path:'/advertising'})
+      this.isShow = !this.isShow;
+      this.isShowp = !this.isShowp;
+      this.isShowc = !this.isShowc;
+      this.isAdvertising = !this.isAdvertising;
+      console.log("nimeimei");
+
+      setTimeout(() => {
+        this.isAdvertising = false;
+        console.log(2222);
+      }, 7000);
     }
   }
 };
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.time
-  width 100%
-  height 118px
-  z-index 10
-  position absolute
-  top 0
-  box-sizing border-box
-  display flex
-  flex-direction column
-  align-content center
-  justify-content center
-  border 2px solid #E0BC74
-  border-radius 15px
-  .countTime
-    height 80px
-    font-size 26px
-    color #E90000
-    line-height 80px
-    text-align center
-  .residue
-    height 50px
-    color #E90000
-    display block
-    font-size 20px
-    line-height 50px
-    text-align center
-.paid
-  width 100%
-  z-index 10
-  position absolute
-  top 118px
-  bottom 100px
-  box-sizing border-box
-  border 2px solid #E0BC74
-  border-radius 15px
-  .particulars
-    width 100%
-    .logol
-      width 100%
-      height 90px
-      line-height 90px
-      text-align center
-      .logo
-        width 50px
-        height 50px
-        vertical-align middle
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
 
-    .subsection
-      color #C2C2C2
-      padding 26px
-      font-size 18px
-      .particulars
-        color: #181818
+.fade-enter, .fade-leave-to { /* .fade-leave-active in below version 2.1.8 */
+  opacity: 0;
+}
 
+.time {
+  width: 100%;
+  height: 118px;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  border: 2px solid #E0BC74;
+  border-radius: 15px;
 
+  .countTime {
+    height: 80px;
+    font-size: 26px;
+    color: #E90000;
+    line-height: 80px;
+    text-align: center;
+  }
 
-.footer
-  width 100%
-  height 100px
-  z-index 10
-  line-height 100px
-  text-align center
-  box-sizing border-box
+  .residue {
+    height: 50px;
+    color: #E90000;
+    display: block;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+  }
+}
+
+.paid {
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: 118px;
+  bottom: 100px;
+  box-sizing: border-box;
+  border: 2px solid #E0BC74;
+  border-radius: 15px;
+
+  .particulars {
+    width: 100%;
+
+    .logol {
+      width: 100%;
+      height: 90px;
+      line-height: 90px;
+      text-align: center;
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+      }
+    }
+
+    .subsection {
+      color: #C2C2C2;
+      padding: 26px;
+      font-size: 18px;
+
+      .particulars {
+        color: #181818;
+      }
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  height: 100px;
+  z-index: 10;
+  line-height: 100px;
+  text-align: center;
+  box-sizing: border-box;
   font-size: 14px;
-  border 2px solid #E0BC74
-  border-radius 15px
-  position absolute
-  bottom 0
+  border: 2px solid #E0BC74;
+  border-radius: 15px;
+  position: absolute;
+  bottom: 0;
+}
 
+// 广告层
+.detail {
+  position: relative;
+  z-index: 500;
+  width: 100%;
+  height: 100vh;
+  background: rgba(7, 17, 27, 0.8);
+  overflow: auto;
+  backdrop-filter: blur(10px);
 
+  &.fade-enter-active, &.fade-leave-active {
+    transition: opacity 0.6s ease 1.5s;
+  }
+
+  &.fade-enter, &.fade-leave-active {
+    opacity: 0;
+  }
+}
 </style>

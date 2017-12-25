@@ -28,8 +28,9 @@ export default {
   },
   methods: {
     show:function() {
-      this.$emit("change","aaa");
-      // this.isShow = false;
+      this.isShow = !this.isShow;
+      this.$emit("change",this.isShow);
+      console.log(this.isShow);
     }
   }
 };
