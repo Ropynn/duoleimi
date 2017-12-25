@@ -4,11 +4,10 @@ import app from "./app";
 import router from "./router";
 import "./common/stylus/mixins.styl";
 
-//引入适配屏幕
-import 'lib-flexible';
 
 //引入mock模拟后台数据
 import "./mock/mockServer";
+import './flexible';
 
 //引入微信js-sdk
 // import wx from "weixin-js-sdk";
@@ -18,7 +17,7 @@ import { Cell } from "mint-ui";
 import { Switch } from "mint-ui";
 import { Button } from "mint-ui";
 import "mint-ui/lib/style.css";
-// import './flexible';
+
 
 import axios from "axios";
 

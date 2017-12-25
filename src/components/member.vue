@@ -175,6 +175,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import "../common/stylus/mixins.styl"
 /* 遮罩层 */
 .makeSure {
   position: absolute;
@@ -186,8 +187,8 @@ export default {
   z-index: 30;
 
   .box {
-    width: 250*2px;
-    height: 150*2px;
+    width: px2rem(500px);
+    height: px2rem(300px);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -197,23 +198,23 @@ export default {
     text-align: center;
 
     .alert {
-      height: 50*2px;
-      line-height: 50*2px;
+      height: px2rem(100px);
+      line-height: px2rem(100px);
       color: #000;
       font-weight: bold;
     }
 
     .message {
-      height: 50*2px;
+      height: px2rem(100px);
       // line-height: 50px;
       color: #666;
     }
 
     .btn {
-      height: 50*2px;
-      line-height: 50*2px;
+      height: px2rem(100px);
+      line-height: px2rem(100px);
       color: #26a2ff;
-      border-top: 1*2px solid #666;
+      border-top: 1px solid #666;
     }
   }
 }
@@ -228,35 +229,35 @@ export default {
 }
 
 .member {
-  margin-top: -50*2px;
+  margin-top: px2rem(-100px);
   background-color: #ddd;
   position: relative;
   z-index: 10;
 
   .title {
     width: 100%;
-    height: 50*2px;
-    line-height: 50*2px;
+    height: px2rem(100px);
+    line-height: px2rem(100px);
     text-align: center;
-    font-size: 18*2px;
+    font-size: 18px;
     color: #E2C99F;
     background-color: #FFFFFF;
   }
 
   .line {
-    border: 2*2px solid #E0BC74;
+    border: px2rem(4px) solid #E0BC74;
   }
 
   /* 可用余额及其按钮 */
   .balance {
     width: 100%;
-    height: 50*2px;
-    line-height: 50*2px;
-    border-bottom: 1*2px solid #D7D7D7;
+    height: px2rem(100px);
+    line-height: px2rem(100px);
+    border-bottom: 1px solid #D7D7D7;
     background-color: #fff;
 
     .mint-cell-wrapper {
-      line-height: 50*2px;
+      line-height: px2rem(100px);
     }
 
     .mint-switch-input:checked + .mint-switch-core {
@@ -267,19 +268,19 @@ export default {
     .mint-switch-core {
       display: inline-block;
       position: relative;
-      width: 44*2px;
-      height: 24*2px;
-      border: 1*2px solid #d9d9d9;
-      border-radius: 16*2px;
+      width: px2rem(88px);
+      height: px2rem(48px);
+      border: 1px solid #d9d9d9;
+      border-radius: 16px;
       box-sizing: border-box;
       background: #d9d9d9;
     }
 
     .mint-switch-core::after {
-      width: 22*2px;
-      height: 22*2px;
+      width: px2rem(44px);
+      height: px2rem(44px);
       background-color: #fff;
-      box-shadow: 0 1*2px 3*2px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     }
   }
 
@@ -288,14 +289,14 @@ export default {
     width: 100%;
     overflow: hidden;
     background-color: #fff;
-    margin-bottom: 10*2px;
+    margin-bottom: px2rem(20px);
 
     .re-charge {
       width: 100%;
-      height: 30*2px;
-      line-height: 30*2px;
-      font-size: 18*2px;
-      padding-left: 30*2px;
+      height: px2rem(60px);
+      line-height: px2rem(60px);
+      font-size: 18px;
+      padding-left: px2rem(60px);
       box-sizing: border-box;
 
       .recharge {
@@ -304,7 +305,7 @@ export default {
     }
 
     .preference {
-      padding: 10*2px 36*2px;
+      padding: px2rem(20px) px2rem(72px);
       width: 100%;
       box-sizing: border-box;
       overflow: hidden;
@@ -317,16 +318,16 @@ export default {
 
       li {
         float: left;
-        width: 125*2px;
-        line-height: 39*2px;
+        width: px2rem(250px);
+        line-height: px2rem(78px);
         text-align: center;
-        margin: 10*2px 10*2px;
-        border: 2*2px solid #554c4d;
-        border-radius: 5*2px;
+        margin: px2rem(20px) px2rem(20px);
+        border: px2rem(4px) solid #554c4d;
+        border-radius: px2rem(10px);
 
         a {
           display: block;
-          font-size: 14*2px;
+          font-size: 14px;
           color: #A19C99;
         }
       }
@@ -335,10 +336,10 @@ export default {
     /* 协议 */
     .service {
       width: 100%;
-      height: 40*2px;
-      line-height: 40*2px;
+      height: px2rem(80px);
+      line-height: px2rem(80px);
       text-align: center;
-      font-size: 16*2px;
+      font-size: 16px;
       position: relative;
 
       a {
@@ -352,43 +353,43 @@ export default {
     background-color: #fff;
 
     .mint-cell-allow-right::after {
-      border: solid 2px #E0BC74;
+      border: solid px2rem(4px) #E0BC74;
       border-bottom-width: 0;
       border-left-width: 0;
       content: ' ';
       top: 50%;
-      right: 20*2px;
+      right: px2rem(40px);
       position: absolute;
-      width: 10*2px;
-      height: 10*2px;
+      width: px2rem(20px);
+      height: px2rem(20px);
       -webkit-transform: translateY(-50%) rotate(45deg);
       transform: translateY(-50%) rotate(45deg);
     }
 
     .mint-cell {
-      border-bottom: 2*2px solid #D7D7D7;
+      border-bottom: px2rem(4px) solid #D7D7D7;
     }
 
     h4 {
       text-align: center;
-      font-size: 20*2px;
-      height: 50*2px;
-      line-height: 50*2px;
+      font-size: 20px;
+      height: px2rem(100px);
+      line-height: px2rem(100px);
     }
 
     .btn {
-      padding: 0 20*2px;
+      padding: 0 px2rem(40px);
     }
 
     // 立即支付按钮
     button {
       text-align: center;
       width: 100%;
-      height: 45*2px;
-      border: 2*2px solid #E0BC74;
-      border-radius: 10*2px;
+      height: px2rem(90px);
+      border: px2rem(4px) solid #E0BC74;
+      border-radius: px2rem(20px);
       background-color: #E0BC74;
-      font-size: 20*2px;
+      font-size: 20px;
       color: #fff;
     }
   }

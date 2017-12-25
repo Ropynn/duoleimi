@@ -133,6 +133,8 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+@import "../common/stylus/mixins.styl"
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;
 }
@@ -143,7 +145,7 @@ export default {
 
 .time {
   width: 100%;
-  height: 118px;
+  height: px2rem(236px);
   z-index: 10;
   position: absolute;
   top: 0;
@@ -152,23 +154,23 @@ export default {
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  border: 2px solid #E0BC74;
-  border-radius: 15px;
+  border: px2rem(4px) solid #E0BC74;
+  border-radius: px2rem(30px);
 
   .countTime {
-    height: 80px;
+    height: px2rem(160px);
     font-size: 26px;
     color: #E90000;
-    line-height: 80px;
+    line-height: px2rem(160px);
     text-align: center;
   }
 
   .residue {
-    height: 50px;
+    height: px2rem(100px);
     color: #E90000;
     display: block;
     font-size: 20px;
-    line-height: 50px;
+    line-height: px2rem(100px);
     text-align: center;
   }
 }
@@ -177,31 +179,31 @@ export default {
   width: 100%;
   z-index: 10;
   position: absolute;
-  top: 118px;
-  bottom: 100px;
+  top: px2rem(236px);
+  bottom: px2rem(200px);
   box-sizing: border-box;
-  border: 2px solid #E0BC74;
-  border-radius: 15px;
+  border: px2rem(4px) solid #E0BC74;
+  border-radius: px2rem(30px);
 
   .particulars {
     width: 100%;
 
     .logol {
       width: 100%;
-      height: 90px;
-      line-height: 90px;
+      height: px2rem(180px);
+      line-height: px2rem(180px);
       text-align: center;
 
       .logo {
-        width: 50px;
-        height: 50px;
+        width: px2rem(100px);
+        height: px2rem(100px);
         vertical-align: middle;
       }
     }
 
     .subsection {
       color: #C2C2C2;
-      padding: 26px;
+      padding: px2rem(52px);
       font-size: 18px;
 
       .particulars {
@@ -213,14 +215,14 @@ export default {
 
 .footer {
   width: 100%;
-  height: 100px;
+  height: px2rem(200px);
   z-index: 10;
-  line-height: 100px;
+  line-height: px2rem(200px);
   text-align: center;
   box-sizing: border-box;
   font-size: 14px;
-  border: 2px solid #E0BC74;
-  border-radius: 15px;
+  border: px2rem(4px) solid #E0BC74;
+  border-radius: px2rem(30px);
   position: absolute;
   bottom: 0;
 }

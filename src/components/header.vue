@@ -13,11 +13,11 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .header
     width: 100%
-    height: 200*2px
+    height: px2rem(400px)
     background:#C43D39
     .banner
       width 100%
-      height 200*2px
+      height px2rem(400px)
       position relative
       z-index 10
 

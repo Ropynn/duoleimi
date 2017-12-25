@@ -20,7 +20,7 @@
         </button>
       </div>
     </header>
-    
+
     <article>
         <!-- 协议详情 -->
     </article>
@@ -36,6 +36,8 @@ export default {};
 
 
 <style lang="stylus" scoped>
+@import "../common/stylus/mixins.styl"
+
 .agreement {
   position: relative;
   z-index: 100;
@@ -53,16 +55,16 @@ export default {};
     display: -ms-flexbox;
     display: flex;
     font-size: 18px;
-    height: 40px;
+    height: px2rem(80px);
     line-height: 1;
-    padding: 0 10px;
+    padding: 0 px2rem(20px);
     position: relative;
     text-align: center;
     white-space: nowrap;
   }
 
   .router-link-active {
-    width: 50px;
+    width: px2rem(100px);
     height: 100%;
     display: inline-block;
   }

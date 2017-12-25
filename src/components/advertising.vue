@@ -25,6 +25,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+@import "../common/stylus/mixins.styl"
 
 .detail-wrapper {
   width: 100%;
@@ -33,14 +34,14 @@ export default {
   /* background-color black */
   .detail-main {
     /* margin-top 64px */
-    padding-bottom: 64px;
+    padding-bottom: px2rem(128px);
   }
 }
 
 .detail-close {
-  margin-top: -100px;
-  height: 100px;
-  line-height: 100px;
+  margin-top: px2rem(-200px);
+  height: px2rem(200px);
+  line-height: px2rem(200px);
   text-align: center;
   color: #FFF;
   font-size: 32px;

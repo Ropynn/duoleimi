@@ -148,16 +148,18 @@ export default {
 
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import "../common/stylus/mixins.styl"
+
 .container {
   width: 100%;
-  height: 60*2px;
-  line-height: 60*2px;
+  height: px2rem(120px);
+  line-height: px2rem(120px);
   text-align: center;
 
   .line {
     display: inline-block;
-    width: 130*2px;
-    border-top: 1*2px solid black;
+    width: px2rem(260px);
+    border-top: 1px solid black;
     /* margin-bottom 13px */
   }
 
@@ -171,66 +173,66 @@ export default {
 
 .selective-type {
   width: 100%;
-  padding: 0px 60*2px;
+  padding: 0px px2rem(120px);
   box-sizing: border-box;
 
   .set-meal {
-    width: 200*2px;
-    height: 60*2px;
+    width: px2rem(400px);
+    height: px2rem(120px);
     /* line-height 60px */
-    margin: 30*2px auto;
-    border: 2*2px solid #DEB882;
-    border-radius: 10*2px;
+    margin: px2rem(60px) auto;
+    border: px2rem(4px) solid #DEB882;
+    border-radius: px2rem(20px);
 
     .chaining {
       width: 100%;
-      height: 60*2px;
+      height: px2rem(120px);
       display: flex;
       justify-content: center;
 
       .single {
-        width: 100*2px;
-        height: 60*2px;
+        width: px2rem(200px);
+        height: px2rem(120px);
         display: flex;
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        border-right: 2*2px dashed #DFCB86;
+        border-right: px2rem(4px) dashed #DFCB86;
 
         .unitPice {
-          width: 100*2px;
-          height: 30*2px;
+          width: px2rem(200px);
+          height: px2rem(60px);
           display: block;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 22*2px;
+          font-size: 22px;
           font-weight: border;
           color: #E2B963;
         }
 
         .lengthTime {
-          width: 100*2px;
-          height: 30*2px;
+          width: px2rem(200px);
+          height: px2rem(60px);
           display: block;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 16*2px;
+          font-size: 16px;
           color: #E2B963;
         }
       }
 
       .functions {
-        width: 100*2px;
-        height: 60*2px;
+        width: px2rem(200px);
+        height: px2rem(120px);
         display: flex;
         align-items: center;
         justify-content: center;
 
         .function {
-          width: 100*2px;
-          height: 60*2px;
+          width: px2rem(200px);
+          height: px2rem(120px);
           display: block;
           display: flex;
           justify-content: center;
@@ -268,8 +270,8 @@ export default {
     // right: 50%;
     // margin-top: -100px;
     // margin-left: -75px;
-    width: 250*2px;
-    height: 150*2px;
+    width: px2rem(500px);
+    height: px2rem(300px);
           position: absolute;
       top: 50%;
       left: 50%;
@@ -279,21 +281,21 @@ export default {
     text-align: center;
 
     .alert {
-      height: 50*2px;
-      line-height: 50*2px;
+      height: px2rem(100px);
+      line-height: px2rem(100px);
       color: #000;
       font-weight: bold;
     }
 
     .message {
-      height: 50*2px;
+      height: px2rem(100px);
       // line-height: 50px;
       color: #666;
     }
 
     .btn {
-      height: 50*2px;
-      line-height: 50*2px;
+      height: px2rem(100px);
+      line-height: px2rem(100px);
       color: #26a2ff;
       border-top: 1px solid #666;
     }
@@ -302,9 +304,9 @@ export default {
 
 .service {
   width: 100%;
-  height: 80*2px;
+  height: px2rem(160px);
   /* background-color deeppink */
-  line-height: 80*2px;
+  line-height: px2rem(160px);
   text-align: center;
   position: absolute;
   button: 0;
