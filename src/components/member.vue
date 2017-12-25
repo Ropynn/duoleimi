@@ -175,7 +175,8 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import "../common/stylus/mixins.styl"
+@import '../common/stylus/mixins.styl';
+
 /* 遮罩层 */
 .makeSure {
   position: absolute;
@@ -351,6 +352,7 @@ export default {
   /* 优惠券 */
   .coupon {
     background-color: #fff;
+    margin-bottom: px2rem(40px);
 
     .mint-cell-allow-right::after {
       border: solid px2rem(4px) #E0BC74;

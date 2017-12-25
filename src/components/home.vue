@@ -317,7 +317,7 @@ export default {
   }
 
   .agreementSure {
-    color: blue;
+    // color: blue;
     color: #ccc;
   }
 }
