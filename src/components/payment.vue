@@ -73,8 +73,6 @@ export default {
   mounted(){
     //按摩开始时间
     this.openingTime()
-    // this.countdowm(this.endTime);
-    // this.callback()
   },
   methods: {
     //todo 服务开始时间
@@ -116,7 +114,7 @@ export default {
 @import "../common/stylus/mixins.styl"
 .time
   width 100%
-  height  px2rem(236px)
+  height  px2rem(200px)
   z-index 10
   position absolute
   top 0
@@ -135,16 +133,16 @@ export default {
   .residue
     height  px2rem(100px)
     color #E90000
-    display block
-    font-size 20px
-    line-height  px2rem(100px)
-    text-align center
+    font-size 18px
+    line-height px2rem(100px)
+    display flex
+    justify-content center
 .paid
   width 100%
   z-index 10
   position absolute
-  top  px2rem(236px)
-  bottom  px2rem(200px)
+  top  px2rem(200px)
+  bottom  px2rem(180px)
   .particulars
     width 100%
     .logol
@@ -158,15 +156,15 @@ export default {
         vertical-align middle
     .subsection
       color #C2C2C2
-      padding  px2rem(52px)
-      font-size 18px
+      padding  px2rem(50px)
+      font-size 16px
       .particulars
         color: #181818
 .footer
   width 100%
-  height  px2rem(200px)
+  height  px2rem(180px)
   z-index 10
-  line-height  px2rem(200px)
+  line-height  px2rem(180px)
   text-align center
   box-sizing border-box
   font-size: 14px;

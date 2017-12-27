@@ -77,7 +77,7 @@
 
     <!-- 确认层 -->
     <transition name="fade">
-      <div class="makeSure" v-show="isShow">
+      <div class="makeSure" v-show="isShow" @touchmove.prevent>
         <div class="box">
           <div class="alert">
             系统提示
@@ -179,8 +179,8 @@ export default {
 
 /* 遮罩层 */
 .makeSure {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom : 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -383,7 +383,8 @@ export default {
       padding: 0 px2rem(40px);
     }
 
-    // 立即支付按钮
+    // 立即支付按钮.
+
     button {
       text-align: center;
       width: 100%;

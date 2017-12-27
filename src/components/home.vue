@@ -9,7 +9,7 @@
     <!-- 套餐选择 -->
     <ul class="selective-type">
       <!-- 测试专用 -->
-      <li class="set-meak">
+      <!-- <li class="set-meak">
         <router-link class="chaining" :to="'/member/'+5+'/'+0.1">
           <div class="single">
             <span class="unitPice">￥5</span>
@@ -18,8 +18,8 @@
           <div class="functions">
             <span class="function">111</span>
           </div>
-        </router-link>
-      </li>
+        </router-link> -->
+      <!-- </li> -->
 
       <li class="set-meal" v-for="item in home.projects">
         <router-link v-show="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
@@ -48,7 +48,7 @@
 
     <!-- 确认层 -->
     <transition name="fade">
-      <div class="makeSure" v-show="isShow">
+      <div class="makeSure" v-show="isShow" @touchmove.prevent>
         <div class="box">
           <div class="alert">
             系统提示
@@ -129,14 +129,14 @@ export default {
   mounted() {
     // console.log(wx);
     // console.log(wx.config);
-    wx.config({
-      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-      appId: "111", // 必填，公众号的唯一标识
-      timestamp: "", // 必填，生成签名的时间戳
-      nonceStr: "", // 必填，生成签名的随机串
-      signature: "", // 必填，签名，见附录1
-      jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    });
+    // wx.config({
+    //   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    //   appId: "111", // 必填，公众号的唯一标识
+    //   timestamp: "", // 必填，生成签名的时间戳
+    //   nonceStr: "", // 必填，生成签名的随机串
+    //   signature: "", // 必填，签名，见附录1
+    //   jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    // });
   },
 
   components: {
@@ -256,7 +256,7 @@ export default {
 }
 
 .makeSure {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -265,14 +265,9 @@ export default {
   z-index: 30;
 
   .box {
-    // position: absolute;
-    // top: 50%;
-    // right: 50%;
-    // margin-top: -100px;
-    // margin-left: -75px;
+    position: absolute;
     width: px2rem(500px);
     height: px2rem(300px);
-    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
