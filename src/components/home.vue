@@ -116,19 +116,6 @@ export default {
       this.isShow = false;
     }
   },
-
-  mounted() {
-    console.log(wx);
-    // console.log(wx.config);
-    wx.config({
-      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-      appId: "111", // 必填，公众号的唯一标识
-      timestamp: "", // 必填，生成签名的时间戳
-      nonceStr: "", // 必填，生成签名的随机串
-      signature: "", // 必填，签名，见附录1
-      jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    });
-  },
   created() {
     this.axios.get("/api/home").then(res => {
       // console.log(res);
@@ -137,6 +124,19 @@ export default {
 
     // console.log(wx);
     // console.log(wx.config);
+  },
+
+  mounted() {
+    // console.log(wx);
+    // console.log(wx.config);
+    wx.config({
+      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      appId: "111", // 必填，公众号的唯一标识
+      timestamp: "", // 必填，生成签名的时间戳
+      nonceStr: "", // 必填，生成签名的随机串
+      signature: "", // 必填，签名，见附录1
+      jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
   },
 
   components: {
@@ -148,7 +148,7 @@ export default {
 
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import "../common/stylus/mixins.styl"
+@import '../common/stylus/mixins.styl';
 
 .container {
   width: 100%;
@@ -272,10 +272,10 @@ export default {
     // margin-left: -75px;
     width: px2rem(500px);
     height: px2rem(300px);
-          position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #fff;
     color: red;
     text-align: center;
