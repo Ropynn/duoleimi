@@ -33,6 +33,7 @@ export default new VueRouter({
     //支付完成路由
     {
       path: "/payment/:price/:minutes/:currentTime",
+      // path: '/payment',
       component: payment
     }
   ]

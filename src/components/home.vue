@@ -21,9 +21,9 @@
         </router-link> -->
       <!-- </li> -->
 
-      <li class="set-meal" v-for="item in home.projects">
-        <!-- <router-link v-show="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time"> -->
-        <div v-show="flag" class="chaining pay" @click="choosePay">
+      <li class="set-meal" v-for="item in home.projects" @click="choosePay(item)">
+        <router-link v-show="flag" class="chaining" to="" >
+          <!-- <div v-show="flag" class="chaining" @click="choosePay"> -->
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
@@ -31,19 +31,19 @@
           <div class="functions">
             <span class="function">{{item.name}}</span>
           </div>
-        </div>
-        <!-- </router-link> -->
+          <!-- </div> -->
+          </router-link>
 
-        <!-- 如果没选中，路由跳转的地址就为home -->
-        <router-link v-show="flc" class="chaining" :to="'/home/'" @click.native='loading'>
-          <div class="single">
-            <span class="unitPice">￥{{item.price}}</span>
-            <span class="lengthTime">{{item.time}}分钟</span>
-          </div>
-          <div class="functions">
-            <span class="function">{{item.name}}</span>
-          </div>
-        </router-link>
+          <!-- 如果没选中，路由跳转的地址就为home -->
+          <router-link v-show="flc" class="chaining" :to="'/home'" @click.native='loading'>
+            <div class="single">
+              <span class="unitPice">￥{{item.price}}</span>
+              <span class="lengthTime">{{item.time}}分钟</span>
+            </div>
+            <div class="functions">
+              <span class="function">{{item.name}}</span>
+            </div>
+          </router-link>
       </li>
 
     </ul>
@@ -94,7 +94,8 @@ export default {
       user: {},
       timestamp: "",
       nonceStr: "",
-      signature: ""
+      signature: "",
+      currentTime: ""
     };
   },
 
@@ -120,6 +121,39 @@ export default {
 
     show() {
       this.isShow = false;
+    },
+    choosePay(item) {
+      if (this.val != "1") {
+        return;
+      }
+      this.axios
+        .post("http://tsa.yzidea.com/wx/getPay", {
+          time: item.time,
+          money: item.price
+        })
+        .then(res => {
+          console.log(res);
+
+          if (res.data.statu == 1) {
+            wx.chooseWXPay({
+              timestamp: res.data.conf.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+              nonceStr: res.data.conf.nonceStr, // 支付签名随机串，不长于 32 位
+              package: res.data.conf.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+              signType: res.data.conf.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+              paySign: res.data.conf.paySign, // 支付签名
+  
+              success: (res) => {
+                // 支付成功后的回调函数
+                this.currentTime = new Date().getTime();
+                console.log("支付成功后的成功回调");
+                this.$router.push({
+                  path: "/payment/" + item.price + "/" + item.time +"/" + this.currentTime
+                  // path: '/payment'
+                });
+              }
+            });
+          }
+        });
     }
   },
   created() {
@@ -144,37 +178,33 @@ export default {
       this.home = res.data.data;
     });
 
-    this.axios.get("http://tsa.yzidea.com/wx/getConf").then(res => {
-      console.log(res);
-      // this.conf = res.data.conf;
-      console.log("-------------------");
-      this.timestamp = res.data.conf.timestamp;
-      console.log(this.timestamp);
-      this.nonceStr = res.data.conf.nonceStr;
-      console.log(this.nonceStr);
-      this.signature = res.data.conf.signature;
-      console.log(this.signature);
+    this.axios
+      .post("http://tsa.yzidea.com/wx/getConf", {
+        path: window.location.href
+      })
+      .then(res => {
+        console.log(res);
+        // this.conf = res.data.conf;
+        console.log("-------------------");
+        this.timestamp = res.data.conf.timestamp;
+        console.log(this.timestamp);
+        this.nonceStr = res.data.conf.nonceStr;
+        console.log(this.nonceStr);
+        this.signature = res.data.conf.signature;
+        console.log(this.signature);
 
-      wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: "wx56c21278b4ecee79", // 必填，公众号的唯一标识
-        timestamp: this.timestamp, // 必填，生成签名的时间戳
-        nonceStr: this.nonceStr, // 必填，生成签名的随机串
-        signature: this.signature, // 必填，签名，见附录1
-        jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: "wx56c21278b4ecee79", // 必填，公众号的唯一标识
+          timestamp: this.timestamp, // 必填，生成签名的时间戳
+          nonceStr: this.nonceStr, // 必填，生成签名的随机串
+          signature: this.signature, // 必填，签名，见附录1
+          jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
       });
-    });
   },
 
   mounted() {},
-
-  methods: {
-    choosePat() {
-      this.axios.get('http://tsa.yzidea.com/wx/getPay').then(res=>{
-        console.log(res);
-      })
-    }
-  },
   components: {
     member,
     bannerHeader
