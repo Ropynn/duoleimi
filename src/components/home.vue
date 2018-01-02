@@ -22,7 +22,8 @@
       <!-- </li> -->
 
       <li class="set-meal" v-for="item in home.projects">
-        <router-link v-show="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time">
+        <!-- <router-link v-show="flag" class="chaining" :to="'/member/'+item.price+'/'+item.time"> -->
+        <div v-show="flag" class="chaining pay" @click="choosePay">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
@@ -30,7 +31,8 @@
           <div class="functions">
             <span class="function">{{item.name}}</span>
           </div>
-        </router-link>
+        </div>
+        <!-- </router-link> -->
 
         <!-- 如果没选中，路由跳转的地址就为home -->
         <router-link v-show="flc" class="chaining" :to="'/home/'" @click.native='loading'>
@@ -88,7 +90,11 @@ export default {
       val: "1",
       flag: true,
       flc: false,
-      isShow: false
+      isShow: false,
+      user: {},
+      timestamp: "",
+      nonceStr: "",
+      signature: ""
     };
   },
 
@@ -117,28 +123,58 @@ export default {
     }
   },
   created() {
+    //判断是否授权登录
+    this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
+      // console.log("------------------------------------");
+      // console.log(JSON.stringify(res));
+      // console.log(res.data.statu);
+      // console.log(typeof res.data.statu);
+      if (res.data.statu == 1) {
+        console.log("获取成功");
+        this.user = res.data.user;
+        // this.$router.push("home");
+      } else {
+        window.location = "http://tsa.yzidea.com/wx/login?goback=home";
+        console.log("获取失败");
+      }
+    });
+
     this.axios.get("/api/home").then(res => {
       // console.log(res);
       this.home = res.data.data;
     });
 
-    // console.log(wx);
-    // console.log(wx.config);
+    this.axios.get("http://tsa.yzidea.com/wx/getConf").then(res => {
+      console.log(res);
+      // this.conf = res.data.conf;
+      console.log("-------------------");
+      this.timestamp = res.data.conf.timestamp;
+      console.log(this.timestamp);
+      this.nonceStr = res.data.conf.nonceStr;
+      console.log(this.nonceStr);
+      this.signature = res.data.conf.signature;
+      console.log(this.signature);
+
+      wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: "wx56c21278b4ecee79", // 必填，公众号的唯一标识
+        timestamp: this.timestamp, // 必填，生成签名的时间戳
+        nonceStr: this.nonceStr, // 必填，生成签名的随机串
+        signature: this.signature, // 必填，签名，见附录1
+        jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      });
+    });
   },
 
-  mounted() {
-    // console.log(wx);
-    // console.log(wx.config);
-    // wx.config({
-    //   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-    //   appId: "111", // 必填，公众号的唯一标识
-    //   timestamp: "", // 必填，生成签名的时间戳
-    //   nonceStr: "", // 必填，生成签名的随机串
-    //   signature: "", // 必填，签名，见附录1
-    //   jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    // });
-  },
+  mounted() {},
 
+  methods: {
+    choosePat() {
+      this.axios.get('http://tsa.yzidea.com/wx/getPay').then(res=>{
+        console.log(res);
+      })
+    }
+  },
   components: {
     member,
     bannerHeader
