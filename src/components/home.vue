@@ -194,14 +194,22 @@ export default {
               signType: res.data.conf.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
               paySign: res.data.conf.paySign, // 支付签名
 
+              // 支付成功后的回调函数
               success: res => {
-                // 支付成功后的回调函数
-                this.currentTime = new Date().getTime();
-                console.log("支付成功后的成功回调");
-                this.$router.push({
-                  path:
-                    "/payment/" + item.price + "/" + item.time + "/" + this.currentTime
-                });
+                this.axios
+                  .post("http://tsa.yzidea.com/wx/mcMove", { time: item.time })
+                    .then(res => {
+                      if (res.data.statu == 1) {
+                        this.currentTime = new Date().getTime() + 2000;
+                        this.$router.push({
+                          path:
+                            "/payment/" + item.price + "/" + item.time + "/" + this.currentTime
+                        });
+                      }
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
               }
             });
           }
