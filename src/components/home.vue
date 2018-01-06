@@ -79,7 +79,6 @@ import bannerHeader from "./header";
 import member from "./member";
 
 // import wx from "weixin-js-sdk"; //引入微信接口
-console.log(window.location);
 
 export default {
   data() {
@@ -99,7 +98,7 @@ export default {
   },
 
   created() {
-    console.log(this.$route.path);
+
     //判断是否授权登录
     this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
       // console.log("------------------------------------");
@@ -120,7 +119,8 @@ export default {
       // console.log(res);
       this.home = res.data.data;
     });
-
+    // console.log(this.$route.path);
+    console.log(this.$route.query.code);
     this.axios
       .post("http://tsa.yzidea.com/wx/getConf", {
         path: "http://tsa.yzidea.com/#" + this.$route.path
@@ -181,7 +181,8 @@ export default {
       this.axios
         .post("http://tsa.yzidea.com/wx/getPay", {
           time: item.time,
-          money: item.price
+          money: item.price,
+          code:this.$route.query.code
         })
         .then(res => {
           console.log(res);
@@ -198,14 +199,19 @@ export default {
               success: res => {
                 this.axios
                   .post("http://tsa.yzidea.com/wx/mcMove", { time: item.time })
-                    .then(res => {
-                      if (res.data.statu == 1) {
-                        this.currentTime = new Date().getTime() + 2000;
-                        this.$router.push({
-                          path:
-                            "/payment/" + item.price + "/" + item.time + "/" + this.currentTime
-                        });
-                      }
+                  .then(res => {
+                    if (res.data.statu == 1) {
+                      this.currentTime = new Date().getTime() + 2000;
+                      this.$router.push({
+                        path:
+                          "/payment/" +
+                          item.price +
+                          "/" +
+                          item.time +
+                          "/" +
+                          this.currentTime
+                      });
+                    }
                   })
                   .catch(err => {
                     console.log(err);

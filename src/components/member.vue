@@ -115,6 +115,7 @@ export default {
     };
   },
   created() {
+    this.$route.params.price
     this.axios.get("/api/member").then(res => {
       this.member = res.data.data;
     });

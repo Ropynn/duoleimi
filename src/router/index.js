@@ -9,6 +9,7 @@ Vue.use(VueRouter);
 
 export default new VueRouter({
   linkActiveClass: "active",
+  // mode: 'history',
   routes: [
     //重定向为首页
     {
