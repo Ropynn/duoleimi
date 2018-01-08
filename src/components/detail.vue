@@ -4,14 +4,14 @@
     <!-- 引入mint-ui的header -->
     <header class="mint-header">
       <div class="mint-header-button is-left">
-        <router-link to="/home/" class="router-link-active">
+        <!-- <router-link to="/home/" class="router-link-active">
           <button class="mint-button mint-button--default mint-button--normal">
             <span class="mint-button-icon">
               <i class="mintui mintui-back"></i>
             </span>
             <label class="mint-button-text"></label>
           </button>
-        </router-link>
+        </router-link> -->
       </div>
       <h1 class="mint-header-title">用户协议</h1>
       <div class="mint-header-button is-right">

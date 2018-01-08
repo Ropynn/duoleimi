@@ -81,6 +81,9 @@ import member from "./member";
 // import wx from "weixin-js-sdk"; //引入微信接口
 
 export default {
+  props: {
+    code: String
+  },
   data() {
     return {
       home: {},
@@ -93,12 +96,12 @@ export default {
       timestamp: "",
       nonceStr: "",
       signature: "",
-      currentTime: ""
+      currentTime: "",  //当前时间
+      orderId: "" //订单编号
     };
   },
 
   created() {
-
     //判断是否授权登录
     this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
       // console.log("------------------------------------");
@@ -175,6 +178,7 @@ export default {
 
     //点击调用微信支付的方法
     choosePay(item) {
+      const equipmentCode = this.code;
       if (this.val != "1") {
         return;
       }
@@ -182,12 +186,16 @@ export default {
         .post("http://tsa.yzidea.com/wx/getPay", {
           time: item.time,
           money: item.price,
-          code:this.$route.query.code
+          code: equipmentCode
         })
         .then(res => {
           console.log(res);
-
+          console.log('------获取id');
           if (res.data.statu == 1) {
+
+            this.orderId = res.data.order_id;
+            console.log(this.orderId);
+
             wx.chooseWXPay({
               timestamp: res.data.conf.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
               nonceStr: res.data.conf.nonceStr, // 支付签名随机串，不长于 32 位
@@ -198,7 +206,12 @@ export default {
               // 支付成功后的回调函数
               success: res => {
                 this.axios
-                  .post("http://tsa.yzidea.com/wx/mcMove", { time: item.time })
+                  .post("http://tsa.yzidea.com/wx/mcMove", {
+                    time: item.time,
+                    code: equipmentCode,
+                    dis: 1111,
+                    order_id: this.orderId
+                  })
                   .then(res => {
                     if (res.data.statu == 1) {
                       this.currentTime = new Date().getTime() + 2000;
