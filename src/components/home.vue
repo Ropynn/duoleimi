@@ -96,8 +96,8 @@ export default {
       timestamp: "",
       nonceStr: "",
       signature: "",
-      currentTime: "",  //当前时间
-      orderId: "" //订单编号
+      currentTime: "",
+      orderId: ""
     };
   },
 
@@ -113,7 +113,8 @@ export default {
         this.user = res.data.user;
         // this.$router.push("home");
       } else {
-        window.location = "http://tsa.yzidea.com/wx/login?goback=home";
+        window.location =
+          "http://tsa.yzidea.com/wx/login?goback=home?code=" + this.code;
         console.log("获取失败");
       }
     });
@@ -190,12 +191,9 @@ export default {
         })
         .then(res => {
           console.log(res);
-          console.log('------获取id');
+
           if (res.data.statu == 1) {
-
             this.orderId = res.data.order_id;
-            console.log(this.orderId);
-
             wx.chooseWXPay({
               timestamp: res.data.conf.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
               nonceStr: res.data.conf.nonceStr, // 支付签名随机串，不长于 32 位
@@ -205,6 +203,7 @@ export default {
 
               // 支付成功后的回调函数
               success: res => {
+
                 this.axios
                   .post("http://tsa.yzidea.com/wx/mcMove", {
                     time: item.time,
