@@ -25,6 +25,7 @@
         </div>
       </div>
     </transition>
+
   </div>
 </template>
 
@@ -36,7 +37,6 @@ export default {
   },
   data() {
     return {
-      time: "", //按摩时长
       price: "", //按摩价格
       currentTime: "", //当前时间
       orderId: "", //订单编号
@@ -64,12 +64,7 @@ export default {
             this.currentTime = new Date().getTime() + 2000;
             this.$router.push({
               path:
-                "/payment/" +
-                this.price +
-                "/" +
-                this.time +
-                "/" +
-                this.currentTime
+                "/payment/" + this.price + "/" + this.time + "/" + this.currentTime
             });
           } else if (res.data.statu == 0) {
             this.isShow = !this.isShow;

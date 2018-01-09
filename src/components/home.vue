@@ -191,7 +191,6 @@ export default {
         })
         .then(res => {
           console.log(res);
-
           if (res.data.statu == 1) {
             this.orderId = res.data.order_id;
             wx.chooseWXPay({
@@ -203,31 +202,15 @@ export default {
 
               // 支付成功后的回调函数
               success: res => {
-
-                this.axios
-                  .post("http://tsa.yzidea.com/wx/mcMove", {
-                    time: item.time,
-                    code: equipmentCode,
-                    dis: 1111,
-                    order_id: this.orderId
-                  })
-                  .then(res => {
-                    if (res.data.statu == 1) {
-                      this.currentTime = new Date().getTime() + 2000;
-                      this.$router.push({
-                        path:
-                          "/payment/" +
-                          item.price +
-                          "/" +
-                          item.time +
-                          "/" +
-                          this.currentTime
-                      });
-                    }
-                  })
-                  .catch(err => {
-                    console.log(err);
-                  });
+                this.$router.push({
+                  path:
+                    "/mcMove/" +
+                    item.price +
+                    "/" +
+                    item.time +
+                    "/" +
+                    this.orderId
+                });
               }
             });
           }
