@@ -33,7 +33,7 @@
         </router-link>
 
         <!-- 如果没选中，路由跳转的地址就为home -->
-        <router-link v-show="flc" class="chaining" :to="'/home'" @click.native='loading'>
+        <router-link v-show="flc" class="chaining" :to="'/home?code=' + this.code" @click.native='loading'>
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime">{{item.time}}分钟</span>
