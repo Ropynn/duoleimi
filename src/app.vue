@@ -32,7 +32,6 @@ export default {
     //     console.log("获取失败");
     //   }
     // });
-
   }
 };
 </script>

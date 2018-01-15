@@ -3,6 +3,7 @@ import Vue from "vue";
 import app from "./app";
 import router from "./router";
 import "./common/stylus/mixins.styl";
+import filters from './common/js/filter'
 
 //引入mock模拟后台数据
 import "./mock/mockServer";

@@ -1,8 +1,7 @@
 {
   "home": {
     "setMeal": "套餐选择",
-    "projects": [
-      {
+    "projects": [{
         "name": "唤醒身体",
         "price": "6",
         "time": "3"
@@ -23,8 +22,7 @@
   "member": {
     "headings": "摩摩哒微SPA——6元唤醒身体",
     "balances": "0000",
-    "recharges": [
-      {
+    "recharges": [{
         "charge": "30",
         "send": "3",
         "type": 0
@@ -54,5 +52,28 @@
     "completed": "已完成",
     "packageType": "6元/6分钟",
     "date": "2017.12.16"
-  }
+  },
+  "orderList": [{
+      "payid": "HZ1515815930930",
+      "price": "6",
+      "description": "天河店J67508设备",
+      "status": "未启动",
+      "move": false,
+      "pay": "支付成功",
+      "creatTime": "2018-01-13T03:58:51.000Z",
+      "time":"6"
+    },
+    {
+      "payid": "HZ1515815930888",
+      "price": "15",
+      "description": "天河店J67508设备",
+      "status": "已启动",
+      "move": true,
+      "pay": "支付成功",
+      "creatTime": "2018-01-13T03:58:51.000Z",
+      "time":"10"
+    }
+  ]
+
+
 }

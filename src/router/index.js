@@ -5,6 +5,7 @@ import member from "../components/member.vue";  //套餐组件
 import detail from "../components/detail.vue";  //协议详情组件
 import payment from "../components/payment.vue";  //支付组件
 import mcMove from "../components/mcMove.vue";  //启动机器组件
+import order from "../components/orderList.vue";  //启动机器组件
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ export default new VueRouter({
     {
       path: "/payment/:price/:minutes/:currentTime",
       component: payment
+    },
+    //订单页面
+    {
+      path:'/order',
+      component:order
     }
   ]
 });
