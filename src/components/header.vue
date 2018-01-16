@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="header">
-        <img class="banner" src="../assets/ye.png" alt="">
+        <img class="banner" src="../assets/ye.jpg" alt="">
       </div>
     </div>
 </template>
@@ -14,7 +14,6 @@
   .header
     width: 100%
     height: px2rem(400px)
-    background:#C43D39
     .banner
       width 100%
       height px2rem(400px)

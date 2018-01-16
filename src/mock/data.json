@@ -1,20 +1,16 @@
 {
   "home": {
     "setMeal": "套餐选择",
-    "projects": [{
-        "name": "唤醒身体",
-        "price": "6",
-        "time": "3"
-      },
+    "projects": [
       {
         "name": "通行气血",
-        "price": "10",
-        "time": "5"
+        "price": "48",
+        "time": "30"
       },
       {
         "name": "舒张筋骨",
-        "price": "15",
-        "time": "10"
+        "price": "68",
+        "time": "60"
       }
     ],
     "considerations": "摩摩哒服务协议"
