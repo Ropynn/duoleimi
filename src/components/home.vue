@@ -1,6 +1,11 @@
 <template>
   <div>
     <banner-header></banner-header>
+    <div class="tip">
+      <p class="desc">
+        <img src="../assets/laba.png"> 专享优惠：新用户首单9.9元体验疏通排毒套餐！
+      </p>
+    </div>
     <div class="container">
       <span class="line"></span>
       <span class="txt">{{home.setMeal}}</span>
@@ -8,32 +13,25 @@
     </div>
     <!-- 套餐选择 -->
     <ul class="selective-type">
-      <!-- 测试专用 -->
-      <!-- <li class="set-meak">
-        <router-link class="chaining" :to="'/member/'+5+'/'+0.1">
-          <div class="single">
-            <span class="unitPice">￥5</span>
-            <span class="lengthTime" time='0+0.1'>5分钟</span>
-          </div>
-          <div class="functions">
-            <span class="function">111</span>
-          </div>
-        </router-link> -->
-      <!-- </li> -->
-
+      <li class="pic" v-show="isFirst">
+        <img src="../assets/aa.png" alt="">
+      </li>
       <li class="set-meal" v-for="item in home.projects" @click="choosePay(item)">
-        <router-link v-show="flag" class="chaining" to="">
+        <!-- <router-link v-show="flag" class="chaining" to=""> -->
+        <router-link class="chaining" to="">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
+            <!-- <span>1</span> -->
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
+            <!-- <span class="function">首单9.9</span> -->
           </div>
         </router-link>
 
         <!-- 如果没选中，路由跳转的地址就为home -->
-        <router-link v-show="flc" class="chaining" :to="'/home?code=' + this.code" @click.native='loading'>
+        <!-- <router-link v-show="flc" class="chaining" :to="'/home?code=' + this.code" @click.native='loading'>
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime">{{item.time}}分钟</span>
@@ -41,10 +39,23 @@
           <div class="functions">
             <span class="function">{{item.name}}</span>
           </div>
-        </router-link>
+        </router-link> -->
       </li>
 
     </ul>
+    <div class="playBtn">
+      <button @click="play">点击查看使用教程</button>
+    </div>
+
+    <!-- 使用教程 -->
+    <transition name="fade">
+      <div class="videos" v-if="flag" >
+        <div class="test" @click="close"></div>
+          <video controls autoplay>
+            <source src="../../static/q.mp4" type="video/mp4" >
+          </video>
+      </div>
+    </transition>
 
     <!-- 确认层 -->
     <transition name="fade">
@@ -89,7 +100,7 @@ export default {
       home: {},
       checked: "checked",
       val: "1",
-      flag: true,
+      flag: false,
       flc: false,
       isShow: false,
       user: {},
@@ -97,7 +108,8 @@ export default {
       nonceStr: "",
       signature: "",
       currentTime: "",
-      orderId: ""
+      orderId: "",
+      isFirst:true
     };
   },
 
@@ -108,9 +120,13 @@ export default {
       // console.log(JSON.stringify(res));
       // console.log(res.data.statu);
       // console.log(typeof res.data.statu);
+      console.log(res);
       if (res.data.statu == 1) {
         console.log("获取成功");
         this.user = res.data.user;
+        this.isFirst = res.data.user.firstpay
+        console.log(this.isFirst);
+
         // this.$router.push("home");
       } else {
         window.location =
@@ -168,7 +184,12 @@ export default {
         this.flc = false;
       }
     },
-
+    close() {
+      this.flag = !this.flag;
+    },
+    play() {
+      this.flag = !this.flag;
+    },
     loading() {
       this.isShow = true;
     },
@@ -181,6 +202,7 @@ export default {
     choosePay(item) {
       const equipmentCode = this.code;
       if (this.val != "1") {
+        this.loading();
         return;
       }
       this.axios
@@ -228,6 +250,25 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import '../common/stylus/mixins.styl';
 
+.tip{
+  display flex
+  justify-content center
+  color #FF003E
+  font-size 12px
+  height px2rem(60px)
+  line-height px2rem(60px)
+  .desc{
+    text-align center
+    width px2rem(700px)
+    border 1px solid #FF003E
+  }
+  img{
+    width px2rem(50px)
+    vertical-align middle
+    // hei px2rem(20px)
+  }
+}
+
 .container {
   width: 100%;
   height: px2rem(120px);
@@ -243,23 +284,34 @@ export default {
 
   .txt {
     color: #8B8785;
-    font-size: 20px;
+    font-size: 18px;
     vertical-align: middle;
     text-align: center;
   }
+
 }
 
 .selective-type {
+  position relative
   width: 100%;
   padding: 0px px2rem(120px);
   box-sizing: border-box;
+
+  .pic{
+    position absolute
+    top 0
+    right px2rem(175px)
+    img{
+      width px2rem(80px)
+    }
+  }
 
   .set-meal {
     width: px2rem(400px);
     height: px2rem(120px);
     /* line-height 60px */
     margin: px2rem(60px) auto;
-    border: px2rem(4px) solid #DEB882;
+    border: px2rem(4px) solid #FF003E;
     border-radius: px2rem(20px);
 
     .chaining {
@@ -275,7 +327,7 @@ export default {
         justify-content: center;
         flex-direction: column;
         align-items: center;
-        border-right: px2rem(4px) dashed #DFCB86;
+        border-right: px2rem(4px) dashed #FF003E;
 
         .unitPice {
           width: px2rem(200px);
@@ -284,9 +336,9 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 22px;
+          font-size: 20px;
           font-weight: border;
-          color: #E2B963;
+          color: #FF003E;
         }
 
         .lengthTime {
@@ -296,8 +348,8 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 16px;
-          color: #E2B963;
+          font-size: 18px;
+          color: #FF003E;
         }
       }
 
@@ -315,8 +367,8 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 20px;
-          color: #74716D;
+          font-size: 18px;
+          color: #000;
         }
       }
     }
@@ -374,6 +426,49 @@ export default {
     }
   }
 }
+
+  .playBtn{
+    margin-top px2rem(100px);
+    display flex;
+    width 100%;
+    justify-content: center;
+    button {
+      text-align: center;
+      width px2rem(410px);
+      height px2rem(110px);
+      border: px2rem(4px) solid #FF003E;
+      border-radius: px2rem(10px);
+      background-color: #FF003E;
+      font-size: 16px;
+      color: #fff;
+    }
+  }
+
+
+.videos{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 30;
+  .test{
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+  }
+  video{
+    position absolute
+    width 100%
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 
 .service {
   width: 100%;

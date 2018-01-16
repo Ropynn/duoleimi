@@ -1,13 +1,15 @@
 <template>
   <div class="listBox">
     <banner-header></banner-header>
-    <ul class="dec" v-for="item in orderList.data" @click="move(item)">
+    <!-- <div class="user">
+      <img :src="" alt="">
+    </div> -->
+    <ul class="dec" v-for="item in orderList" @click="move(item)">
       <li>订单编号：{{item.payid}}</li>
-      <li>订单总额：{{item.price}}元</li>
-      <li>设备描述：{{item.description}}</li>
-      <li>机器运作状态：{{item.status}}</li>
-      <li>支付状态：{{item.pay}}</li>
-      <li>创建时间：{{item.creatTime | creatAt}}</li>
+      <li>订单总额：{{item.money}}元</li>
+      <li>机器运作状态：{{item.move | move}}</li>
+      <li>订单状态：{{item.statu | statu}}</li>
+      <li>创建时间：{{item.createdAt | creatAt}}</li>
     </ul>
   </div>
 </template>
@@ -30,19 +32,28 @@ export default {
         console.log("获取失败");
       }
     }),
-      this.axios.get("/api/orderList").then(res => {
+      this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
         console.log(res);
-        this.orderList = res.data;
+        if (res.data.statu) {
+           this.orderList = res.data.list;
+
+        }else{
+          console.log('获取失败');
+        }
+
       });
   },
   methods: {
     move(item) {
       // console.log(item.statu);
-      if (!item.move) {
+      if (!item.move && item.statu == 1) {
+         sessionStorage.setItem('_CODE_',item.deviceId);
         // console.log('aaaa');
         this.$router.push({
           path: "/mcMove/" + item.price + "/" + item.time + "/" + item.payid
         });
+      }else{
+        return;
       }
     }
   },

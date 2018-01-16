@@ -8,20 +8,10 @@
       <div class="line"></div>
 
       <div class="balance">
-        <!-- 引入mint-ui的switch -->
-        <div class="mint-cell-wrapper">
-          <div class="mint-cell-title">
-            <!---->
-            <span class="mint-cell-text">可用余额：0.00</span>
-            <!---->
+        <div>
+          <div>
+          <span>可用余额：0.00</span>
           </div>
-          <div class="mint-cell-value">
-            <label class="mint-switch"><input type="checkbox" class="mint-switch-input">
-              <span class="mint-switch-core"></span>
-              <div class="mint-switch-label"></div>
-            </label>
-          </div>
-          <!---->
         </div>
 
       </div>
@@ -41,7 +31,7 @@
         <div class="service">
           <label class="agreementm" for="agreement">
             <input class="agreement" type="checkbox" :value="val" id="agreement" :checked="checked" @click='isCheck'> 我已阅读并同意
-            <router-link to="">《摩摩哒充返协议》</router-link>
+            <router-link to="">《哆蕾咪充返协议》</router-link>
           </label>
         </div>
       </div>
@@ -59,9 +49,9 @@
             <div class="mint-cell-value is-link">
               <span>未使用&nbsp;&nbsp;</span>
             </div>
-            <i class="mint-cell-allow-right"></i>
+            <!-- <i class="mint-cell-allow-right"></i> -->
           </div>
-          <div class="mint-cell-right"></div>
+          <!-- <div class="mint-cell-right"></div> -->
         </router-link>
         <h4>本次支付：{{this.$route.params.price}}.00</h4>
         <div class="btn">
@@ -98,7 +88,7 @@
 <script>
 // import Bus from "../common/js/bus.js";
 import bannerHeader from "./header"; //引入头部组件
-// import appShadow from "./common/shadow.vue"; //引入遮罩层
+import { XSwitch, Group, Cell } from "vux";
 
 export default {
   data() {
@@ -115,7 +105,7 @@ export default {
     };
   },
   created() {
-    this.$route.params.price
+    this.$route.params.price;
     this.axios.get("/api/member").then(res => {
       this.member = res.data.data;
     });
@@ -169,7 +159,10 @@ export default {
 
   //使用header公共组件
   components: {
-    bannerHeader
+    bannerHeader,
+    XSwitch,
+    Group,
+    Cell
     // ,appShadow
   }
 };

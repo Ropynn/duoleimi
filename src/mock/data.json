@@ -3,20 +3,20 @@
     "setMeal": "套餐选择",
     "projects": [
       {
-        "name": "通行气血",
+        "name": "疏通排毒",
         "price": "48",
         "time": "30"
       },
       {
-        "name": "舒张筋骨",
+        "name": "塑形美胸",
         "price": "68",
         "time": "60"
       }
     ],
-    "considerations": "摩摩哒服务协议"
+    "considerations": "哆蕾咪服务协议"
   },
   "member": {
-    "headings": "摩摩哒微SPA——6元唤醒身体",
+    "headings": "哆蕾咪微SPA——6元唤醒身体",
     "balances": "0000",
     "recharges": [{
         "charge": "30",

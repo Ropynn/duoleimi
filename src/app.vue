@@ -39,3 +39,6 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 @import './common/stylus/mixins.styl';
 </style>
+<style lang="less">
+@import '~vux/src/styles/reset.less';
+</style>

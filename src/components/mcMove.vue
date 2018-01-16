@@ -7,8 +7,10 @@
     </div>
 
     <div class="btn">
-      <button @click="mcMove">立即启动</button>
+      <x-button action-type='button' @click.native="mcMove" mini>立即启动</x-button>
+      <!-- <button @click="mcMove">立即启动</button> -->
     </div>
+
 
     <transition name="fade">
       <div class="makeSure" v-show="isShow" @touchmove.prevent>
@@ -31,6 +33,7 @@
 
 <script>
 import bannerHeader from "./header";
+import { XButton } from "vux";
 export default {
   props: {
     code: String
@@ -49,7 +52,7 @@ export default {
       this.time = this.$route.params.minutes;
       this.orderId = this.$route.params.orderId;
 
-      const equipmentCode = this.code;
+      const equipmentCode = this.code || sessionStorage.getItem('_CODE_');
       // console.log(equipmentCode);
 
       this.axios
@@ -64,7 +67,12 @@ export default {
             this.currentTime = new Date().getTime() + 2000;
             this.$router.push({
               path:
-                "/payment/" + this.price + "/" + this.time + "/" + this.currentTime
+                "/payment/" +
+                this.price +
+                "/" +
+                this.time +
+                "/" +
+                this.currentTime
             });
           } else if (res.data.statu == 0) {
             this.isShow = !this.isShow;
@@ -82,7 +90,8 @@ export default {
     }
   },
   components: {
-    bannerHeader
+    bannerHeader,
+    XButton
   }
 };
 </script>
@@ -96,12 +105,12 @@ export default {
   line-height: px2rem(100px);
   text-align: center;
   font-size: 18px;
-  color: #E2C99F;
+  color: #FF003E;
   background-color: #FFFFFF;
 }
 
 .line {
-  border: px2rem(4px) solid #E0BC74;
+  border: px2rem(4px) solid #FF003E;
 }
 
 .btn {
@@ -117,9 +126,9 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: px2rem(4px) solid #E0BC74;
+  border: px2rem(4px) solid #FF003E;
   border-radius: px2rem(20px);
-  background-color: #E0BC74;
+  background-color: #FF003E;
   font-size: 20px;
   color: #fff;
 }
