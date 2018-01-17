@@ -35,24 +35,22 @@ export default {
       this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
         console.log(res);
         if (res.data.statu) {
-           this.orderList = res.data.list;
-
-        }else{
-          console.log('获取失败');
+          this.orderList = res.data.list;
+        } else {
+          console.log("获取失败");
         }
-
       });
   },
   methods: {
     move(item) {
       // console.log(item.statu);
       if (!item.move && item.statu == 1) {
-         sessionStorage.setItem('_CODE_',item.deviceId);
+        sessionStorage.setItem("_CODE_", item.deviceId);
         // console.log('aaaa');
         this.$router.push({
           path: "/mcMove/" + item.price + "/" + item.time + "/" + item.payid
         });
-      }else{
+      } else {
         return;
       }
     }
@@ -92,4 +90,3 @@ export default {
   }
 }
 </style>
-
