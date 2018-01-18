@@ -43,19 +43,33 @@
       </li>
 
     </ul>
+      <!-- <div class="container"> -->
+      <!-- <div class="player">
+        <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
+          @pause="onPlayerPause($event)">
+        </video-player>
+      </div> -->
+    <!-- </div> -->
     <div class="playBtn">
       <button @click="play">点击查看使用教程</button>
     </div>
 
+
+
+
+
     <!-- 使用教程 -->
-    <transition name="fade">
-      <div class="videos" v-if="flag">
-        <div class="test" @click="close"></div>
-        <video controls autoplay>
-          <source src="../../static/q.mp4" type="video/mp4">
-        </video>
+    <!-- <transition name="fade">
+      <div class="videos" v-if="flag" @touchmove.prevent>
+        <div class="test" @click="close"></div> -->
+        <!-- <video controls autoplay>
+          <source src="../../static/introduce.mp4" type="video/mp4">
+        </video> -->
+        <!-- <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
+          @pause="onPlayerPause($event)">
+        </video-player>
       </div>
-    </transition>
+    </transition> -->
 
     <!-- 确认层 -->
     <transition name="fade">
@@ -86,170 +100,214 @@
 </template>
 
 <script>
-  import bannerHeader from "./header";
-  import member from "./member";
+import bannerHeader from "./header";
+import member from "./member";
+// import "video.js/dist/video-js.css";
+// import { videoPlayer } from "vue-video-player";
 
-  // import wx from "weixin-js-sdk"; //引入微信接口
+// import wx from "weixin-js-sdk"; //引入微信接口
 
-  export default {
-    props: {
-      code: String
-    },
-    data() {
-      return {
-        home: {},
-        checked: "checked",
-        val: "1",
-        flag: false,
-        flc: false,
-        isShow: false,
-        user: {},
-        timestamp: "",
-        nonceStr: "",
-        signature: "",
-        currentTime: "",
-        orderId: "",
-        isFirst: true
-      };
-    },
+export default {
+  props: {
+    code: String
+  },
+  data() {
+    return {
+      home: {},
+      checked: "checked",
+      val: "1",
+      flag: false,
+      flc: false,
+      isShow: false,
+      user: {},
+      timestamp: "",
+      nonceStr: "",
+      signature: "",
+      currentTime: "",
+      orderId: "",
+      isFirst: true,
+      // playerOptions: {
+      //   //        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
+      //   autoplay: false, //如果true,浏览器准备好时开始回放。
+      //   muted: false, // 默认情况下将会消除任何音频。
+      //   loop: false, // 导致视频一结束就重新开始。
+      //   preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+      //   language: "zh-CN",
+      //   aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+      //   fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+      //   sources: [
+      //     {
+      //       type: "video/mp4",
+      //       src: "../../static/introduce.mp4" //你的m3u8地址（必填）
+      //     }
+      //   ],
+      //   // poster: "poster.jpg", //你的封面地址
+      //   width: document.documentElement.clientWidth,
+      //   notSupportedMessage: "此视频暂无法播放，请稍后再试" //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+      //   //        controlBar: {
+      //   //          timeDivider: true,
+      //   //          durationDisplay: true,
+      //   //          remainingTimeDisplay: false,
+      //   //          fullscreenToggle: true  //全屏按钮
+      //   //        }
+      // }
+    };
+  },
 
-    created() {
-      //判断是否授权登录
-      this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
-        // console.log("------------------------------------");
-        // console.log(JSON.stringify(res));
-        // console.log(res.data.statu);
-        // console.log(typeof res.data.statu);
+  created() {
+    //判断是否授权登录
+    this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
+      // console.log("------------------------------------");
+      // console.log(JSON.stringify(res));
+      // console.log(res.data.statu);
+      // console.log(typeof res.data.statu);
+      console.log(res);
+      if (res.data.statu == 1) {
+        console.log("获取成功");
+        this.user = res.data.user;
+        this.isFirst = res.data.user.firstpay;
+        console.log(this.isFirst);
+
+        // this.$router.push("home");
+      } else {
+        window.location =
+          "http://tsa.yzidea.com/wx/login?goback=home?code=" + this.code;
+        console.log("获取失败");
+      }
+    });
+
+    this.axios.get("/api/home").then(res => {
+      // console.log(res);
+      this.home = res.data.data;
+    });
+    // console.log(this.$route.path);
+    console.log(this.$route.query.code);
+    this.axios
+      .post("http://tsa.yzidea.com/wx/getConf", {
+        path: "http://tsa.yzidea.com/#" + this.$route.path
+      })
+      .then(res => {
         console.log(res);
-        if (res.data.statu == 1) {
-          console.log("获取成功");
-          this.user = res.data.user;
-          this.isFirst = res.data.user.firstpay;
-          console.log(this.isFirst);
+        // this.conf = res.data.conf;
+        // console.log("-------------------");
+        this.timestamp = res.data.conf.timestamp;
+        // console.log(this.timestamp);
+        this.nonceStr = res.data.conf.nonceStr;
+        // console.log(this.nonceStr);
+        this.signature = res.data.conf.signature;
+        // console.log(this.signature);
 
-          // this.$router.push("home");
-        } else {
-          window.location =
-            "http://tsa.yzidea.com/wx/login?goback=home?code=" + this.code;
-          console.log("获取失败");
-        }
+        wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: "wx56c21278b4ecee79", // 必填，公众号的唯一标识
+          timestamp: this.timestamp, // 必填，生成签名的时间戳
+          nonceStr: this.nonceStr, // 必填，生成签名的随机串
+          signature: this.signature, // 必填，签名，见附录1
+          jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
       });
+  },
 
-      this.axios.get("/api/home").then(res => {
-        // console.log(res);
-        this.home = res.data.data;
+  // computed: {
+  //   player() {
+  //     return this.$refs.videoPlayer.player;
+  //   }
+  // },
+
+  mounted() {},
+
+  methods: {
+    // onPlayerPlay(player) {
+    //   console.log("play");
+    // },
+    // onPlayerPause(player) {
+    //   console.log("pause");
+    // },
+
+    //点击是否同意协议
+    isCheck() {
+      if (this.checked == "checked") {
+        this.checked = "";
+        this.val = "0";
+        this.flag = false;
+        this.flc = true;
+      } else {
+        this.checked = "checked";
+        this.val = "1";
+        this.flag = true;
+        this.flc = false;
+      }
+    },
+    close() {
+      this.flag = !this.flag;
+    },
+    play() {
+      this.$router.push({
+        path: '/video'
       });
-      // console.log(this.$route.path);
-      console.log(this.$route.query.code);
+      // this.flag = !this.flag;
+    },
+    loading() {
+      this.isShow = true;
+    },
+
+    show() {
+      this.isShow = false;
+    },
+
+    //点击调用微信支付的方法
+    choosePay(item) {
+      const equipmentCode = this.code;
+      if (this.val != "1") {
+        this.loading();
+        return;
+      }
       this.axios
-        .post("http://tsa.yzidea.com/wx/getConf", {
-          path: "http://tsa.yzidea.com/#" + this.$route.path
+        .post("http://tsa.yzidea.com/wx/getPay", {
+          time: item.time,
+          money: item.price,
+          code: equipmentCode
         })
         .then(res => {
           console.log(res);
-          // this.conf = res.data.conf;
-          // console.log("-------------------");
-          this.timestamp = res.data.conf.timestamp;
-          // console.log(this.timestamp);
-          this.nonceStr = res.data.conf.nonceStr;
-          // console.log(this.nonceStr);
-          this.signature = res.data.conf.signature;
-          // console.log(this.signature);
+          if (res.data.statu == 1) {
+            this.orderId = res.data.order_id;
+            wx.chooseWXPay({
+              timestamp: res.data.conf.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+              nonceStr: res.data.conf.nonceStr, // 支付签名随机串，不长于 32 位
+              package: res.data.conf.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+              signType: res.data.conf.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+              paySign: res.data.conf.paySign, // 支付签名
 
-          wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: "wx56c21278b4ecee79", // 必填，公众号的唯一标识
-            timestamp: this.timestamp, // 必填，生成签名的时间戳
-            nonceStr: this.nonceStr, // 必填，生成签名的随机串
-            signature: this.signature, // 必填，签名，见附录1
-            jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-          });
-        });
-    },
-
-    mounted() {
-    },
-
-    methods: {
-      //点击是否同意协议
-      isCheck() {
-        if (this.checked == "checked") {
-          this.checked = "";
-          this.val = "0";
-          this.flag = false;
-          this.flc = true;
-        } else {
-          this.checked = "checked";
-          this.val = "1";
-          this.flag = true;
-          this.flc = false;
-        }
-      },
-      close() {
-        this.flag = !this.flag;
-      },
-      play() {
-        this.flag = !this.flag;
-      },
-      loading() {
-        this.isShow = true;
-      },
-
-      show() {
-        this.isShow = false;
-      },
-
-      //点击调用微信支付的方法
-      choosePay(item) {
-        const equipmentCode = this.code;
-        if (this.val != "1") {
-          this.loading();
-          return;
-        }
-        this.axios
-          .post("http://tsa.yzidea.com/wx/getPay", {
-            time: item.time,
-            money: item.price,
-            code: equipmentCode
-          })
-          .then(res => {
-            console.log(res);
-            if (res.data.statu == 1) {
-              this.orderId = res.data.order_id;
-              wx.chooseWXPay({
-                timestamp: res.data.conf.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-                nonceStr: res.data.conf.nonceStr, // 支付签名随机串，不长于 32 位
-                package: res.data.conf.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
-                signType: res.data.conf.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-                paySign: res.data.conf.paySign, // 支付签名
-
-                // 支付成功后的回调函数
-                success: res => {
-                  this.$router.push({
-                    path:
+              // 支付成功后的回调函数
+              success: res => {
+                this.$router.push({
+                  path:
                     "/mcMove/" +
                     item.price +
                     "/" +
                     item.time +
                     "/" +
                     this.orderId
-                  });
-                }
-              });
-            }
-          });
-      }
-    },
-    components: {
-      member,
-      bannerHeader
+                });
+              }
+            });
+          }
+        });
     }
-  };
+  },
+  components: {
+    member,
+    bannerHeader,
+    // videoPlayer
+  }
+};
 </script>
 
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import '../common/stylus/mixins.styl';
+  // @import "../common/stylus/button.css";
 
   .tip {
     display: flex;
@@ -445,6 +503,7 @@
     }
   }
 
+
   .videos {
     position: fixed;
     top: 0;
@@ -460,7 +519,7 @@
       width 100%;
       height 100%
     }
-    video {
+    .video-player {
       position absolute;
       width 100%;
       top: 50%;

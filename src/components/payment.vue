@@ -6,10 +6,16 @@
       <count-down :endTime="endTime" :callback="callback" :endText="endText" class="countTime"></count-down>
     </div>
     <div class="paid">
+      <div class="container">
+        <span class="line"></span>
+        <span class="txt">详细信息</span>
+        <span class="line"></span>
+      </div>
+
       <div class="particulars">
-        <div class="logol">
+        <!-- <div class="logol">
           <img class="logo" src="../assets/logo.png" alt="">
-        </div>
+        </div> -->
         <p class="subsection">订单号：
           <span class="particulars">{{payment.ordernumber}}</span>
         </p>
@@ -25,23 +31,27 @@
         </p>
       </div>
     </div>
-    <div class="footer">
-      若需帮忙请拨打按摩椅上的客服电话，谢谢惠顾
+    <div class="pic">
+      <img src="../assets/logo3.jpg" alt="">
     </div>
-    <transition name="fade">
+
+    <!-- <div class="footer">
+      若需帮忙请拨打按摩椅上的客服电话，谢谢惠顾
+    </div> -->
+    <!-- <transition name="fade">
       <advertising class="detail" v-show="isAdvertising" >
       </advertising>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
 <script>
 import countDown from "./countDown.vue";   //引入倒计时组件
-import advertising from "./advertising";  //引入广告层组件
+// import advertising from "./advertising";  //引入广告层组件
 export default {
   components:{
     countDown,
-    advertising
+    // advertising
   },
   data() {
     return {
@@ -112,6 +122,27 @@ export default {
 
 <style lang="stylus" scoped rel="stylesheet/stylus">
 @import "../common/stylus/mixins.styl"
+ .container {
+    width: 100%;
+    padding-top px2rem(50px)
+    height: px2rem(120px);
+    line-height: px2rem(120px);
+    text-align: center;
+
+    .line {
+      display: inline-block;
+      width: px2rem(260px);
+      border-top: 1px solid black;
+      /* margin-bottom 13px */
+    }
+
+    .txt {
+      color: #8B8785;
+      font-size: 18px;
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
 .time
   width 100%
   height  px2rem(200px)
@@ -123,16 +154,18 @@ export default {
   flex-direction column
   align-content center
   justify-content center
-  border-bottom  px2rem(10px) solid #E0BC74
+  // border-bottom  px2rem(10px) solid #E0BC74
   .countTime
+    padding-top px2rem(40px)
     height  px2rem(160px)
     font-size  px2rem(52px)
-    color #E90000
+    color #f80034
     line-height  px2rem(160px)
     text-align center
   .residue
+    margin px2rem(50px) 0
     height  px2rem(100px)
-    color #E90000
+    color #f80034
     font-size 18px
     line-height px2rem(100px)
     display flex
@@ -144,6 +177,7 @@ export default {
   top  px2rem(200px)
   bottom  px2rem(180px)
   .particulars
+    padding-top px2rem(50px)
     width 100%
     .logol
       width 100%
@@ -155,11 +189,12 @@ export default {
         height  px2rem(100px)
         vertical-align middle
     .subsection
-      color #C2C2C2
-      padding  px2rem(50px)
+      color #ccc
+      padding  px2rem(20px) px2rem(100px)
       font-size 16px
       .particulars
         color: #181818
+
 .footer
   width 100%
   height  px2rem(180px)
@@ -186,4 +221,12 @@ export default {
   &.fade-enter, &.fade-leave-active
     opacity: 0
 
+ .pic{
+      position absolute;
+      bottom px2rem(-20px);
+      right 0;
+      img{
+        width 100%;
+      }
+    }
 </style>

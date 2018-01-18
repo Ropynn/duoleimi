@@ -21,3 +21,7 @@ Vue.filter("statu", function(statu) {
     return "已退款";
   }
 });
+Vue.filter("money", function(money) {
+  let price = Number(money) / 100;
+  return price;
+});

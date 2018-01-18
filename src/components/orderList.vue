@@ -6,7 +6,7 @@
     </div> -->
     <ul class="dec" v-for="item in orderList" @click="move(item)">
       <li>订单编号：{{item.payid}}</li>
-      <li>订单总额：{{item.money}}元</li>
+      <li>订单总额：{{item.money/100}}元</li>
       <li>机器运作状态：{{item.move | move}}</li>
       <li>订单状态：{{item.statu | statu}}</li>
       <li>创建时间：{{item.createdAt | creatAt}}</li>

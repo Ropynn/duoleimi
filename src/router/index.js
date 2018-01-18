@@ -1,11 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import home from "../components/home.vue";  //首页组件
-import member from "../components/member.vue";  //套餐组件
-import detail from "../components/detail.vue";  //协议详情组件
-import payment from "../components/payment.vue";  //支付组件
-import mcMove from "../components/mcMove.vue";  //启动机器组件
-import order from "../components/orderList.vue";  //启动机器组件
+import home from "../components/home.vue"; //首页组件
+import member from "../components/member.vue"; //套餐组件
+import detail from "../components/detail.vue"; //协议详情组件
+import payment from "../components/payment.vue"; //支付组件
+import mcMove from "../components/mcMove.vue"; //启动机器组件
+import order from "../components/orderList.vue"; //启动机器组件
+import video from "../components/video.vue";
 
 Vue.use(VueRouter);
 
@@ -45,8 +46,12 @@ export default new VueRouter({
     },
     //订单页面
     {
-      path:'/order',
-      component:order
+      path: "/order",
+      component: order
+    },
+    {
+      path: "/video",
+      component: video
     }
   ]
 });
