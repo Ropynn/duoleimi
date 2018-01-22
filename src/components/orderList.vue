@@ -1,16 +1,20 @@
 <template>
   <div class="listBox">
     <banner-header></banner-header>
-    <!-- <div class="user">
-      <img :src="" alt="">
-    </div> -->
     <ul class="dec" v-for="item in orderList" @click="move(item)">
       <li>订单编号：{{item.payid}}</li>
       <li>订单总额：{{item.money/100}}元</li>
       <li>机器运作状态：{{item.move | move}}</li>
       <li>订单状态：{{item.statu | statu}}</li>
       <li>创建时间：{{item.createdAt | creatAt}}</li>
+      <li>
+        <span class="line"></span>
+        <button>立即启动</button>
+        <button>申请退款</button>
+      </li>
+
     </ul>
+
   </div>
 </template>
 
@@ -82,10 +86,17 @@ export default {
     padding: px2rem(40px);
     // border-bottom: 1px solid #000;
     background-color: #fff;
-    border-radius 10px
+    border-radius: 10px;
 
     li {
       line-height: 1.5;
+    }
+
+    .line {
+      display: inline-block;
+      width: 100%;
+      border-top: 1px solid black;
+      /* margin-bottom 13px */
     }
   }
 }

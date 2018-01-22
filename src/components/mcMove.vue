@@ -170,7 +170,7 @@ export default {
   .pic {
     display flex;
     justify-content center;
-    margin-top px2rem(50px);
+    margin-top px2rem(36px);
     padding px2rem(50px);
     .box {
       width px2rem(500px);
@@ -181,7 +181,7 @@ export default {
   }
 
   .moveBtn {
-    padding-top: px2rem(80px);
+    padding-top: px2rem(60px);
     display flex;
     button {
       text-align: center;
@@ -195,7 +195,7 @@ export default {
   }
 
   .tip {
-    padding-top px2rem(50px);
+    padding-top px2rem(40px);
     display flex;
     p {
       flex 1;
@@ -204,8 +204,8 @@ export default {
   }
 
   .playBtn {
-    margin-top px2rem(130px);
-    margin-bottom: px2rem(40px);
+    margin-top px2rem(100px);
+    margin-bottom: px2rem(30px);
     display flex;
     width 100%;
     justify-content: center;

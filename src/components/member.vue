@@ -10,7 +10,7 @@
       <div class="balance">
         <div>
           <div>
-          <span>可用余额：0.00</span>
+            <span>可用余额：0.00</span>
           </div>
         </div>
 
@@ -174,7 +174,7 @@ export default {
 /* 遮罩层 */
 .makeSure {
   position: fixed;
-  bottom : 0;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -378,7 +378,6 @@ export default {
     }
 
     // 立即支付按钮.
-
     button {
       text-align: center;
       width: 100%;

@@ -7,6 +7,7 @@ import payment from "../components/payment.vue"; //支付组件
 import mcMove from "../components/mcMove.vue"; //启动机器组件
 import order from "../components/orderList.vue"; //启动机器组件
 import video from "../components/video.vue";
+import businessman from "../components/businessman.vue";
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,10 @@ export default new VueRouter({
     {
       path: "/video",
       component: video
+    },
+    {
+      path: "/businessman",
+      component: businessman
     }
   ]
 });
