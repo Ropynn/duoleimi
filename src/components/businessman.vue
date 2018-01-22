@@ -10,64 +10,65 @@
     </header>
 
     <div class="today container">
-      <div class="head">当日数据：</div>
+      <div class="head">当日数据</div>
       <grid :cols="3">
         <grid-item>
           <div>新增用户</div>
-          <span class="grid-center">1</span>
+          <span class="grid-center">{{allInfo.nPerson}}</span>
         </grid-item>
         <grid-item>
           <div>新增订单</div>
-          <span class="grid-center">2</span>
+          <span class="grid-center">{{allInfo.nOrder}}</span>
         </grid-item>
         <grid-item>
           <div>新增管理员</div>
-          <span class="grid-center">3</span>
+          <span class="grid-center">{{allInfo.nAdminer}}</span>
         </grid-item>
       </grid>
     </div>
 
     <div class="all container">
-      <div class="head">总数据（元）：</div>
+      <div class="head">总数据（元）</div>
       <grid :cols="3">
         <grid-item>
           <div>注册用户</div>
-          <span class="grid-center">1</span>
+          <span class="grid-center">{{allInfo.aPerson}}</span>
         </grid-item>
         <grid-item>
           <div>订单</div>
-          <span class="grid-center">1</span>
+          <span class="grid-center">{{allInfo.aOrder}}</span>
         </grid-item>
         <grid-item>
           <div>管理员</div>
-          <span class="grid-center">1</span>
+          <span class="grid-center">{{allInfo.aAdminer}}</span>
         </grid-item>
       </grid>
     </div>
 
     <div class="all_money container">
-      <div class="head">总收入：</div>
-      <grid :cols="2">
+      <div class="head">总收入</div>
+      <grid :cols="col">
         <grid-item>
           <div>投资人收益</div>
-          <span class="grid-center">22</span>
+          <span class="grid-center">{{allMoney.investo/100 || 0}}</span>
         </grid-item>
         <grid-item>
           <div>合伙人收益</div>
-          <span class="grid-center">22</span>
+          <span class="grid-center">{{allMoney.partner/100 || 0}}</span>
         </grid-item>
         <grid-item>
           <div>店家收益</div>
-          <span class="grid-center">22</span>
+          <span class="grid-center">{{allMoney.owner/100 ||0}}</span>
         </grid-item>
         <grid-item>
           <div>平台收益</div>
-          <span class="grid-center">22</span>
+          <span class="grid-center">{{allMoney.platform/100 || 0}}</span>
         </grid-item>
       </grid>
     </div>
 
     <div class="command">
+      <div class="head">走势图</div>
       <div id="myCharts"></div>
     </div>
   </div>
@@ -93,6 +94,9 @@ export default {
   data() {
     return {
       user: {},
+      allInfo: {},
+      allMoney: {},
+      col: 2,
       date: [
         format(new Date() - 6 * 24 * 3600 * 1000, "MM-DD"),
         format(new Date() - 5 * 24 * 3600 * 1000, "MM-DD"),
@@ -113,11 +117,13 @@ export default {
         window.location = "http://tsa.yzidea.com/wx/login?goback=businessman";
       }
     });
-    this.axios.get("http://tsb.yzidea.com/api/getAllHome").then(res => {
+    this.axios.get("http://tsa.yzidea.com/wx/getAllHome").then(res => {
       console.log(res);
+      this.allInfo = res.data;
     });
-    this.axios.get("http://tsb.yzidea.com/api/getAllMoney").then(res => {
+    this.axios.get("http://tsa.yzidea.com/wx/getAllMoney").then(res => {
       console.log(res);
+      this.allMoney = res.data;
     });
   },
   methods: {
@@ -213,6 +219,7 @@ export default {
     display: block;
     text-align: center;
     color: #666;
+    font-size 16px
   }
 
   .container {
@@ -223,6 +230,7 @@ export default {
 
   .head {
     padding: px2rem(20px);
+    text-align: center;
   }
 
   .command {

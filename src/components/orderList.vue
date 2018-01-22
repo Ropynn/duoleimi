@@ -29,7 +29,7 @@ export default {
   created() {
     this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
       if (res.data.statu == 1) {
-        console.log("获取成功");
+        // console.log("获取成功");
         this.user = res.data.user;
       } else {
         window.location = "http://tsa.yzidea.com/wx/login?goback=order";
