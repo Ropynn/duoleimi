@@ -2,7 +2,7 @@
 <template>
   <div class="payment-time">
     <div class="time">
-      <span class="residue" v-show="isShow" >剩余时间</span>
+      <span class="residue" v-show="isShow">剩余时间</span>
       <count-down :endTime="endTime" :callback="callback" :endText="endText" class="countTime"></count-down>
     </div>
     <div class="paid">
@@ -31,13 +31,16 @@
         </p>
       </div>
     </div>
-    <div class="pic">
+    <!-- <div class="pic">
       <img src="../assets/logo3.jpg" alt="">
-    </div>
-
-    <!-- <div class="footer">
-      若需帮忙请拨打按摩椅上的客服电话，谢谢惠顾
     </div> -->
+
+    <div class="footer">
+      <div class="tip">
+        小贴士
+      </div>
+      <p>不同的手机和操作系统对倒计时存在一些误差值，请以实际按摩时间为准</p>
+    </div>
     <!-- <transition name="fade">
       <advertising class="detail" v-show="isAdvertising" >
       </advertising>
@@ -46,11 +49,11 @@
 </template>
 
 <script>
-import countDown from "./countDown.vue";   //引入倒计时组件
+import countDown from "./countDown.vue"; //引入倒计时组件
 // import advertising from "./advertising";  //引入广告层组件
 export default {
-  components:{
-    countDown,
+  components: {
+    countDown
     // advertising
   },
   data() {
@@ -60,19 +63,19 @@ export default {
       currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
       payment: {},
       endTime: "", //按摩结束的时间
-      startTime:"", //客户开始的时间
-      isShow:true,
-      isShowc:false,
-      isAdvertising:false,
+      startTime: "", //客户开始的时间
+      isShow: true,
+      isShowc: false,
+      isAdvertising: false,
       content: ""
     };
   },
   props: {
-    hided:"",
+    hided: "",
     endText: {
       type: String,
       default: "按摩完成，欢迎继续使用"
-    },
+    }
   },
   created() {
     this.axios.get("/api/payment").then(res => {
@@ -80,153 +83,201 @@ export default {
     });
     this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
   },
-  mounted(){
+  mounted() {
     //按摩开始时间
-    this.openingTime()
+    this.openingTime();
   },
   methods: {
     //todo 服务开始时间
-     openingTime:function () {
-      let time=this.currentTime;
-      let newtime=time*1000;
-      function gettime(t){
-        let _time=new Date(t);
-        let   year=_time.getFullYear();//2017
-        let   month=_time.getMonth()+1;//12
-        let   date=_time.getDate();//20
-        let   hour=_time.getHours();//10
-        let   minute=_time.getMinutes();//56
-        let   second=_time.getSeconds();//15
+    openingTime: function() {
+      let time = this.currentTime;
+      let newtime = time * 1000;
+      function gettime(t) {
+        let _time = new Date(t);
+        let year = _time.getFullYear(); //2017
+        let month = _time.getMonth() + 1; //12
+        let date = _time.getDate(); //20
+        let hour = _time.getHours(); //10
+        let minute = _time.getMinutes(); //56
+        let second = _time.getSeconds(); //15
         minute = minute < 10 ? "0" + minute : minute;
         second = second < 10 ? "0" + second : second;
-        return   year+"年"+month+"月"+date+"日   "+hour+":"+minute+":"+second;//这里自己按自己需要的格式拼接
-      };
-      this.startTime=gettime(newtime/1000)
+        return (
+          year +
+          "年" +
+          month +
+          "月" +
+          date +
+          "日   " +
+          hour +
+          ":" +
+          minute +
+          ":" +
+          second
+        ); //这里自己按自己需要的格式拼接
+      }
+      this.startTime = gettime(newtime / 1000);
     },
-     callback(){
+    callback() {
       // todo 完成后动态改变计时器、订单状态等
-      this.isShow=!this.isShow
-      this.isShowc=!this.isShowc
+      this.isShow = !this.isShow;
+      this.isShowc = !this.isShowc;
       // todo 弹层广告出来
-      this.isAdvertising=!this.isAdvertising
-      console.log("nimeimei")
-       //todo 5s后广告层自动消失
-      setTimeout(()=>{
-         this.isAdvertising=false
-         // console.log(this.isAdvertising)
-       },7000)
-    },
+      this.isAdvertising = !this.isAdvertising;
+      console.log("nimeimei");
+      //todo 5s后广告层自动消失
+      setTimeout(() => {
+        this.isAdvertising = false;
+        // console.log(this.isAdvertising)
+      }, 7000);
+    }
   }
 };
 </script>
 
 <style lang="stylus" scoped rel="stylesheet/stylus">
-@import "../common/stylus/mixins.styl"
- .container {
-    width: 100%;
-    padding-top px2rem(50px)
-    height: px2rem(120px);
-    line-height: px2rem(120px);
-    text-align: center;
+@import '../common/stylus/mixins.styl';
 
-    .line {
-      display: inline-block;
-      width: px2rem(260px);
-      border-top: 1px solid black;
-      /* margin-bottom 13px */
-    }
+.container {
+  width: 100%;
+  // padding-top px2rem(50px)
+  height: px2rem(120px);
+  line-height: px2rem(120px);
+  text-align: center;
 
-    .txt {
-      color: #8B8785;
-      font-size: 18px;
-      vertical-align: middle;
-      text-align: center;
-    }
+  .line {
+    display: inline-block;
+    width: px2rem(260px);
+    border-top: 1px solid black;
+    /* margin-bottom 13px */
   }
-.time
-  width 100%
-  height  px2rem(200px)
-  z-index 10
-  position absolute
-  top 0
-  box-sizing border-box
-  display flex
-  flex-direction column
-  align-content center
-  justify-content center
+
+  .txt {
+    color: #8B8785;
+    font-size: 18px;
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+.time {
+  width: 100%;
+  height: px2rem(200px);
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+
   // border-bottom  px2rem(10px) solid #E0BC74
-  .countTime
-    padding-top px2rem(40px)
-    height  px2rem(160px)
-    font-size  px2rem(52px)
-    color #f80034
-    line-height  px2rem(160px)
-    text-align center
-  .residue
-    margin px2rem(50px) 0
-    height  px2rem(100px)
-    color #f80034
-    font-size 18px
-    line-height px2rem(100px)
-    display flex
-    justify-content center
-.paid
-  width 100%
-  z-index 10
-  position absolute
-  top  px2rem(200px)
-  bottom  px2rem(180px)
-  .particulars
-    padding-top px2rem(50px)
-    width 100%
-    .logol
-      width 100%
-      height  px2rem(180px)
-      line-height  px2rem(180px)
-      text-align center
-      .logo
-        width  px2rem(100px)
-        height  px2rem(100px)
-        vertical-align middle
-    .subsection
-      color #ccc
-      padding  px2rem(20px) px2rem(100px)
-      font-size 16px
-      .particulars
-        color: #181818
+  .countTime {
+    padding-top: px2rem(40px);
+    height: px2rem(160px);
+    font-size: px2rem(52px);
+    color: #f80034;
+    line-height: px2rem(160px);
+    text-align: center;
+  }
 
-.footer
-  width 100%
-  height  px2rem(180px)
-  z-index 10
-  line-height  px2rem(180px)
-  text-align center
-  box-sizing border-box
-  font-size: 14px;
-  border-top  px2rem(10px) solid #E0BC74
-  position absolute
-  bottom 0
-.detail
-  position: fixed
-  left: 0
-  top: 0
-  z-index: 100
-  width: 100%
-  height: 100%
-  background: rgba(7, 17, 27, 0.8)
-  overflow: auto
-  backdrop-filter: blur( px2rem(20px))
-  &.fade-enter-active, &.fade-leave-active
-    transition: opacity .5s ease 1.5s
-  &.fade-enter, &.fade-leave-active
-    opacity: 0
+  .residue {
+    margin: px2rem(50px) 0;
+    height: px2rem(100px);
+    color: #f80034;
+    font-size: 18px;
+    line-height: px2rem(100px);
+    display: flex;
+    justify-content: center;
+  }
+}
 
- .pic{
-      position absolute;
-      bottom px2rem(-20px);
-      right 0;
-      img{
-        width 100%;
+.paid {
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: px2rem(200px);
+  bottom: px2rem(180px);
+
+  .particulars {
+    padding-top: px2rem(50px);
+    width: 100%;
+
+    .logol {
+      width: 100%;
+      height: px2rem(180px);
+      line-height: px2rem(180px);
+      text-align: center;
+
+      .logo {
+        width: px2rem(100px);
+        height: px2rem(100px);
+        vertical-align: middle;
       }
     }
+
+    .subsection {
+      color: #ccc;
+      padding: px2rem(20px) px2rem(100px);
+      font-size: 16px;
+
+      .particulars {
+        color: #181818;
+      }
+    }
+  }
+}
+
+.footer {
+  width: 100%;
+  height: px2rem(300px);
+  z-index: 10;
+  color #777
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+  position: absolute;
+  bottom: 0;
+
+  .tip {
+    font-size: 16px;
+    line-height: px2rem(100px);
+  }
+
+  p {
+    padding 0 px2rem(80px)
+  }
+}
+
+.detail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background: rgba(7, 17, 27, 0.8);
+  overflow: auto;
+  backdrop-filter: blur(px2rem(20px));
+
+  &.fade-enter-active, &.fade-leave-active {
+    transition: opacity 0.5s ease 1.5s;
+  }
+
+  &.fade-enter, &.fade-leave-active {
+    opacity: 0;
+  }
+}
+
+.pic {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  img {
+    width: 100%;
+  }
+}
 </style>

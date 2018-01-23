@@ -21,6 +21,7 @@
     "mockjs": "^1.0.1-beta3",
     "vue": "^2.2.6",
     "vue-router": "^2.3.1",
+    "vue-scroller": "^2.2.4",
     "vue-video-player": "^5.0.0",
     "vux": "^2.7.7",
     "vux-loader": "^1.1.31"

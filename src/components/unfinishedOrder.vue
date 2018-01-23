@@ -1,6 +1,6 @@
 <template>
   <div class="listBox">
-    <banner-header></banner-header>
+    <!-- <banner-header></banner-header> -->
     <ul class="dec" v-for="item in orderList">
       <li>订单编号：{{item.payid}}</li>
       <li>订单总额：{{item.money/100}}元</li>

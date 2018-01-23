@@ -13,55 +13,55 @@
       <div class="head">当日数据</div>
       <grid :cols="3">
         <grid-item>
-          <div>新增用户</div>
+          <div class="dec">新增用户</div>
           <span class="grid-center">{{allInfo.nPerson}}</span>
         </grid-item>
         <grid-item>
-          <div>新增订单</div>
+          <div class="dec">新增订单</div>
           <span class="grid-center">{{allInfo.nOrder}}</span>
         </grid-item>
         <grid-item>
-          <div>新增管理员</div>
+          <div class="dec">新增管理员</div>
           <span class="grid-center">{{allInfo.nAdminer}}</span>
         </grid-item>
       </grid>
     </div>
 
     <div class="all container">
-      <div class="head">总数据（元）</div>
+      <div class="head">总数据</div>
       <grid :cols="3">
         <grid-item>
-          <div>注册用户</div>
+          <div class="dec">注册用户</div>
           <span class="grid-center">{{allInfo.aPerson}}</span>
         </grid-item>
         <grid-item>
-          <div>订单</div>
+          <div class="dec">订单</div>
           <span class="grid-center">{{allInfo.aOrder}}</span>
         </grid-item>
         <grid-item>
-          <div>管理员</div>
+          <div class="dec">管理员</div>
           <span class="grid-center">{{allInfo.aAdminer}}</span>
         </grid-item>
       </grid>
     </div>
 
     <div class="all_money container">
-      <div class="head">总收入</div>
+      <div class="head">总收入（元）</div>
       <grid :cols="col">
         <grid-item>
-          <div>投资人收益</div>
+          <div class="dec">投资人收益</div>
           <span class="grid-center">{{allMoney.investo/100 || 0}}</span>
         </grid-item>
         <grid-item>
-          <div>合伙人收益</div>
+          <div class="dec">合伙人收益</div>
           <span class="grid-center">{{allMoney.partner/100 || 0}}</span>
         </grid-item>
         <grid-item>
-          <div>店家收益</div>
+          <div class="dec">店家收益</div>
           <span class="grid-center">{{allMoney.owner/100 ||0}}</span>
         </grid-item>
         <grid-item>
-          <div>平台收益</div>
+          <div class="dec">平台收益</div>
           <span class="grid-center">{{allMoney.platform/100 || 0}}</span>
         </grid-item>
       </grid>
@@ -214,12 +214,15 @@ export default {
     display: inline-block;
     font-size: 14px;
   }
+  .dec{
+    text-align center
+  }
 
   .grid-center {
     display: block;
     text-align: center;
     color: #666;
-    font-size 16px
+    font-size: 16px;
   }
 
   .container {

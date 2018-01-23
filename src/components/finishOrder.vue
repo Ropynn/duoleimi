@@ -1,19 +1,12 @@
 <template>
   <div class="listBox">
-    <banner-header></banner-header>
+    <!-- <banner-header></banner-header> -->
     <ul class="dec" v-for="item in orderList">
       <li>订单编号：{{item.payid}}</li>
       <li>订单总额：{{item.money/100}}元</li>
       <li>机器运作状态：{{item.move | move}}</li>
       <li>订单状态：{{item.statu | statu}}</li>
       <li>创建时间：{{item.createdAt | creatAt}}</li>
-      <li v-if="(!item.move && item.statu == 1)">
-        <span class="line"></span>
-        <div class="btn">
-          <x-button action-type='button' @click.native="move(item)" mini>立即启动</x-button>
-          <x-button action-type='button' @click.native="refund(item)" mini>申请退款</x-button>
-        </div>
-      </li>
     </ul>
 
     <!-- 确认层 -->
