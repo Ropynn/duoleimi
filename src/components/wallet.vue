@@ -10,13 +10,19 @@
       </div> -->
     </header>
     <div class="withdraw">
-      提现
+      <group>
+        <cell title="充值" is-link></cell>
+        <cell title="提现" is-link></cell>
+        <cell title="提现明细" is-link></cell>
+      </group>
     </div>
   </div>
 
 </template>
 
 <script>
+import { Cell, Group, CellBox } from "vux";
+
 export default {
   data() {
     return {
@@ -46,6 +52,11 @@ export default {
       console.log(res);
       this.withdrawList = res.data.withdrawList;
     });
+  },
+  components: {
+    Group,
+    Cell,
+    CellBox
   }
 };
 </script>
@@ -76,12 +87,12 @@ export default {
     // padding-left: px2rem(20px);
     font-size: 12px;
     vertical-align: middle;
-    color #ccc
+    color: #ccc;
 
     .allMoney {
       font-size: 40px;
-      height px2rem(150px)
-      color #fff
+      height: px2rem(150px);
+      color: #fff;
     }
   }
 
