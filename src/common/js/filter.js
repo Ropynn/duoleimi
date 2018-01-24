@@ -13,6 +13,7 @@ Vue.filter("move", function (move) {
     return "已启动";
   }
 });
+//付款
 Vue.filter("statu", function (statu) {
   if (statu == 0) {
     return "未付款";
@@ -24,11 +25,9 @@ Vue.filter("statu", function (statu) {
     return "已退款";
   }
 });
-// Vue.filter("fMoney", function (fMoney) {
-//   return numberComma(fMoney);
-// });
+//金额
 Vue.filter("fmoney", function (num) {
-  let sign,cents;
+  let sign, cents;
   num = num.toString().replace(/\$|\,/g, '');
   if (isNaN(num))
     num = "0";
@@ -42,4 +41,14 @@ Vue.filter("fmoney", function (num) {
     num = num.substring(0, num.length - (4 * i + 3)) + ',' +
       num.substring(num.length - (4 * i + 3));
   return (((sign) ? '' : '-') + num + '.' + cents);
+});
+//提现
+Vue.filter("status", function (status) {
+  if (status == 0) {
+    return "提现失败";
+  } else if (status == 1) {
+    return "提现成功";
+  } else if (status == 2) {
+    return "提现中";
+  }
 });

@@ -7,7 +7,7 @@
       <!-- <scroller :on-refresh="refresh" &&:on-infinite="infinite" || ref="domName"> -->
       <li v-for="item in withdrawList">
         <div class="left">
-          <div class="title">提现</div>
+          <div class="title">{{item.statu |status}}</div>
           <div class="time">{{item.time | creatAt}}</div>
         </div>
         <div class="amount">-{{item.amount/100 | fmoney}}</div>
