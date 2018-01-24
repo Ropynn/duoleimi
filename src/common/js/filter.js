@@ -25,6 +25,14 @@ Vue.filter("statu", function (statu) {
     return "已退款";
   }
 });
+//退款
+Vue.filter("rStatu", function (statu) {
+  if (statu == 0) {
+    return "退款中";
+  } else if (statu == 1) {
+    return "已退款";
+  }
+})
 //金额
 Vue.filter("fmoney", function (num) {
   let sign, cents;

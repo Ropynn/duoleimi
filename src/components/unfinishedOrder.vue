@@ -86,15 +86,17 @@ export default {
       }
     },
     ensure() {
-      console.log(this.order);
+      // console.log(this.order);
       this.isShow = !this.isShow;
-      console.log('确认退款');
+      console.log("确认退款");
+      this.$router.push({
+        path: "/refund"
+      });
     },
-    cancel(){
+    cancel() {
       this.isShow = !this.isShow;
-      console.log('取消退款');
+      console.log("取消退款");
     }
-
   },
   components: { bannerHeader, XButton }
 };
@@ -139,8 +141,10 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+
     button {
-      background-color: #ddd;
+      background-color: #F86184;
+      color: #fff;
     }
   }
 
@@ -196,10 +200,11 @@ export default {
       }
 
       .sureBtn, .cancelBtn {
-        flex 1
+        flex: 1;
       }
-      .cancelBtn{
-        color red;
+
+      .cancelBtn {
+        color: red;
         // border-left 1px solid #ccc
       }
     }

@@ -52,13 +52,13 @@ export default {
   },
   methods: {
     onPlayerPlay(player) {
-      console.log("play");
+      // console.log("play");
     },
     onPlayerPause(player) {
-      console.log("pause");
+      // console.log("pause");
     },
     close(){
-     this.$router.go(-1);
+    //  this.$router.go(-1);
     }
   }
 };

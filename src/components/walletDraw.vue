@@ -41,9 +41,9 @@ export default {
       ----------- */
       this.money -= this.amount;
       this.amount = "";
-      this.$router.push({
-        path:'/wallet'
-      })
+      // this.$router.push({
+      //   path:'/wallet'
+      // })
     },
     //金额发生改变时
     change() {

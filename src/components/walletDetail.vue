@@ -35,7 +35,7 @@ export default {
       }
     });
     this.axios.get("/api/withdrawList").then(res => {
-      console.log(res);
+      // console.log(res);
       this.withdrawList = res.data.withdrawList;
     });
   }

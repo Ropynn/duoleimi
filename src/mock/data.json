@@ -103,5 +103,21 @@
       "amount": "18000",
       "statu": "2"
     }
+  ],
+  "refund": [
+    {
+      "price": "38",
+      "description": "天河店J67508设备",
+      "orderId": "1554770879568373",
+      "creatTime": "2018-01-13T03:58:51.000Z",
+      "statu": "0"
+    },
+    {
+      "price": "28",
+      "description": "天河店J67508设备",
+      "orderId": "1554770879568555",
+      "creatTime": "2018-01-13T03:58:51.000Z",
+      "statu" :"1"
+    }
   ]
 }

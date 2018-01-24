@@ -8,9 +8,9 @@
     </header>
     <div class="withdraw">
       <group>
-        <!-- <cell title="充值" is-link>
+        <cell title="充值" is-link>
           <i class="iconfont icon-tixian"></i>
-        </cell> -->
+        </cell>
         <cell title="提现" is-link :link="walletDraw">
           <i class="iconfont icon-zaixianchongzhi"></i>
         </cell>
@@ -53,7 +53,7 @@ export default {
       this.walletDraw = "/walletDraw" + "/" + this.money;
     });
     this.axios.get("/api/withdrawList").then(res => {
-      console.log(res);
+      // console.log(res);
       this.withdrawList = res.data.withdrawList;
     });
   },
@@ -74,17 +74,8 @@ export default {
 
   header {
     background-color: #fe4871;
-    padding: px2rem(30px) px2rem(20px);
+    padding: px2rem(30px) px2rem(30px);
     position: relative;
-  }
-
-  .headimg {
-    display: inline-block;
-
-    img {
-      height: px2rem(100px);
-      vertical-align: middle;
-    }
   }
 
   .balance {
@@ -96,7 +87,8 @@ export default {
 
     .allMoney {
       font-size: 40px;
-      height: px2rem(150px);
+      height: px2rem(180px);
+      line-height: px2rem(180px);
       color: #fff;
     }
   }
