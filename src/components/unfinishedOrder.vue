@@ -1,6 +1,6 @@
 <template>
   <div class="listBox">
-    <!-- <banner-header></banner-header> -->
+    <div class="noMore" v-if="orderList.length == 0">列表无数据</div>
     <ul class="dec" v-for="item in orderList">
       <li>订单编号：{{item.payid}}</li>
       <li>订单总额：{{item.money/100}}元</li>
@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       orderList: [],
-      isShow: false
+      isShow: false,
+      isHas: false
     };
   },
   created() {
@@ -55,17 +56,18 @@ export default {
         window.location = "http://tsa.yzidea.com/wx/login?goback=order";
         console.log("已登录");
       }
-    }),
-      this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-        console.log(res);
-        if (res.data.statu) {
-          this.orderList = res.data.list;
-        } else {
-          console.log("获取失败");
-        }
-      });
+    });
+    this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
+      // console.log(res);
+      if (res.data.statu) {
+        this.orderList = res.data.list;
+      } else {
+        console.log("获取失败");
+      }
+    });
   },
   methods: {
+    //立即启动
     move(item) {
       // console.log(item.statu);
       if (!item.move && item.statu == 1) {
@@ -78,6 +80,7 @@ export default {
         return;
       }
     },
+    //申请退款
     refund(item) {
       if (!item.move && item.statu == 1) {
         this.order = item;
@@ -85,14 +88,15 @@ export default {
         this.isShow = !this.isShow;
       }
     },
+    //确认退款
     ensure() {
-      // console.log(this.order);
       this.isShow = !this.isShow;
       console.log("确认退款");
       this.$router.push({
         path: "/refund"
       });
     },
+    //取消退款
     cancel() {
       this.isShow = !this.isShow;
       console.log("取消退款");
@@ -107,8 +111,10 @@ export default {
 @import '../common/stylus/mixins.styl';
 
 .listBox {
-  background-color: #ddd;
-  height: 100%;
+  .noMore {
+    text-align: center;
+    padding px2rem(100px)
+  }
 
   .banner {
     padding: px2rem(40px) px2rem(40px) 0;

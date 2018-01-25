@@ -124,7 +124,6 @@ export default {
       this.isShowc = !this.isShowc;
       // todo 弹层广告出来
       this.isAdvertising = !this.isAdvertising;
-      console.log("nimeimei");
       //todo 5s后广告层自动消失
       setTimeout(() => {
         this.isAdvertising = false;

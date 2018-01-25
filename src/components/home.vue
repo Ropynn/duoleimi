@@ -11,7 +11,9 @@
       <span class="txt">{{home.setMeal}}</span>
       <span class="line"></span>
     </div>
+
     <!-- 套餐选择 -->
+    <!-- 活动套餐 -->
     <ul class="selective-type">
       <li class="pic" v-show="isFirst">
         <img src="../assets/aa.png" alt="">
@@ -26,25 +28,32 @@
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
-            <!-- <span class="function">首单9.9</span> -->
           </div>
         </router-link>
+      </li>
+    </ul>
 
-        <!-- 如果没选中，路由跳转的地址就为home -->
-        <!-- <router-link v-show="flc" class="chaining" :to="'/home?code=' + this.code" @click.native='loading'>
+    <!-- 店家套餐 -->
+    <ul class="selective-type">
+      <li class="pic" v-show="isFirst">
+        <img src="../assets/aa.png" alt="">
+      </li>
+      <li class="set-meal" v-for="item in home.projects" @click="choosePay(item)">
+        <!-- <router-link v-show="flag" class="chaining" to=""> -->
+        <router-link class="chaining" to="">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
-            <span class="lengthTime">{{item.time}}分钟</span>
+            <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
+            <!-- <span>1</span> -->
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
           </div>
-        </router-link> -->
+        </router-link>
       </li>
-
     </ul>
-      <!-- <div class="container"> -->
-      <!-- <div class="player">
+    <!-- <div class="container"> -->
+    <!-- <div class="player">
         <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
           @pause="onPlayerPause($event)">
         </video-player>
@@ -54,18 +63,14 @@
       <button @click="play">点击查看使用教程</button>
     </div>
 
-
-
-
-
     <!-- 使用教程 -->
     <!-- <transition name="fade">
       <div class="videos" v-if="flag" @touchmove.prevent>
         <div class="test" @click="close"></div> -->
-        <!-- <video controls autoplay>
+    <!-- <video controls autoplay>
           <source src="../../static/introduce.mp4" type="video/mp4">
         </video> -->
-        <!-- <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
+    <!-- <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
           @pause="onPlayerPause($event)">
         </video-player>
       </div>
@@ -105,8 +110,6 @@ import member from "./member";
 // import "video.js/dist/video-js.css";
 // import { videoPlayer } from "vue-video-player";
 
-// import wx from "weixin-js-sdk"; //引入微信接口
-
 export default {
   props: {
     code: String
@@ -125,7 +128,7 @@ export default {
       signature: "",
       currentTime: "",
       orderId: "",
-      isFirst: true,
+      isFirst: true
       // playerOptions: {
       //   //        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
       //   autoplay: false, //如果true,浏览器准备好时开始回放。
@@ -157,22 +160,18 @@ export default {
   created() {
     //判断是否授权登录
     this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
-      // console.log("------------------------------------");
-      // console.log(JSON.stringify(res));
-      // console.log(res.data.statu);
-      // console.log(typeof res.data.statu);
-      console.log(res);
+      // console.log(res);
       if (res.data.statu == 1) {
-        console.log("获取成功");
+        // console.log("获取成功");
         this.user = res.data.user;
         this.isFirst = res.data.user.firstpay;
-        console.log(this.isFirst);
+        // console.log(this.isFirst);
 
         // this.$router.push("home");
       } else {
         window.location =
           "http://tsa.yzidea.com/wx/login?goback=home?code=" + this.code;
-        console.log("获取失败");
+        // console.log("获取失败");
       }
     });
 
@@ -187,7 +186,7 @@ export default {
         path: "http://tsa.yzidea.com/#" + this.$route.path
       })
       .then(res => {
-        console.log(res);
+        // console.log(res);
         // this.conf = res.data.conf;
         // console.log("-------------------");
         this.timestamp = res.data.conf.timestamp;
@@ -243,7 +242,7 @@ export default {
     },
     play() {
       this.$router.push({
-        path: '/video'
+        path: "/video"
       });
       // this.flag = !this.flag;
     },
@@ -269,7 +268,7 @@ export default {
           code: equipmentCode
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.data.statu == 1) {
             this.orderId = res.data.order_id;
             wx.chooseWXPay({
@@ -298,7 +297,7 @@ export default {
   },
   components: {
     member,
-    bannerHeader,
+    bannerHeader
     // videoPlayer
   }
 };
@@ -306,246 +305,247 @@ export default {
 
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import '../common/stylus/mixins.styl';
-  // @import "../common/stylus/button.css";
+@import '../common/stylus/mixins.styl';
 
-  .tip {
-    display: flex;
-    justify-content: center;
-    color: #FF003E;
-    font-size: 12px;
-    height: px2rem(60px);
-    line-height: px2rem(60px);
-    .desc {
-      text-align: center;
-      width: px2rem(700px);
-      border: 1px solid #FF003E;
-    }
-    img {
-      width: px2rem(50px);
-      vertical-align: middle // hei px2rem(20px)
-    }
-  }
+// @import "../common/stylus/button.css";
+.tip {
+  display: flex;
+  justify-content: center;
+  color: #FF003E;
+  font-size: 12px;
+  height: px2rem(60px);
+  line-height: px2rem(60px);
 
-  .container {
-    width: 100%;
-    height: px2rem(120px);
-    line-height: px2rem(120px);
+  .desc {
     text-align: center;
+    width: px2rem(700px);
+    border: 1px solid #FF003E;
+  }
 
-    .line {
-      display: inline-block;
-      width: px2rem(260px);
-      border-top: 1px solid black;
-      /* margin-bottom 13px */
-    }
+  img {
+    width: px2rem(50px);
+    vertical-align: middle; // hei px2rem(20px)
+  }
+}
 
-    .txt {
-      color: #8B8785;
-      font-size: 18px;
-      vertical-align: middle;
-      text-align: center;
+.container {
+  width: 100%;
+  height: px2rem(120px);
+  line-height: px2rem(120px);
+  text-align: center;
+
+  .line {
+    display: inline-block;
+    width: px2rem(260px);
+    border-top: 1px solid black;
+    /* margin-bottom 13px */
+  }
+
+  .txt {
+    color: #8B8785;
+    font-size: 18px;
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
+.selective-type {
+  position: relative;
+  width: 100%;
+  padding: 0px px2rem(120px);
+  box-sizing: border-box;
+
+  .pic {
+    position: absolute;
+    top: 0;
+    right: px2rem(175px);
+
+    img {
+      width: px2rem(80px);
     }
   }
 
-  .selective-type {
-    position: relative;
-    width: 100%;
-    padding: 0px px2rem(120px);
-    box-sizing: border-box;
+  .set-meal {
+    width: px2rem(400px);
+    height: px2rem(120px);
+    /* line-height 60px */
+    margin: px2rem(60px) auto;
+    border: px2rem(4px) solid #FF003E;
+    border-radius: px2rem(20px);
 
-    .pic {
-      position: absolute;
-      top: 0;
-      right: px2rem(175px);
-      img {
-        width: px2rem(80px)
-      }
-    }
-
-    .set-meal {
-      width: px2rem(400px);
+    .chaining {
+      width: 100%;
       height: px2rem(120px);
-      /* line-height 60px */
-      margin: px2rem(60px) auto;
-      border: px2rem(4px) solid #FF003E;
-      border-radius: px2rem(20px);
+      display: flex;
+      justify-content: center;
 
-      .chaining {
-        width: 100%;
+      .single {
+        width: px2rem(200px);
         height: px2rem(120px);
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        border-right: px2rem(4px) dashed #FF003E;
 
-        .single {
+        .unitPice {
           width: px2rem(200px);
-          height: px2rem(120px);
+          height: px2rem(60px);
+          display: block;
           display: flex;
           justify-content: center;
-          flex-direction: column;
           align-items: center;
-          border-right: px2rem(4px) dashed #FF003E;
-
-          .unitPice {
-            width: px2rem(200px);
-            height: px2rem(60px);
-            display: block;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: border;
-            color: #FF003E;
-          }
-
-          .lengthTime {
-            width: px2rem(200px);
-            height: px2rem(60px);
-            display: block;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            color: #FF003E;
-          }
+          font-size: 20px;
+          font-weight: border;
+          color: #FF003E;
         }
 
-        .functions {
+        .lengthTime {
+          width: px2rem(200px);
+          height: px2rem(60px);
+          display: block;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          color: #FF003E;
+        }
+      }
+
+      .functions {
+        width: px2rem(200px);
+        height: px2rem(120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .function {
           width: px2rem(200px);
           height: px2rem(120px);
+          display: block;
           display: flex;
-          align-items: center;
           justify-content: center;
-
-          .function {
-            width: px2rem(200px);
-            height: px2rem(120px);
-            display: block;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            color: #000;
-          }
+          align-items: center;
+          font-size: 18px;
+          color: #000;
         }
       }
     }
   }
+}
 
-  // 遮罩层
-  // 过渡效果
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s;
-  }
+// 遮罩层
+// 过渡效果
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
 
-  .fade-enter,
-  .fade-leave-to {
-    /* .fade-leave-active in below version 2.1.8 */
-    opacity: 0;
-  }
+.fade-enter, .fade-leave-to {
+  /* .fade-leave-active in below version 2.1.8 */
+  opacity: 0;
+}
 
-  .makeSure {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 30;
+.makeSure {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
 
-    .box {
-      position: absolute;
-      width: px2rem(500px);
-      height: px2rem(300px);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      color: red;
-      text-align: center;
-
-      .alert {
-        height: px2rem(100px);
-        line-height: px2rem(100px);
-        color: #000;
-        font-weight: bold;
-      }
-
-      .message {
-        height: px2rem(100px); // line-height: 50px;
-        color: #666;
-      }
-
-      .btn {
-        height: px2rem(100px);
-        line-height: px2rem(100px);
-        color: #26a2ff;
-        border-top: 1px solid #666;
-      }
-    }
-  }
-
-  .playBtn {
-    margin-top px2rem(100px);
-    display flex;
-    width 100%;
-    justify-content: center;
-    button {
-      text-align: center;
-      width px2rem(410px);
-      height px2rem(110px);
-      border: px2rem(4px) solid #FF003E;
-      border-radius: px2rem(10px);
-      background-color: #FF003E;
-      font-size: 16px;
-      color: #fff;
-    }
-  }
-
-
-  .videos {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 30;
-    .test {
-      position absolute;
-      top 0;
-      left 0;
-      width 100%;
-      height 100%
-    }
-    .video-player {
-      position absolute;
-      width 100%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  .service {
-    width: 100%;
-    height: px2rem(160px);
-    /* background-color deeppink */
-    line-height: px2rem(160px);
-    text-align: center;
+  .box {
     position: absolute;
-    button: 0;
-    left: 0;
+    width: px2rem(500px);
+    height: px2rem(300px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    color: red;
+    text-align: center;
 
-    label {
-      height: 100%;
+    .alert {
+      height: px2rem(100px);
+      line-height: px2rem(100px);
+      color: #000;
+      font-weight: bold;
     }
 
-    .agreementSure {
-    // color: blue;
-      color: #ccc;
+    .message {
+      height: px2rem(100px); // line-height: 50px;
+      color: #666;
+    }
+
+    .btn {
+      height: px2rem(100px);
+      line-height: px2rem(100px);
+      color: #26a2ff;
+      border-top: 1px solid #666;
     }
   }
+}
 
+.playBtn {
+  margin-top: px2rem(100px);
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  button {
+    text-align: center;
+    width: px2rem(410px);
+    height: px2rem(110px);
+    border: px2rem(4px) solid #FF003E;
+    border-radius: px2rem(10px);
+    background-color: #FF003E;
+    font-size: 16px;
+    color: #fff;
+  }
+}
+
+.videos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 30;
+
+  .test {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-player {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.service {
+  width: 100%;
+  height: px2rem(160px);
+  /* background-color deeppink */
+  line-height: px2rem(160px);
+  text-align: center;
+  position: absolute;
+  button: 0;
+  left: 0;
+
+  label {
+    height: 100%;
+  }
+
+  .agreementSure {
+    color: #ccc;
+  }
+}
 </style>

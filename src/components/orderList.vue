@@ -53,11 +53,11 @@ export default {
         this.user = res.data.user;
       } else {
         window.location = "http://tsa.yzidea.com/wx/login?goback=order";
-        console.log("已登录");
+        // console.log("已登录");
       }
     }),
       this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.statu) {
           this.orderList = res.data.list;
         } else {
@@ -88,13 +88,12 @@ export default {
     ensure() {
       console.log(this.order);
       this.isShow = !this.isShow;
-      console.log('确认退款');
+      console.log("确认退款");
     },
-    cancel(){
+    cancel() {
       this.isShow = !this.isShow;
-      console.log('取消退款');
+      console.log("取消退款");
     }
-
   },
   components: { bannerHeader, XButton }
 };
@@ -139,6 +138,7 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+
     button {
       background-color: #ddd;
     }
@@ -196,10 +196,11 @@ export default {
       }
 
       .sureBtn, .cancelBtn {
-        flex 1
+        flex: 1;
       }
-      .cancelBtn{
-        color red;
+
+      .cancelBtn {
+        color: red;
         // border-left 1px solid #ccc
       }
     }

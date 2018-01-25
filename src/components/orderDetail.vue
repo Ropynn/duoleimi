@@ -50,6 +50,7 @@ export default {
 
 .orders {
   background-color: #ddd;
+  height: 100vh;
 }
 </style>
 

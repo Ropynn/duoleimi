@@ -5,7 +5,8 @@
         <img :src="user.headimgurl">
       </div>
       <div class="uname">
-        <span>用户名：{{user.nickname}}</span>
+        <div>{{user.nickname}}</div>
+        <div>普通会员</div>
       </div>
     </header>
 
@@ -211,8 +212,10 @@ export default {
   }
 
   .uname {
+    padding-left px2rem(20px)
     display: inline-block;
     font-size: 14px;
+    vertical-align middle
   }
   .dec{
     text-align center

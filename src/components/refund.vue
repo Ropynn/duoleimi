@@ -1,5 +1,6 @@
 <template>
   <div class="refund">
+    <div class="noMore" v-if="refund.length == 0">列表无数据</div>
     <div class="business" v-for="item in refund">
       <div class="lis">
         <span class="dec">商家名称</span>
@@ -26,14 +27,14 @@ import { Flow, FlowState, FlowLine } from "vux";
 export default {
   data() {
     return {
-      refund: {}
+      refund: [],
+      isShow: true
     };
   },
   created() {
     this.axios.get("/api/refund").then(res => {
       // console.log(res);
       this.refund = res.data.refund;
-      console.log(this.refund);
     });
   },
   components: { Flow, FlowState, FlowLine }
@@ -47,6 +48,10 @@ export default {
   font-size: 14px;
   background-color: #f4f4f4;
   padding: px2rem(30px);
+
+  .noMore {
+    text-align: center;
+  }
 
   .business {
     background-color: #fff;

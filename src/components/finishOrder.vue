@@ -1,6 +1,6 @@
 <template>
   <div class="listBox">
-    <!-- <banner-header></banner-header> -->
+    <div class="noMore" v-if="orderList.length == 0" v-cloak>列表无数据</div>
     <ul class="dec" v-for="item in orderList">
       <li>订单编号：{{item.payid}}</li>
       <li>订单总额：{{item.money/100}}元</li>
@@ -8,24 +8,6 @@
       <li>订单状态：{{item.statu | statu}}</li>
       <li>创建时间：{{item.createdAt | creatAt}}</li>
     </ul>
-
-    <!-- 确认层 -->
-    <transition name="fade">
-      <div class="makeSure" v-show="isShow" @touchmove.prevent>
-        <div class="box">
-          <div class="alert">
-            系统提示
-          </div>
-          <div class="message">
-            确认退款?
-          </div>
-          <div class="btns">
-            <div class="sureBtn" @click="ensure">确定</div>
-            <div class="cancelBtn" @click="cancel">取消</div>
-          </div>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -36,7 +18,6 @@ export default {
   data() {
     return {
       orderList: [],
-      isShow: false
     };
   },
   created() {
@@ -58,37 +39,6 @@ export default {
         }
       });
   },
-  methods: {
-    move(item) {
-      // console.log(item.statu);
-      if (!item.move && item.statu == 1) {
-        sessionStorage.setItem("_CODE_", item.deviceId);
-        // console.log('aaaa');
-        this.$router.push({
-          path: "/mcMove/" + item.price + "/" + item.time + "/" + item.payid
-        });
-      } else {
-        return;
-      }
-    },
-    refund(item) {
-      if (!item.move && item.statu == 1) {
-        this.order = item;
-        console.log("跳转退款页面");
-        this.isShow = !this.isShow;
-      }
-    },
-    ensure() {
-      console.log(this.order);
-      this.isShow = !this.isShow;
-      console.log('确认退款');
-    },
-    cancel(){
-      this.isShow = !this.isShow;
-      console.log('取消退款');
-    }
-
-  },
   components: { bannerHeader, XButton }
 };
 </script>
@@ -97,9 +47,16 @@ export default {
 <style lang="stylus" scoped>
 @import '../common/stylus/mixins.styl';
 
+[v-cloak] {
+  display: none;
+}
+
 .listBox {
-  background-color: #ddd;
-  height: 100%;
+
+  .noMore {
+    text-align: center;
+    padding px2rem(100px)
+  }
 
   .banner {
     padding: px2rem(40px) px2rem(40px) 0;
@@ -132,6 +89,7 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+
     button {
       background-color: #ddd;
     }
@@ -189,10 +147,11 @@ export default {
       }
 
       .sureBtn, .cancelBtn {
-        flex 1
+        flex: 1;
       }
-      .cancelBtn{
-        color red;
+
+      .cancelBtn {
+        color: red;
         // border-left 1px solid #ccc
       }
     }
