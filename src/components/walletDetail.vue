@@ -12,18 +12,20 @@
         </div>
         <div class="amount">-{{item.amount/100 | fmoney}}</div>
       </li>
-      <li class="more">{{loadMore}}</li>
+      <!-- <li class="more">{{loadMore}}</li> -->
       <!-- </scroller> -->
     </ul>
+
   </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       withdrawList: [],
-      loadMore:'没有更多数据'
+      list: [{}]
     };
   },
   created() {

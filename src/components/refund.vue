@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { Flow, FlowState, FlowLine } from "vux";
+
 export default {
   data() {
     return {
@@ -36,8 +36,7 @@ export default {
       // console.log(res);
       this.refund = res.data.refund;
     });
-  },
-  components: { Flow, FlowState, FlowLine }
+  }
 };
 </script>
 

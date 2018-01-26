@@ -17,15 +17,18 @@ import './flexible';
 // import { Cell } from "mint-ui";
 // import { Switch } from "mint-ui";
 // import { Button } from "mint-ui";
-// import "mint-ui/lib/style.css";
+import "mint-ui/lib/style.css";
+import { Loadmore } from 'mint-ui';
+Vue.component(Loadmore.name, Loadmore);
+import { Spinner } from 'mint-ui';
+Vue.component(Spinner.name, Spinner);
+
 
 import axios from "axios";
 
 import VideoPlayer from 'vue-video-player'
 Vue.use(VideoPlayer);
 
-// import VueScroller from 'vue-scroller'
-// Vue.use(VueScroller);
 
 //解决移动端点击300ms延迟
 import FastClick from 'fastclick';

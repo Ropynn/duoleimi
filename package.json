@@ -17,6 +17,7 @@
     "echarts": "^4.0.2",
     "lib-flexible": "^0.3.2",
     "lodash": "^4.17.4",
+    "mint-ui": "^2.2.13",
     "mock": "^0.1.1",
     "mockjs": "^1.0.1-beta3",
     "vue": "^2.2.6",

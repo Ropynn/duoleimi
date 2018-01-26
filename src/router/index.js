@@ -28,7 +28,8 @@ const businessman = () => import('../components/businessman.vue'); //商家中�
 const wallet = () => import('../components/wallet.vue');//钱包组件
 const walletDetail = () => import('../components/walletDetail.vue'); //提现明细组件
 const walletDraw = () => import('../components/walletDraw.vue');//提现组件
-const refund = () => import('../components/refund.vue');//提现组件
+const refund = () => import('../components/refund.vue');//退款组件
+const test = () => import('../components/test.vue');//test  组件
 
 
 Vue.use(VueRouter);
@@ -109,9 +110,14 @@ export default new VueRouter({
       path: "/walletDraw/:money",
       component: walletDraw
     },
+    //退款
     {
       path: "/refund",
       component: refund
+    },
+    {
+      path: "/test",
+      component: test
     }
   ]
 });

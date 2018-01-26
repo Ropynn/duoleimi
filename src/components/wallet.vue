@@ -17,7 +17,7 @@
         <cell title="提现明细" is-link link="/walletDetail">
           <i class="iconfont icon-icon_gongzimingxi"></i>
         </cell>
-      </group>  
+      </group>
     </div>
   </div>
 
