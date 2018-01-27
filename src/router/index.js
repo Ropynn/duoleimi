@@ -22,6 +22,7 @@ const payment = () => import('../components/payment.vue'); //支付组件
 const mcMove = () => import('../components/mcMove.vue');//启动机器组件
 const order = () => import('../components/orderDetail.vue');//订单列表组件
 const finishOrder = () => import('../components/finishOrder.vue');//已完成订单列表组件
+const finishOrder2 = () => import('../components/finishOrder2.vue');//已完成订单列表组件
 const unfinishedOrder = () => import('../components/unfinishedOrder.vue');//未完成订单列表组件
 const video = () => import('../components/video.vue');// 视频组件
 const businessman = () => import('../components/businessman.vue'); //商家中心组件
@@ -30,6 +31,7 @@ const walletDetail = () => import('../components/walletDetail.vue'); //提现明
 const walletDraw = () => import('../components/walletDraw.vue');//提现组件
 const refund = () => import('../components/refund.vue');//退款组件
 const test = () => import('../components/test.vue');//test  组件
+const test2 = () => import('../components/test2.vue');//test  组件
 
 
 Vue.use(VueRouter);
@@ -78,11 +80,15 @@ export default new VueRouter({
           path: '/finishOrder',
           component: finishOrder
         },
+        {
+          path: '/finishOrder2',
+          component: finishOrder2
+        },
         //未完成订单
         {
           path: '/unfinishedOrder',
           component: unfinishedOrder
-        }
+        } 
       ]
     },
     //视频路由
@@ -118,6 +124,10 @@ export default new VueRouter({
     {
       path: "/test",
       component: test
+    },
+    {
+      path: "/test2",
+      component: test2
     }
   ]
 });

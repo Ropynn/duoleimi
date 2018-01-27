@@ -1,11 +1,11 @@
 <template>
   <div class="page-loadmore">
-    <h1 class="page-title">Pull up</h1>
+    <!-- <h1 class="page-title">Pull up</h1>
     <p class="page-loadmore-desc">在列表底部, 按住 - 上拉 - 释放可以获取更多数据</p>
     <p class="page-loadmore-desc">translate : {{ translate }}</p>
     <div class="loading-background" :style="{ transform: 'scale3d(' + moveTranslate + ',' + moveTranslate + ',1)' }">
       translateScale : {{ moveTranslate }}
-    </div>
+    </div> -->
 
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
@@ -32,65 +32,6 @@
     </div>
   </div>
 </template>
-
-<style>
-.loading-background,
-.mint-loadmore-top span {
-  -webkit-transition: 0.2s linear;
-  transition: 0.2s linear;
-}
-.mint-loadmore-top span {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.mint-loadmore-top span.is-rotate {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.page-loadmore .mint-spinner {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.page-loadmore-desc {
-  text-align: center;
-  color: #666;
-  padding-bottom: 5px;
-}
-
-.page-loadmore-desc:last-of-type,
-.page-loadmore-listitem {
-  border-bottom: 1px solid #eee;
-}
-
-.page-loadmore-listitem {
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
-}
-
-.page-loadmore-listitem:first-child {
-  border-top: 1px solid #eee;
-}
-
-.page-loadmore-wrapper {
-  overflow: scroll;
-}
-
-.mint-loadmore-bottom span {
-  display: inline-block;
-  -webkit-transition: 0.2s linear;
-  transition: 0.2s linear;
-  vertical-align: middle;
-}
-
-.mint-loadmore-bottom span.is-rotate {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-</style>
 
 <script type="text/babel">
 export default {
@@ -161,3 +102,65 @@ export default {
   }
 };
 </script>
+
+<style>
+.loading-background,
+.mint-loadmore-top span {
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+}
+.mint-loadmore-top span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.mint-loadmore-top span.is-rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.page-loadmore .mint-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.page-loadmore-desc {
+  text-align: center;
+  color: #666;
+  padding-bottom: 5px;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: transparent !important;
+}
+
+.page-loadmore-desc:last-of-type,
+.page-loadmore-listitem {
+  border-bottom: 1px solid #eee;
+}
+
+.page-loadmore-listitem {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.page-loadmore-listitem:first-child {
+  border-top: 1px solid #eee;
+}
+
+.page-loadmore-wrapper {
+  overflow: scroll;
+}
+
+.mint-loadmore-bottom span {
+  display: inline-block;
+  -webkit-transition: 0.2s linear;
+  transition: 0.2s linear;
+  vertical-align: middle;
+}
+
+.mint-loadmore-bottom span.is-rotate {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+</style>

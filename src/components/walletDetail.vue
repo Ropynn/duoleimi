@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!-- <div class="history">
-      历史记录
-    </div> -->
     <ul class="withdrawList">
-      <!-- <scroller :on-refresh="refresh" &&:on-infinite="infinite" || ref="domName"> -->
       <li v-for="item in withdrawList">
         <div class="left">
           <div class="title">{{item.statu |status}}</div>
@@ -12,20 +8,16 @@
         </div>
         <div class="amount">-{{item.amount/100 | fmoney}}</div>
       </li>
-      <!-- <li class="more">{{loadMore}}</li> -->
-      <!-- </scroller> -->
     </ul>
 
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      withdrawList: [],
-      list: [{}]
+      withdrawList: []
     };
   },
   created() {
