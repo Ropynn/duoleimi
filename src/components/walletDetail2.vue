@@ -1,6 +1,6 @@
 <template>
   <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="autoFill">
 
       <ul class="page-loadmore-list">
         <li v-for="item in list" class="page-loadmore-listitem lis">
@@ -24,6 +24,7 @@ export default {
     return {
       list: [],
       allLoaded: false,
+      autoFill:false,
       bottomStatus: "",
       wrapperHeight: 0,
       topStatus: "",

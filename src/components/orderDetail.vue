@@ -32,12 +32,12 @@ export default {
   methods: {
     cut1() {
       this.$router.push({
-        path: "/finishOrder"
+        path: "/finishOrder2"
       });
     },
     cut2() {
       this.$router.push({
-        path: "/unfinishedOrder"
+        path: "/unfinishedOrder2"
       });
     }
   }

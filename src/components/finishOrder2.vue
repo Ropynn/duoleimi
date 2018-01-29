@@ -11,7 +11,7 @@
   </div> -->
   <div class="page-loadmore-wrapper listBox" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
     <div class="noMore" v-if="orderList.length == 0" v-cloak>列表无数据</div>
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomPullText="bottomPullText">
+    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomPullText="bottomPullText" :autoFill="autoFill">
 
       <ul class="page-loadmore-list">
         <li v-for="item in orderList" class="page-loadmore-listitem dec">
@@ -39,7 +39,8 @@ export default {
       topStatus: "",
       translate: 0,
       moveTranslate: 0,
-      bottomPullText:"上拉加载更多"
+      bottomPullText: "上拉加载更多",
+      autoFill: false
     };
   },
   methods: {
@@ -49,14 +50,9 @@ export default {
 
     loadBottom() {
       setTimeout(() => {
-        if (this.orderList.length < 2) {
-            this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
+        this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
           this.orderList.push(...res.data.list);
         });
-        }else{
-          console.log('222');
-        }
-
         this.$refs.loadmore.onBottomLoaded();
       }, 1500);
     },
