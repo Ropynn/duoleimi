@@ -81,7 +81,7 @@ export default {
     this.axios.get("/api/payment").then(res => {
       this.payment = res.data.data;
     });
-    this.endTime = (this.currentTime + this.minutes * 1000 * 60) / 1000;
+    this.endTime = (this.currentTime + this.minutes * 1000 * 60);
   },
   mounted() {
     //按摩开始时间

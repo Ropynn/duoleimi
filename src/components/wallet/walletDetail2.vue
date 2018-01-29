@@ -80,7 +80,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-@import '../common/stylus/mixins.styl';
+@import '../../common/stylus/mixins.styl';
 
 .box {
   background-color: #fff;

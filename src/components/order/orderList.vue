@@ -1,22 +1,21 @@
 <template>
-  <div class="listBox page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-    <div class="noMore" v-if="orderList.length == 0">列表无数据</div>
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomPullText="bottomPullText" :autoFill="autoFill">
-      <ul class="dec" v-for="item in orderList">
-        <li>订单编号：{{item.payid}}</li>
-        <li>订单总额：{{item.money/100}}元</li>
-        <li>机器运作状态：{{item.move | move}}</li>
-        <li>订单状态：{{item.statu | statu}}</li>
-        <li>创建时间：{{item.createdAt | creatAt}}</li>
-        <li v-if="(!item.move && item.statu == 1)">
-          <span class="line"></span>
-          <div class="btn">
-            <x-button action-type='button' @click.native="move(item)" mini>立即启动</x-button>
-            <x-button action-type='button' @click.native="refund(item)" mini>申请退款</x-button>
-          </div>
-        </li>
-      </ul>
-    </mt-loadmore>
+  <div class="listBox">
+    <banner-header></banner-header>
+    <ul class="dec" v-for="item in orderList">
+      <li>订单编号：{{item.payid}}</li>
+      <li>订单总额：{{item.money/100}}元</li>
+      <li>机器运作状态：{{item.move | move}}</li>
+      <li>订单状态：{{item.statu | statu}}</li>
+      <li>创建时间：{{item.createdAt | creatAt}}</li>
+      <li v-if="(!item.move && item.statu == 1)">
+        <span class="line"></span>
+        <div class="btn">
+          <x-button action-type='button' @click.native="move(item)" mini>立即启动</x-button>
+          <x-button action-type='button' @click.native="refund(item)" mini>申请退款</x-button>
+        </div>
+      </li>
+    </ul>
+
     <!-- 确认层 -->
     <transition name="fade">
       <div class="makeSure" v-show="isShow" @touchmove.prevent>
@@ -38,22 +37,13 @@
 </template>
 
 <script>
-import bannerHeader from "./header.vue";
+import bannerHeader from "../header.vue";
 import { XButton } from "vux";
 export default {
   data() {
     return {
       orderList: [],
-      isShow: false,
-      isHas: false,
-      allLoaded: false,
-      bottomStatus: "",
-      wrapperHeight: 0,
-      topStatus: "",
-      translate: 0,
-      moveTranslate: 0,
-      bottomPullText: "上拉加载更多",
-      autoFill: false
+      isShow: false
     };
   },
   created() {
@@ -63,20 +53,19 @@ export default {
         this.user = res.data.user;
       } else {
         window.location = "http://tsa.yzidea.com/wx/login?goback=order";
-        console.log("已登录");
+        // console.log("已登录");
       }
-    });
-    this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-      // console.log(res);
-      if (res.data.statu) {
-        this.orderList = res.data.list;
-      } else {
-        console.log("获取失败");
-      }
-    });
+    }),
+      this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
+        // console.log(res);
+        if (res.data.statu) {
+          this.orderList = res.data.list;
+        } else {
+          console.log("获取失败");
+        }
+      });
   },
   methods: {
-    //立即启动
     move(item) {
       // console.log(item.statu);
       if (!item.move && item.statu == 1) {
@@ -89,7 +78,6 @@ export default {
         return;
       }
     },
-    //申请退款
     refund(item) {
       if (!item.move && item.statu == 1) {
         this.order = item;
@@ -97,40 +85,14 @@ export default {
         this.isShow = !this.isShow;
       }
     },
-    //确认退款
     ensure() {
+      console.log(this.order);
       this.isShow = !this.isShow;
       console.log("确认退款");
-      this.$router.push({
-        path: "/refund"
-      });
     },
-    //取消退款
     cancel() {
       this.isShow = !this.isShow;
       console.log("取消退款");
-    },
-    //上拉加载,下拉刷新
-    handleBottomChange(status) {
-      this.bottomStatus = status;
-    },
-    loadBottom() {
-      setTimeout(() => {
-        this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-          this.orderList.push(...res.data.list);
-        });
-        this.$refs.loadmore.onBottomLoaded();
-      }, 1500);
-    },
-    handleTopChange(status) {
-      this.moveTranslate = 1;
-      this.topStatus = status;
-    },
-    loadTop() {
-      setTimeout(() => {
-        this.$router.replace("/unfinishedOrder2");
-        this.$refs.loadmore.onTopLoaded();
-      }, 1500);
     }
   },
   components: { bannerHeader, XButton }
@@ -139,13 +101,11 @@ export default {
 
 
 <style lang="stylus" scoped>
-@import '../common/stylus/mixins.styl';
+@import '../../common/stylus/mixins.styl';
 
 .listBox {
-  .noMore {
-    text-align: center;
-    padding: px2rem(100px);
-  }
+  background-color: #ddd;
+  height: 100%;
 
   .banner {
     padding: px2rem(40px) px2rem(40px) 0;
@@ -180,8 +140,7 @@ export default {
     align-items: flex-end;
 
     button {
-      background-color: #F86184;
-      color: #fff;
+      background-color: #ddd;
     }
   }
 
@@ -245,40 +204,6 @@ export default {
         // border-left 1px solid #ccc
       }
     }
-  }
-
-  .page-loadmore .mint-spinner {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .page-loadmore-desc {
-    text-align: center;
-    color: #666;
-    padding-bottom: 5px;
-  }
-
-  ::-webkit-scrollbar-track-piece {
-    background-color: transparent !important;
-  }
-
-  .page-loadmore-desc:last-of-type, .page-loadmore-listitem {
-    border-bottom: 1px solid #eee;
-  }
-
-  .page-loadmore-listitem:first-child {
-    border-top: 1px solid #eee;
-  }
-
-  .page-loadmore-wrapper {
-    overflow: scroll;
-  }
-
-  .mint-loadmore-bottom span {
-    display: inline-block;
-    -webkit-transition: 0.2s linear;
-    transition: 0.2s linear;
-    vertical-align: middle;
   }
 }
 </style>

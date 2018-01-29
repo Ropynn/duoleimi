@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import bannerHeader from "./header.vue";
 export default {
   data() {
     return {
@@ -47,7 +46,6 @@ export default {
     handleBottomChange(status) {
       this.bottomStatus = status;
     },
-
     loadBottom() {
       setTimeout(() => {
         this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
@@ -88,14 +86,13 @@ export default {
     this.wrapperHeight =
       document.documentElement.clientHeight -
       this.$refs.wrapper.getBoundingClientRect().top;
-  },
-  components: { bannerHeader }
+  }
 };
 </script>
 
 
 <style lang="stylus" scoped>
-@import '../common/stylus/mixins.styl';
+@import '../../common/stylus/mixins.styl';
 
 [v-cloak] {
   display: none;

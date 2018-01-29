@@ -1,50 +1,23 @@
 <template>
   <div class="listBox">
-    <div class="noMore" v-if="orderList.length == 0">列表无数据</div>
+    <div class="noMore" v-if="orderList.length == 0" v-cloak>列表无数据</div>
     <ul class="dec" v-for="item in orderList">
       <li>订单编号：{{item.payid}}</li>
       <li>订单总额：{{item.money/100}}元</li>
       <li>机器运作状态：{{item.move | move}}</li>
       <li>订单状态：{{item.statu | statu}}</li>
       <li>创建时间：{{item.createdAt | creatAt}}</li>
-      <li v-if="(!item.move && item.statu == 1)">
-        <span class="line"></span>
-        <div class="btn">
-          <x-button action-type='button' @click.native="move(item)" mini>立即启动</x-button>
-          <x-button action-type='button' @click.native="refund(item)" mini>申请退款</x-button>
-        </div>
-      </li>
     </ul>
-
-    <!-- 确认层 -->
-    <transition name="fade">
-      <div class="makeSure" v-show="isShow" @touchmove.prevent>
-        <div class="box">
-          <div class="alert">
-            系统提示
-          </div>
-          <div class="message">
-            确认退款?
-          </div>
-          <div class="btns">
-            <div class="sureBtn" @click="ensure">确定</div>
-            <div class="cancelBtn" @click="cancel">取消</div>
-          </div>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
 <script>
-import bannerHeader from "./header.vue";
+
 import { XButton } from "vux";
 export default {
   data() {
     return {
       orderList: [],
-      isShow: false,
-      isHas: false
     };
   },
   created() {
@@ -56,61 +29,30 @@ export default {
         window.location = "http://tsa.yzidea.com/wx/login?goback=order";
         console.log("已登录");
       }
-    });
-    this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-      // console.log(res);
-      if (res.data.statu) {
-        this.orderList = res.data.list;
-      } else {
-        console.log("获取失败");
-      }
-    });
-  },
-  methods: {
-    //立即启动
-    move(item) {
-      // console.log(item.statu);
-      if (!item.move && item.statu == 1) {
-        sessionStorage.setItem("_CODE_", item.deviceId);
-        // console.log('aaaa');
-        this.$router.push({
-          path: "/mcMove/" + item.price + "/" + item.time + "/" + item.payid
-        });
-      } else {
-        return;
-      }
-    },
-    //申请退款
-    refund(item) {
-      if (!item.move && item.statu == 1) {
-        this.order = item;
-        console.log("跳转退款页面");
-        this.isShow = !this.isShow;
-      }
-    },
-    //确认退款
-    ensure() {
-      this.isShow = !this.isShow;
-      console.log("确认退款");
-      this.$router.push({
-        path: "/refund"
+    }),
+      this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
+        console.log(res);
+        if (res.data.statu) {
+          this.orderList = res.data.list;
+        } else {
+          console.log("获取失败");
+        }
       });
-    },
-    //取消退款
-    cancel() {
-      this.isShow = !this.isShow;
-      console.log("取消退款");
-    }
   },
-  components: { bannerHeader, XButton }
+  components: { XButton }
 };
 </script>
 
 
 <style lang="stylus" scoped>
-@import '../common/stylus/mixins.styl';
+@import '../../common/stylus/mixins.styl';
+
+[v-cloak] {
+  display: none;
+}
 
 .listBox {
+
   .noMore {
     text-align: center;
     padding px2rem(100px)
@@ -149,8 +91,7 @@ export default {
     align-items: flex-end;
 
     button {
-      background-color: #F86184;
-      color: #fff;
+      background-color: #ddd;
     }
   }
 

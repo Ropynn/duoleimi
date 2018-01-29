@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import bannerHeader from "./header.vue";
 import { Panel, Tab, TabItem } from "vux";
 const list = () => ["订单明细", "分账明细"];
 export default {
@@ -46,7 +45,7 @@ export default {
 
 
 <style lang="stylus" scoped>
-@import '../common/stylus/mixins.styl';
+@import '../../common/stylus/mixins.styl';
 
 .orders {
   background-color: #ddd;

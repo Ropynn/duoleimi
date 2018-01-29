@@ -67,7 +67,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../common/stylus/mixins.styl';
+@import '../../common/stylus/mixins.styl';
 
 .wallet {
   background-color: #f6f5fa;
