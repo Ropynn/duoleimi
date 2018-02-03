@@ -1,14 +1,14 @@
 <template>
   <div class="page-loadmore">
-    <!-- <h1 class="page-title">Pull up</h1>
+    <h1 class="page-title">Pull up</h1>
     <p class="page-loadmore-desc">在列表底部, 按住 - 上拉 - 释放可以获取更多数据</p>
     <p class="page-loadmore-desc">translate : {{ translate }}</p>
     <div class="loading-background" :style="{ transform: 'scale3d(' + moveTranslate + ',' + moveTranslate + ',1)' }">
       translateScale : {{ moveTranslate }}
-    </div> -->
+    </div>
 
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-      <mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore" :autoFill="autoFill">
 
         <ul class="page-loadmore-list">
           <li v-for="item in list" class="page-loadmore-listitem">{{ item }}</li>
@@ -39,7 +39,7 @@ export default {
     return {
       list: [],
       allLoaded: false,
-
+autoFill: false,
       bottomStatus: "",
       wrapperHeight: 0,
 
@@ -57,14 +57,14 @@ export default {
 
     loadBottom() {
       setTimeout(() => {
-        let lastValue = this.list[this.list.length - 1];
-        if (lastValue < 40) {
-          for (let i = 1; i <= 10; i++) {
-            this.list.push(lastValue + i);
-          }
-        } else {
-          this.allLoaded = true;
-        }
+        // let lastValue = this.list[this.list.length - 1];
+        // if (lastValue < 40) {
+        //   for (let i = 1; i <= 10; i++) {
+        //     this.list.push(lastValue + i);
+        //   }
+        // } else {
+        //   this.allLoaded = true;
+        // }
         this.$refs.loadmore.onBottomLoaded();
       }, 1500);
     },
@@ -90,7 +90,7 @@ export default {
   },
 
   created() {
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 2; i++) {
       this.list.push(i);
     }
   },

@@ -17,30 +17,30 @@
           <img class="logo" src="../assets/logo.png" alt="">
         </div> -->
         <p class="subsection">订单号：
-          <span class="particulars">{{payment.ordernumber}}</span>
+          <span class="particulars">{{payment.payid}}</span>
         </p>
-        <p class="subsection">订单状态：
-          <span class="particulars" v-show="isShow">{{payment.pay}}</span>
-          <span class="particulars" v-show="isShowc">{{payment.completed}}</span>
+        <p class="subsection">机器状态：
+          <span class="particulars" v-show="isShow">正在运行</span>
+          <span class="particulars" v-show="isShowc">已结束</span>
         </p>
         <p class="subsection">套餐：
-          <span class="particulars">{{price}}元 / {{minutes}}分钟</span>
+          <span class="particulars">{{payment.money}}元 / {{payment.time}}分钟</span>
         </p>
         <p class="subsection">启动时间：
-          <span class="particulars" @change="openingTime">{{startTime}}</span>
+          <span class="particulars">{{payment.createdAt | updatedAt}}</span>
         </p>
       </div>
     </div>
-    <!-- <div class="pic">
+    <div class="pic">
       <img src="../assets/logo3.jpg" alt="">
-    </div> -->
+    </div>
 
-    <div class="footer">
+    <!-- <div class="footer">
       <div class="tip">
         小贴士
       </div>
       <p>不同的手机和操作系统对倒计时存在一些误差值，请以实际按摩时间为准</p>
-    </div>
+    </div> -->
     <!-- <transition name="fade">
       <advertising class="detail" v-show="isAdvertising" >
       </advertising>
@@ -60,9 +60,10 @@ export default {
     return {
       price: this.$route.params.price, //获取传递过来的价钱
       minutes: this.$route.params.minutes, //获取传递过来的按摩时间
-      currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
+      // currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
+      // currentTime: "", //获取按摩开始的时间
       payment: {},
-      endTime: "", //按摩结束的时间
+      endTime: Number(this.$route.params.endTime), //按摩结束的时间
       startTime: "", //客户开始的时间
       isShow: true,
       isShowc: false,
@@ -78,46 +79,37 @@ export default {
     }
   },
   created() {
-    this.axios.get("/api/payment").then(res => {
-      this.payment = res.data.data;
-    });
-    this.endTime = (this.currentTime + this.minutes * 1000 * 60);
+    const obj = JSON.parse(sessionStorage.getItem("_ORDER_"));
+    this.payment = obj;
+    console.log(this.endTime);
+    // this.endTime = new Date(this.payment.updatedAt).getTime();
+    // console.log(this.endTime);
   },
   mounted() {
     //按摩开始时间
-    this.openingTime();
+    // this.openingTime();
   },
   methods: {
     //todo 服务开始时间
-    openingTime: function() {
-      let time = this.currentTime;
-      let newtime = time * 1000;
-      function gettime(t) {
-        let _time = new Date(t);
-        let year = _time.getFullYear(); //2017
-        let month = _time.getMonth() + 1; //12
-        let date = _time.getDate(); //20
-        let hour = _time.getHours(); //10
-        let minute = _time.getMinutes(); //56
-        let second = _time.getSeconds(); //15
-        minute = minute < 10 ? "0" + minute : minute;
-        second = second < 10 ? "0" + second : second;
-        return (
-          year +
-          "年" +
-          month +
-          "月" +
-          date +
-          "日   " +
-          hour +
-          ":" +
-          minute +
-          ":" +
-          second
-        ); //这里自己按自己需要的格式拼接
-      }
-      this.startTime = gettime(newtime / 1000);
-    },
+    // openingTime: function() {
+    //   let time = this.currentTime;
+    //   let newtime = time * 1000;
+    //   function gettime(t) {
+    //     let _time = new Date(t);
+    //     let year = _time.getFullYear();
+    //     let month = _time.getMonth() + 1;
+    //     let date = _time.getDate();
+    //     let hour = _time.getHours();
+    //     let minute = _time.getMinutes();
+    //     let second = _time.getSeconds();
+    //     minute = minute < 10 ? "0" + minute : minute;
+    //     second = second < 10 ? "0" + second : second;
+    //     return (
+    //       year + "年" + month +  "月" + date + "日 " + hour + ":" + minute + ":" + second
+    //     ); //这里自己按自己需要的格式拼接
+    //   }
+    //   this.startTime = gettime(newtime / 1000);
+    // },
     callback() {
       // todo 完成后动态改变计时器、订单状态等
       this.isShow = !this.isShow;
@@ -232,7 +224,7 @@ export default {
   width: 100%;
   height: px2rem(300px);
   z-index: 10;
-  color #777
+  color: #777;
   text-align: center;
   box-sizing: border-box;
   font-size: 14px;
@@ -246,7 +238,7 @@ export default {
   }
 
   p {
-    padding 0 px2rem(80px)
+    padding: 0 px2rem(80px);
   }
 }
 
@@ -277,6 +269,7 @@ export default {
 
   img {
     width: 100%;
+    vertical-align: middle;
   }
 }
 </style>

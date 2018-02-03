@@ -31,7 +31,7 @@ export default {
   methods: {
     cut1() {
       this.$router.push({
-        path: "/finishOrder2"
+        path: "/finishOrder"
       });
     },
     cut2() {
@@ -49,7 +49,7 @@ export default {
 
 .orders {
   background-color: #ddd;
-  height: 100vh;
+  // height: 100vh;
 }
 </style>
 

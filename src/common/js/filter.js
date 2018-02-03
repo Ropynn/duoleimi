@@ -6,6 +6,11 @@ Vue.filter("creatAt", function (creatTime) {
   // return moment(creatTime).format("YYYY-MM-DD HH:mm:ss");
   return format(creatTime, "YYYY-MM-DD HH:mm:ss");
 });
+Vue.filter("updatedAt", function (creatTime) {
+  // return moment(creatTime).format("YYYY-MM-DD HH:mm:ss");
+  return format(creatTime, "YYYY年MM月DD日 HH:mm:ss");
+});
+
 Vue.filter("move", function (move) {
   if (!move) {
     return "未启动";

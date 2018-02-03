@@ -48,7 +48,9 @@
     "pay": "已付款",
     "completed": "已完成",
     "packageType": "6元/6分钟",
-    "date": "2017.12.16"
+    "date": "2017.12.16",
+    "overTime":"2018-02-03T05:58:51.000Z",
+    "updatedAt":"2018-02-03T03:58:51.000Z"
   },
   "orderList": [
     {

@@ -11,12 +11,14 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "async": "^2.6.0",
     "axios": "^0.17.1",
     "babel-runtime": "^6.26.0",
     "date-fns": "^1.29.0",
     "echarts": "^4.0.2",
     "lib-flexible": "^0.3.2",
     "lodash": "^4.17.4",
+    "mescroll.js": "^1.3.2",
     "mint-ui": "^2.2.13",
     "mock": "^0.1.1",
     "mockjs": "^1.0.1-beta3",

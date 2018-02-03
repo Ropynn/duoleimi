@@ -16,6 +16,10 @@ export default {
     };
   },
   created() {
+    // console.log(this.code)
+
+    // console.log(this.$route.query);
+    // console.log(this.code);
     // this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
     //   console.log("------------------------------------");
     //   console.log(JSON.stringify(res));

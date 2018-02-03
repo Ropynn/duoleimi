@@ -36,16 +36,16 @@
       </div>
     </transition>
 
-     <!-- <transition name="fade">
+    <!-- <transition name="fade">
       <div class="videos" v-if="flag" @touchmove.prevent>
         <div class="test" @click="close"></div> -->
-        <!-- <video controls autoplay>
+    <!-- <video controls autoplay>
           <source src="../../static/introduce.mp4" type="video/mp4">
         </video> -->
-        <!-- <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
+    <!-- <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
           @pause="onPlayerPause($event)">
         </video-player> -->
-      <!-- </div>
+    <!-- </div>
     </transition> -->
   </div>
 </template>
@@ -55,6 +55,7 @@
 // import { videoPlayer } from "vue-video-player";
 import bannerHeader from "./header";
 import { XButton } from "vux";
+import { lchown } from "fs";
 
 export default {
   props: {
@@ -67,6 +68,7 @@ export default {
       orderId: "", //订单编号
       isShow: false,
       flag: false,
+      order: {}
       // playerOptions: {
       //   //        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
       //   autoplay: false, //如果true,浏览器准备好时开始回放。
@@ -113,7 +115,6 @@ export default {
 
       const equipmentCode = this.code || sessionStorage.getItem("_CODE_");
       // console.log(equipmentCode);
-
       this.axios
         .post("http://tsa.yzidea.com/wx/mcMove", {
           time: this.time,
@@ -122,17 +123,18 @@ export default {
           order_id: this.orderId
         })
         .then(res => {
+          console.log(res);
           if (res.data.statu == 1) {
-            this.currentTime = new Date().getTime() + 2000;
-            this.$router.push({
-              path:
-                "/payment/" +
-                this.price +
-                "/" +
-                this.time +
-                "/" +
-                this.currentTime
-            });
+            console.log("AAA");
+            const obj = {};
+            obj.createdAt = res.data.order.createdAt;
+            obj.updatedAt = res.data.order.updatedAt;
+            obj.payid = res.data.order.payid;
+            obj.money = res.data.order.money;
+            obj.time = res.data.order.time;
+            sessionStorage.setItem("_ORDER_", JSON.stringify(obj));
+            const endT = res.data.order.overTime;
+            this.$router.push({ path: "/payment/" + endT });
           } else if (res.data.statu == 0) {
             this.isShow = !this.isShow;
           } else {
@@ -148,8 +150,8 @@ export default {
       this.isShow = !this.isShow;
     },
     play() {
-       this.$router.push({
-        path: '/video'
+      this.$router.push({
+        path: "/video"
       });
       // this.flag = !this.flag;
     },
@@ -165,138 +167,141 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  @import '../common/stylus/mixins.styl';
-// @import "../common/stylus/button.css";
-  .pic {
-    display flex;
-    justify-content center;
-    margin-top px2rem(36px);
-    padding px2rem(50px);
-    .box {
-      width px2rem(500px);
+@import '../common/stylus/mixins.styl';
+
+.pic {
+  display: flex;
+  justify-content: center;
+  margin-top: px2rem(36px);
+  padding: px2rem(50px);
+
+  .box {
+    width: px2rem(500px);
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.moveBtn {
+  padding-top: px2rem(60px);
+  display: flex;
+
+  button {
+    text-align: center;
+    width: 50%;
+    border: px2rem(4px) solid #FF003E;
+    border-radius: px2rem(20px);
+    background-color: #FF003E;
+    font-size: 20px;
+    color: #fff;
+  }
+}
+
+.tip {
+  padding-top: px2rem(40px);
+  display: flex;
+
+  p {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.playBtn {
+  margin-top: px2rem(100px);
+  margin-bottom: px2rem(30px);
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  button {
+    text-align: center;
+    width: px2rem(410px);
+    height: px2rem(110px);
+    border: px2rem(4px) solid #FF003E;
+    border-radius: px2rem(10px);
+    background-color: #fff;
+    font-size: 16px;
+    color: #FF003E;
+  }
+}
+
+/* 遮罩层 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  /* .fade-leave-active in below version 2.1.8 */
+  opacity: 0;
+}
+
+.makeSure {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+
+  .box {
+    position: absolute;
+    width: px2rem(500px);
+    height: px2rem(300px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    color: red;
+    text-align: center;
+
+    .alert {
+      height: px2rem(100px);
+      line-height: px2rem(100px);
+      color: #000;
+      font-weight: bold;
     }
-    img {
-      width 100%;
+
+    .message {
+      height: px2rem(100px); // line-height: 50px;
+      color: #666;
+    }
+
+    .btn {
+      height: px2rem(100px);
+      line-height: px2rem(100px);
+      color: #26a2ff;
+      border-top: 1px solid #666;
     }
   }
+}
 
-  .moveBtn {
-    padding-top: px2rem(60px);
-    display flex;
-    button {
-      text-align: center;
-      width: 50%;
-      border: px2rem(4px) solid #FF003E;
-      border-radius: px2rem(20px);
-      background-color: #FF003E;
-      font-size: 20px;
-      color: #fff;
-    }
-  }
+.videos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 30;
 
-  .tip {
-    padding-top px2rem(40px);
-    display flex;
-    p {
-      flex 1;
-      text-align center
-    }
-  }
-
-  .playBtn {
-    margin-top px2rem(100px);
-    margin-bottom: px2rem(30px);
-    display flex;
-    width 100%;
-    justify-content: center;
-    button {
-      text-align: center;
-      width px2rem(410px);
-      height px2rem(110px);
-      border: px2rem(4px) solid #FF003E;
-      border-radius: px2rem(10px);
-      background-color: #fff;
-      font-size: 16px;
-      color: #FF003E;
-    }
-  }
-
-  /* 遮罩层 */
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s;
-  }
-
-  .fade-enter,
-  .fade-leave-to {
-    /* .fade-leave-active in below version 2.1.8 */
-    opacity: 0;
-  }
-
-  .makeSure {
-    position: fixed;
+  .test {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 30;
-
-    .box {
-      position: absolute;
-      width: px2rem(500px);
-      height: px2rem(300px);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      color: red;
-      text-align: center;
-
-      .alert {
-        height: px2rem(100px);
-        line-height: px2rem(100px);
-        color: #000;
-        font-weight: bold;
-      }
-
-      .message {
-        height: px2rem(100px); // line-height: 50px;
-        color: #666;
-      }
-
-      .btn {
-        height: px2rem(100px);
-        line-height: px2rem(100px);
-        color: #26a2ff;
-        border-top: 1px solid #666;
-      }
-    }
   }
 
-  .videos {
-    position: fixed;
-    top: 0;
-    left: 0;
+  .video-player {
+    position: absolute;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 30;
-    .test {
-      position absolute;
-      top 0;
-      left 0;
-      width 100%;
-      height 100%
-    }
-    .video-player {
-      position absolute;
-      width 100%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-
+}
 </style>
