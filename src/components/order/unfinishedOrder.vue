@@ -1,146 +1,151 @@
 <template>
-  <div class="listBox page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-    <div class="noMore" v-if="orderList.length == 0">列表无数据</div>
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomPullText="bottomPullText" :autoFill="autoFill">
-      <ul class="dec" v-for="item in orderList">
-        <li>订单编号：{{item.payid}}</li>
-        <li>订单总额：{{item.money/100}}元</li>
-        <li>机器运作状态：{{item.move | move}}</li>
-        <li>订单状态：{{item.statu | statu}}</li>
-        <li>创建时间：{{item.createdAt | creatAt}}</li>
-        <li v-if="(!item.move && item.statu == 1)">
-          <span class="line"></span>
-          <div class="btn">
-            <x-button action-type='button' @click.native="move(item)" mini>立即启动</x-button>
-            <x-button action-type='button' @click.native="refund(item)" mini>申请退款</x-button>
-          </div>
+  <scroller ref="myscroller" :on-refresh="refresh" :on-infinite="infinite" class="listBox">
+    <div class="content">
+      <ul>
+        <li v-for="item in unfinishedOrderList" class="dec" @click="toMove(item)">
+          <div>订单编号：{{item.payid}}</div>
+          <div>订单总额：{{item.money/100}}元</div>
+          <div>机器运作状态：{{item.move | move}}</div>
+          <div>订单状态：{{item.statu | statu}}</div>
+          <div>创建时间：{{item.createdAt | creatAt}}</div>
         </li>
       </ul>
-    </mt-loadmore>
-    <!-- 确认层 -->
-    <transition name="fade">
-      <div class="makeSure" v-show="isShow" @touchmove.prevent>
-        <div class="box">
-          <div class="alert">
-            系统提示
-          </div>
-          <div class="message">
-            确认退款?
-          </div>
-          <div class="btns">
-            <div class="sureBtn" @click="ensure">确定</div>
-            <div class="cancelBtn" @click="cancel">取消</div>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </div>
+    </div>
+  </scroller>
 </template>
 
 <script>
-import { XButton } from "vux";
+import { InfiniteScroll } from "mint-ui";
+import { Toast } from "mint-ui";
+import { Indicator } from "mint-ui";
+import async from "async";
 export default {
   data() {
     return {
       orderList: [],
-      isShow: false,
-      isHas: false,
-      allLoaded: false,
-      bottomStatus: "",
-      wrapperHeight: 0,
-      topStatus: "",
-      translate: 0,
-      moveTranslate: 0,
-      bottomPullText: "上拉加载更多",
-      autoFill: false
+      finishOrderList: [],
+      unfinishedOrderList: []
     };
   },
   created() {
     this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
       if (res.data.statu == 1) {
-        // console.log("获取成功");
         this.user = res.data.user;
       } else {
         window.location = "http://tsa.yzidea.com/wx/login?goback=order";
-        console.log("已登录");
       }
-    });
-    this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-      // console.log(res);
-      if (res.data.statu) {
-        this.orderList = res.data.list;
-      } else {
-        console.log("获取失败");
-      }
-    });
+    }),
+      this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
+        // console.log(res);
+        if (res.data.statu) {
+          this.orderList = res.data.list;
+
+          async.forEachOf(
+            this.orderList,
+            (value, key, callback) => {
+              const overT = new Date(value.overTime).getTime();
+              const nowT = new Date().getTime();
+              if (value.move) {
+                this.finishOrderList.push(value);
+              } else {
+                this.unfinishedOrderList.push(value);
+              }
+              callback();
+            },
+            err => {
+              // console.log(err);
+              return;
+            }
+          );
+        } else {
+          console.log("获取失败");
+        }
+      });
   },
   methods: {
-    //立即启动
-    move(item) {
-      // console.log(item.statu);
-      if (!item.move && item.statu == 1) {
-        localStorage.setItem("_CODE_", item.deviceId);
-        // console.log('aaaa');
-        this.$router.push({
-          path: "/mcMove/" + item.price + "/" + item.time + "/" + item.payid
+    // 上拉刷新
+    refresh() {
+      console.log("刷新");
+      setTimeout(() => {
+        this.$refs.myscroller.finishPullToRefresh();
+        // Indicator.open();
+      },1000);
+    },
+    //下拉加载更多
+    infinite(done) {
+      if (this.noData) {
+        setTimeout(() => {
+          this.$refs.myscroller.finishInfinite(2);
+          this.$refs.myscroller.resize();
         });
-      } else {
         return;
       }
-    },
-    //申请退款
-    refund(item) {
-      if (!item.move && item.statu == 1) {
-        this.order = item;
-        console.log("跳转退款页面");
-        this.isShow = !this.isShow;
-      }
-    },
-    //确认退款
-    ensure() {
-      this.isShow = !this.isShow;
-      console.log("确认退款");
-      this.$router.push({
-        path: "/refund"
-      });
-    },
-    //取消退款
-    cancel() {
-      this.isShow = !this.isShow;
-      console.log("取消退款");
-    },
-    //上拉加载,下拉刷新
-    handleBottomChange(status) {
-      this.bottomStatus = status;
-    },
-    loadBottom() {
+      let self = this;
       setTimeout(() => {
-        // this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
-        //   this.orderList.push(...res.data.list);
-        // });
-        this.$refs.loadmore.onBottomLoaded();
-      }, 1500);
+        // if (this.pageNo >= this.pages) {
+        //   self.noData = "没有更多数据";
+        // } else {
+        //   this.loadTaskList();
+        // }
+        self.noData = "没有更多数据";
+        self.$refs.myscroller.resize();
+        done();
+      }, 300);
     },
-    handleTopChange(status) {
-      this.moveTranslate = 1;
-      this.topStatus = status;
+    loadTaskList() {
+      // this.pageNo = this.pageNo + 1;
+      // Indicator.open();
+      // this.axios
+      //   .post(
+      //     `${this.api.loadTaskList}?taskType=0&pageNo=${this.pageNo}&pageSize=${
+      //       this.pageSiz
+      //     }`
+      //   )
+      //   .then(res => {
+      //     Indicator.close();
+      //     if ((res.data.code = 200)) {
+      //       this.list = this.list.concat(res.data.data.result.records);
+      //     }
+      //   });
     },
-    loadTop() {
-      setTimeout(() => {
-        this.$router.replace("/unfinishedOrder");
-        this.$refs.loadmore.onTopLoaded();
-      }, 1500);
+    init() {
+      // this.pageNo = 1;
+      // this.list = [];
+      // this.noData = "";
+      // this.axios
+      //   .post(
+      //     `${this.api.loadTaskList}?taskType=0&pageNo=${this.pageNo}&pageSize=${
+      //       this.pageSiz
+      //     }`
+      //   )
+      //   .then(res => {
+      //     console.log(res);
+      //     if (res.data.code == 200) {
+      //       this.list = this.list.concat(res.data.data.result.records);
+      //       this.pages = res.data.data.result.pages;
+      //     }
+      //   });
     }
-  },
-  components: {XButton }
+  }
 };
 </script>
 
 
 <style lang="stylus" scoped>
 @import '../../common/stylus/mixins.styl';
+@import '../../common/stylus/scroll.css';
+
+[v-cloak] {
+  display: none;
+}
 
 .listBox {
+  .content {
+    background-color: #ddd;
+    padding: px2rem(20px) px2rem(20px);
+    margin-top: px2rem(88px);
+  }
+
   .noMore {
     text-align: center;
     padding: px2rem(100px);
@@ -179,8 +184,7 @@ export default {
     align-items: flex-end;
 
     button {
-      background-color: #F86184;
-      color: #fff;
+      background-color: #ddd;
     }
   }
 
@@ -244,40 +248,6 @@ export default {
         // border-left 1px solid #ccc
       }
     }
-  }
-
-  .page-loadmore .mint-spinner {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .page-loadmore-desc {
-    text-align: center;
-    color: #666;
-    padding-bottom: 5px;
-  }
-
-  ::-webkit-scrollbar-track-piece {
-    background-color: transparent !important;
-  }
-
-  .page-loadmore-desc:last-of-type, .page-loadmore-listitem {
-    border-bottom: 1px solid #eee;
-  }
-
-  .page-loadmore-listitem:first-child {
-    border-top: 1px solid #eee;
-  }
-
-  .page-loadmore-wrapper {
-    overflow: scroll;
-  }
-
-  .mint-loadmore-bottom span {
-    display: inline-block;
-    -webkit-transition: 0.2s linear;
-    transition: 0.2s linear;
-    vertical-align: middle;
   }
 }
 </style>

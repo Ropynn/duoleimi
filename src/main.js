@@ -23,9 +23,13 @@ Vue.component(Loadmore.name, Loadmore);
 import { Spinner } from 'mint-ui';
 Vue.component(Spinner.name, Spinner);
 
+//下拉刷新上拉加载
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller);
 
 import axios from "axios";
 
+//视频组件
 import VideoPlayer from 'vue-video-player'
 Vue.use(VideoPlayer);
 

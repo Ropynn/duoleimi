@@ -2,7 +2,7 @@
   <div class="orders">
     <!-- <banner-header></banner-header> -->
     <div class="tab">
-      <tab :line-width=1 active-color='#0066CC' v-model="index">
+      <tab :line-width=2 active-color='#0066CC' v-model="index">
         <tab-item class="vux-center vux-1px-r" @on-item-click='cut1'>已完成订单</tab-item>
         <tab-item class="vux-center vux-1px-r" @on-item-click='cut2'>未完成订单</tab-item>
       </tab>
@@ -13,18 +13,14 @@
 
 <script>
 import { Panel, Tab, TabItem } from "vux";
-const list = () => ["订单明细", "分账明细"];
 export default {
   components: {
     Panel,
     Tab,
     TabItem
-    // bannerHeader
   },
   data() {
     return {
-      list1: list(),
-      demo1: "",
       index: 0
     };
   },
@@ -44,12 +40,15 @@ export default {
 </script>
 
 
-<style lang="stylus" scoped>
+<style lang="stylus" >
 @import '../../common/stylus/mixins.styl';
 
 .orders {
   background-color: #ddd;
   // height: 100vh;
+}
+.vux-tab{
+  z-index 100000
 }
 </style>
 
