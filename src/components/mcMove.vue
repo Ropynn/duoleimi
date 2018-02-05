@@ -101,6 +101,11 @@ export default {
   //     return this.$refs.videoPlayer.player;
   //   }
   // },
+  created() {
+    this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res=>{
+      console.log(res);
+    })
+  },
   methods: {
     //  onPlayerPlay(player) {
     //   console.log("play");
@@ -125,16 +130,14 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data.statu == 1) {
-            console.log("AAA");
             const obj = {};
-            obj.createdAt = res.data.order.createdAt;
+            obj.overTime = res.data.order.overTime;
             obj.updatedAt = res.data.order.updatedAt;
             obj.payid = res.data.order.payid;
             obj.money = res.data.order.money;
             obj.time = res.data.order.time;
             sessionStorage.setItem("_ORDER_", JSON.stringify(obj));
-            const endT = res.data.order.overTime;
-            this.$router.push({ path: "/payment/" + endT });
+            this.$router.push({ path: "/payment" });
           } else if (res.data.statu == 0) {
             this.isShow = !this.isShow;
           } else {

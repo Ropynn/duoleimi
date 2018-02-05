@@ -27,7 +27,7 @@
           <span class="particulars">{{payment.money}}元 / {{payment.time}}分钟</span>
         </p>
         <p class="subsection">启动时间：
-          <span class="particulars">{{payment.createdAt | updatedAt}}</span>
+          <span class="particulars">{{payment.updatedAt | updatedAt}}</span>
         </p>
       </div>
     </div>
@@ -63,7 +63,7 @@ export default {
       // currentTime: Number(this.$route.params.currentTime), //获取按摩开始的时间
       // currentTime: "", //获取按摩开始的时间
       payment: {},
-      endTime: Number(this.$route.params.endTime), //按摩结束的时间
+      endTime: "", //按摩结束的时间
       startTime: "", //客户开始的时间
       isShow: true,
       isShowc: false,
@@ -81,6 +81,7 @@ export default {
   created() {
     const obj = JSON.parse(sessionStorage.getItem("_ORDER_"));
     this.payment = obj;
+    this.endTime = new Date(obj.overTime).getTime();
     console.log(this.endTime);
     // this.endTime = new Date(this.payment.updatedAt).getTime();
     // console.log(this.endTime);

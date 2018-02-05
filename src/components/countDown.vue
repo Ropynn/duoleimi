@@ -33,11 +33,11 @@ export default {
   mounted() {
     this.countdowm(this.endTime);
   },
-  // watch: {
-  //   endTime(newT, oldT) {
-  //     this.countdowm(this.endTime);
-  //   }
-  // },
+  watch: {
+    endTime(newT, oldT) {
+      this.countdowm(this.endTime);
+    }
+  },
   methods: {
     countdowm(timestamp) {
       let self = this;

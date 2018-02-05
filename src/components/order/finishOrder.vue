@@ -111,15 +111,15 @@ export default {
     },
     toPayment(item) {
       const obj = {};
-      obj.createdAt = item.createdAt;
+      obj.overTime = item.overTime;
       obj.updatedAt = item.updatedAt;
       obj.payid = item.payid;
       obj.money = item.money;
       obj.time = item.time;
       console.log(obj);
       sessionStorage.setItem("_ORDER_", JSON.stringify(obj));
-      const endT = new Date(item.overTime).getTime();
-      this.$router.push({ path: "/payment/" + endT });
+      // const endT = new Date(item.overTime).getTime();
+      this.$router.push({ path: "/payment" });
     }
   }
 };

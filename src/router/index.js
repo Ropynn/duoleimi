@@ -77,7 +77,7 @@ export default new VueRouter({
     },
     //支付完成路由
     {
-      path: "/payment/:endTime",
+      path: "/payment",
       component: payment
     },
     //视频路由

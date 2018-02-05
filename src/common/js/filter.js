@@ -8,7 +8,7 @@ Vue.filter("creatAt", function (creatTime) {
 });
 Vue.filter("updatedAt", function (creatTime) {
   // return moment(creatTime).format("YYYY-MM-DD HH:mm:ss");
-  return format(creatTime, "YYYY年MM月DD日 HH:mm:ss");
+  return format(creatTime, "YYYY-MM-DD HH:mm:ss");
 });
 
 Vue.filter("move", function (move) {
