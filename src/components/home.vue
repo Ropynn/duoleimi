@@ -95,7 +95,7 @@
 
     <!-- 协议 -->
     <div class="service">
-      <label class="agreementm" for="agreement">
+      <label class="agreement" for="agreement">
         <input class="agreement" type="checkbox" :value="val" id="agreement" :checked="checked" @click="isCheck">
         <router-link to="/detail" class="agreementSure">同意用户协议</router-link>
       </label>
@@ -123,11 +123,13 @@ export default {
       flc: false,
       isShow: false,
       user: {},
+      appId: "",
       timestamp: "",
       nonceStr: "",
       signature: "",
       currentTime: "",
       orderId: " ",
+      jsApiList: [],
       isFirst: true,
       investor: false
       // playerOptions: {
@@ -164,17 +166,16 @@ export default {
     // console.log(this.$route.query.code);
     //判断是否授权登录
     this.axios
-      .get("http://tsa.yzidea.com/wx/getUser?code=" + this.code)
+      .get("http://shop.doremes.com/wx/getUser?code=" + this.code)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.statu == 1) {
           this.investor = res.data.investor;
-          console.log(this.investor);
           this.user = res.data.user;
           this.isFirst = res.data.user.firstpay;
         } else {
           window.location =
-            "http://tsa.yzidea.com/wx/login?goback=home?code=" + this.code;
+            "http://shop.doremes.com/wx/login?goback=home?code=" + this.code;
         }
       });
 
@@ -183,20 +184,25 @@ export default {
     });
 
     this.axios
-      .post("http://tsa.yzidea.com/wx/getConf", {
-        path: "http://tsa.yzidea.com/#" + this.$route.path
+      .post("http://shop.doremes.com/wx/getConf", {
+        path: "http://shop.doremes.com/#" + this.$route.path
       })
       .then(res => {
+        // console.log("------------------");
+        // console.log(res);
+        // console.log("------------------");
+        this.appId = res.data.conf.appId;
         this.timestamp = res.data.conf.timestamp;
         this.nonceStr = res.data.conf.nonceStr;
         this.signature = res.data.conf.signature;
+        this.jsApiList = res.data.conf.jsApiList;
         wx.config({
           debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-          appId: "wx56c21278b4ecee79", // 必填，公众号的唯一标识
+          appId: this.appId, // 必填，公众号的唯一标识
           timestamp: this.timestamp, // 必填，生成签名的时间戳
           nonceStr: this.nonceStr, // 必填，生成签名的随机串
           signature: this.signature, // 必填，签名，见附录1
-          jsApiList: ["chooseWXPay"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          jsApiList: this.jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
       });
   },
@@ -261,7 +267,7 @@ export default {
         });
       } else {
         this.axios
-          .post("http://tsa.yzidea.com/wx/getPay", {
+          .post("http://shop.doremes.com/wx/getPay", {
             time: item.time,
             money: item.price,
             code: equipmentCode
@@ -279,13 +285,7 @@ export default {
                 // 支付成功后的回调函数
                 success: res => {
                   this.$router.push({
-                    path:
-                      "/mcMove/" +
-                      item.price +
-                      "/" +
-                      item.time +
-                      "/" +
-                      this.orderId
+                    path: "/mcMove/" + item.price + "/" + item.time + "/" + this.orderId
                   });
                 }
               });

@@ -111,7 +111,7 @@ export default {
     }
   }
 };
-</script>
+</script> 
 
 <style lang="stylus" scoped>
 @import '../common/stylus/mixins.styl';

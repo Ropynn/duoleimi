@@ -35,14 +35,14 @@ export default {
     };
   },
   created() {
-    this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
+    this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         this.user = res.data.user;
       } else {
-        window.location = "http://tsa.yzidea.com/wx/login?goback=wallet";
+        window.location = "http://shop.doremes.com/wx/login?goback=wallet";
       }
     });
-    this.axios.get("http://tsa.yzidea.com/wx/getAllMoney").then(res => {
+    this.axios.get("http://shop.doremes.com/wx/getAllMoney").then(res => {
       console.log(res);
       this.money =
         (res.data.investor / 1 +

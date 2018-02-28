@@ -164,19 +164,19 @@ export default {
   align-content: center;
   justify-content: center;
 
-  // border-bottom  px2rem(10px) solid #E0BC74
   .countTime {
-    padding-top: px2rem(40px);
+    // padding-top: px2rem(60px);
     height: px2rem(160px);
     font-size: px2rem(52px);
     color: #f80034;
     line-height: px2rem(160px);
-    text-align: center;
+    display: flex;
+    justify-content: center;
   }
 
   .residue {
-    margin: px2rem(50px) 0;
-    height: px2rem(100px);
+    // margin: px2rem(40px) 0;
+    // height: px2rem(100px);
     color: #f80034;
     font-size: 18px;
     line-height: px2rem(100px);
@@ -211,7 +211,7 @@ export default {
 
     .subsection {
       color: #ccc;
-      padding: px2rem(20px) px2rem(100px);
+      padding: px2rem(20px) px2rem(90px);
       font-size: 16px;
 
       .particulars {
@@ -270,6 +270,7 @@ export default {
 
   img {
     width: 100%;
+    height :px2rem(340px)
     vertical-align: middle;
   }
 }

@@ -20,7 +20,7 @@ export default {
 
     // console.log(this.$route.query);
     // console.log(this.code);
-    // this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
+    // this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
     //   console.log("------------------------------------");
     //   console.log(JSON.stringify(res));
 
@@ -32,7 +32,7 @@ export default {
     //     this.user = res.data.user;
     //     this.$router.push("home");
     //   } else {
-    //     window.location = "http://tsa.yzidea.com/wx/login?goback=home";
+    //     window.location = "http://shop.doremes.com/wx/login?goback=home";
     //     console.log("获取失败");
     //   }
     // });

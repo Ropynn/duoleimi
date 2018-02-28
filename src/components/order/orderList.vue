@@ -47,16 +47,16 @@ export default {
     };
   },
   created() {
-    this.axios.get("http://tsa.yzidea.com/wx/getUser").then(res => {
+    this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         // console.log("获取成功");
         this.user = res.data.user;
       } else {
-        window.location = "http://tsa.yzidea.com/wx/login?goback=order";
+        window.location = "http://shop.doremes.com/wx/login?goback=order";
         // console.log("已登录");
       }
     }),
-      this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res => {
+      this.axios.get("http://shop.doremes.com/wx/getMyOrder").then(res => {
         // console.log(res);
         if (res.data.statu) {
           this.orderList = res.data.list;

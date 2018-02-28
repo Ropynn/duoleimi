@@ -102,7 +102,7 @@ export default {
   //   }
   // },
   created() {
-    this.axios.get("http://tsa.yzidea.com/wx/getMyOrder").then(res=>{
+    this.axios.get("http://shop.doremes.com/wx/getMyOrder").then(res=>{
       console.log(res);
     })
   },
@@ -121,7 +121,7 @@ export default {
       const equipmentCode = this.code || sessionStorage.getItem("_CODE_");
       // console.log(equipmentCode);
       this.axios
-        .post("http://tsa.yzidea.com/wx/mcMove", {
+        .post("http://shop.doremes.com/wx/mcMove", {
           time: this.time,
           code: equipmentCode,
           dis: 1111,
