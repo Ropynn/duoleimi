@@ -47,7 +47,7 @@ const test2 = () => import('../components/test2.vue');//test  组件
 Vue.use(VueRouter);
 
 export default new VueRouter({
-  linkActiveClass: "active",
+  
   // mode: 'history',
   routes: [
     //重定向为首页
