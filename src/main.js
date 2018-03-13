@@ -10,6 +10,9 @@ import "./mock/mockServer";
 //引入手淘的flexible.js文件进行适配屏幕
 import './flexible';
 
+import config from './lib/config.js'
+Vue.use(config);
+
 //引入微信js-sdk
 // import wx from "weixin-js-sdk";
 

@@ -8,17 +8,46 @@
     </header>
     <div class="withdraw">
       <group>
-        <cell title="充值" is-link>
+        <!-- <cell title="充值" is-link>
           <i class="iconfont icon-tixian"></i>
-        </cell>
-        <cell title="提现" is-link :link="walletDraw">
+        </cell> -->
+        <!-- <cell title="提现" is-link :link="walletDraw"> -->
+        <cell title="提现" is-link @click.native="show">
           <i class="iconfont icon-zaixianchongzhi"></i>
         </cell>
-        <cell title="提现明细" is-link link="/walletDetail">
+        <!-- <cell title="提现明细" is-link link="/walletDetail"> -->
+        <cell title="提现明细" is-link @click.native="show">
           <i class="iconfont icon-icon_gongzimingxi"></i>
         </cell>
       </group>
     </div>
+
+    <!-- 确认层 -->
+    <transition name="fade">
+      <div class="makeSure" v-show="isShow" @touchmove.prevent>
+        <div class="box">
+          <!-- <div class="alert">
+            系统提示
+          </div> -->
+          <div class="message">
+            此功能暂未开放！
+          </div>
+          <div class="btn" @click="show">
+            确定
+          </div>
+        </div>
+      </div>
+    </transition>
+    <!-- 无权限 -->
+    <transition name="fade">
+      <div class="makeSure can" v-show="isCan" @touchmove.prevent>
+        <div class="box">
+          <div class="message">
+            无权限
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 
 </template>
@@ -29,27 +58,40 @@ import { Cell, Group, CellBox } from "vux";
 export default {
   data() {
     return {
+      isShow: false,
+      isCan: false,
       money: "",
       user: {},
       walletDraw: ""
     };
   },
   created() {
-    this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
+    this.axios.get(this.api + "/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         this.user = res.data.user;
       } else {
-        window.location = "http://shop.doremes.com/wx/login?goback=wallet";
+        window.location = this.api + "/wx/login?goback=wallet";
       }
     });
-    this.axios.get("http://shop.doremes.com/wx/getAllMoney").then(res => {
+
+    //判断用户是否是商家
+    this.axios.get(this.api + "/wx/getAllMoney").then(res => {
       console.log(res);
-      this.money =
-        (res.data.investor / 1 +
-          res.data.owner / 1 +
-          res.data.partner / 1 +
-          res.data.platform / 1) /
-        100;
+      // alert(res.data.statu)
+      console.log(res.data.statu);
+      //不是商家弹出无权限遮罩层
+      if (res.data.statu == 0) {
+        this.money = res.data.money / 100;
+        this.isCan = true;
+        // console.log("000");
+        // this.$router.push({
+        //   path: "/jurisdiction"
+        // });
+      } else if (res.data.statu) {
+        //是商家,没有遮罩层
+
+        this.money = res.data.money / 100;
+      }
       this.walletDraw = "/walletDraw" + "/" + this.money;
     });
     this.axios.get("/api/withdrawList").then(res => {
@@ -57,7 +99,11 @@ export default {
       this.withdrawList = res.data.withdrawList;
     });
   },
-  methods: {},
+  methods: {
+    show() {
+      this.isShow = !this.isShow;
+    }
+  },
   components: {
     Group,
     Cell,
@@ -118,6 +164,65 @@ export default {
 
     .icon-icon_gongzimingxi {
       color: #1afa29;
+    }
+  }
+
+  .makeSure {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 30;
+    font-family: 'Arial, Helvetica, sans-serif';
+
+    .box {
+      position: absolute;
+      width: px2rem(500px);
+      height: px2rem(300px);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      color: red;
+      text-align: center;
+
+      // .alert {
+      // height: px2rem(100px);
+      // line-height: px2rem(100px);
+      // color: #000;
+      // font-weight: bold;
+      // }
+      .message {
+        font-size: 16px;
+        line-height: px2rem(200px);
+        height: px2rem(200px); // line-height: 50px;
+        color: #000;
+      }
+
+      .btn {
+        height: px2rem(100px);
+        line-height: px2rem(100px);
+        color: #26a2ff;
+        border-top: 1px solid #666;
+      }
+    }
+  }
+
+  .can {
+    .box {
+      width: px2rem(500px);
+      height: px2rem(300px);
+
+      .message {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        font-size: 18px;
+        color: red;
+      }
     }
   }
 }
