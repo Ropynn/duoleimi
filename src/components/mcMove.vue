@@ -102,9 +102,9 @@ export default {
   //   }
   // },
   created() {
-    this.axios.get(this.api+"/wx/getMyOrder").then(res=>{
+    this.axios.get(this.api + "/wx/getMyOrder").then(res => {
       // console.log(res);
-    })
+    });
   },
   methods: {
     //  onPlayerPlay(player) {
@@ -119,9 +119,10 @@ export default {
       this.orderId = this.$route.params.orderId;
 
       const equipmentCode = this.code || sessionStorage.getItem("_CODE_");
+
       // console.log(equipmentCode);
       this.axios
-        .post(this.api+"/wx/mcMove", {
+        .post(this.api + "/wx/mcMove", {
           time: this.time,
           code: equipmentCode,
           dis: 1111,
@@ -137,9 +138,10 @@ export default {
             obj.money = res.data.order.money;
             obj.time = res.data.order.time;
 
-            this.$emit("saveData",obj);
+            this.$emit("saveData", obj);
 
             // sessionStorage.setItem("_ORDER_", JSON.stringify(obj));
+
             this.$router.push({ path: "/payment" });
           } else if (res.data.statu == 0) {
             this.isShow = !this.isShow;
