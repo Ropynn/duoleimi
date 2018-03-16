@@ -46,14 +46,14 @@ export default {
     };
   },
   created() {
-    this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
+    this.axios.get(this.api+"/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         this.user = res.data.user;
       } else {
-        window.location = "http://shop.doremes.com/wx/login?goback=order";
+        window.location = this.api+"/wx/login?goback=order";
       }
     }),
-      this.axios.get("http://shop.doremes.com/wx/getMyOrder").then(res => {
+      this.axios.get(this.api+"/wx/getMyOrder").then(res => {
         console.log(res);
         if (res.data.statu) {
           this.orderList = res.data.list;
@@ -89,7 +89,7 @@ export default {
     },
     loadBottom() {
       // setTimeout(() => {
-      //   this.axios.get("http://shop.doremes.com/wx/getMyOrder").then(res => {
+      //   this.axios.get(this.api+"/wx/getMyOrder").then(res => {
       //     this.orderList.push(...res.data.list);
       //   });
       //   this.$refs.loadmore.onBottomLoaded();

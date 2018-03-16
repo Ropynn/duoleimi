@@ -165,27 +165,24 @@ export default {
     // alert(equipmentCode);
     // console.log(this.$route.query.code);
     //判断是否授权登录
-    this.axios
-      .get("http://shop.doremes.com/wx/getUser?code=" + this.code)
-      .then(res => {
-        // console.log(res);
-        if (res.data.statu == 1) {
-          this.investor = res.data.investor;
-          this.user = res.data.user;
-          this.isFirst = res.data.user.firstpay;
-        } else {
-          window.location =
-            "http://shop.doremes.com/wx/login?goback=home?code=" + this.code;
-        }
-      });
+    this.axios.get(this.api + "/wx/getUser?code=" + this.code).then(res => {
+      console.log(res);
+      if (res.data.statu == 1) {
+        this.investor = res.data.investor;
+        this.user = res.data.user;
+        this.isFirst = res.data.user.firstpay;
+      } else {
+        window.location = this.api + "/wx/login?goback=home?code=" + this.code;
+      }
+    });
 
     this.axios.get("/api/home").then(res => {
       this.home = res.data.data;
     });
 
     this.axios
-      .post("http://shop.doremes.com/wx/getConf", {
-        path: "http://shop.doremes.com/#" + this.$route.path
+      .post(this.api + "/wx/getConf", {
+        path: this.api + "/#" + this.$route.path
       })
       .then(res => {
         // console.log("------------------");
@@ -267,7 +264,7 @@ export default {
         });
       } else {
         this.axios
-          .post("http://shop.doremes.com/wx/getPay", {
+          .post(this.api + "/wx/getPay", {
             time: item.time,
             money: item.price,
             code: equipmentCode
@@ -285,7 +282,13 @@ export default {
                 // 支付成功后的回调函数
                 success: res => {
                   this.$router.push({
-                    path: "/mcMove/" + item.price + "/" + item.time + "/" + this.orderId
+                    path:
+                      "/mcMove/" +
+                      item.price +
+                      "/" +
+                      item.time +
+                      "/" +
+                      this.orderId
                   });
                 }
               });
@@ -368,7 +371,7 @@ export default {
     width: px2rem(400px);
     height: px2rem(120px);
     /* line-height 60px */
-    margin: px2rem(60px) auto;
+    margin: px2rem(40px) auto;
     border: px2rem(4px) solid #FF003E;
     border-radius: px2rem(20px);
 
@@ -486,7 +489,7 @@ export default {
 }
 
 .playBtn {
-  margin-top: px2rem(100px);
+  margin-top: px2rem(80px);
   display: flex;
   width: 100%;
   justify-content: center;
@@ -531,9 +534,9 @@ export default {
 
 .service {
   width: 100%;
-  height: px2rem(160px);
+  height: px2rem(130px);
   /* background-color deeppink */
-  line-height: px2rem(160px);
+  line-height: px2rem(130px);
   text-align: center;
   position: absolute;
   button: 0;

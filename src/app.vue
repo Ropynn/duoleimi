@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view :code="code"></router-view>
+    <router-view :code="code" @saveData="getData" :obj = 'obj' ></router-view>
   </div>
 </template>
 
@@ -13,9 +13,12 @@ export default {
     return {
       user: {},
       code: this.$route.query.code,
+      obj: {}
     };
+
   },
   created() {
+
     // console.log(this.code)
 
     // console.log(this.$route.query);
@@ -36,6 +39,12 @@ export default {
     //     console.log("获取失败");
     //   }
     // });
+  },
+  methods: {
+    getData(obj){
+        console.log('obj', obj);
+        this.obj = obj;
+    }
   }
 };
 </script>

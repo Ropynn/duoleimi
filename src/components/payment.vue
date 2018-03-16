@@ -24,7 +24,7 @@
           <span class="particulars" v-show="isShowc">已结束</span>
         </p>
         <p class="subsection">套餐：
-          <span class="particulars">{{payment.money}}元 / {{payment.time}}分钟</span>
+          <span class="particulars">{{payment.money/100}}元 / {{payment.time}}分钟</span>
         </p>
         <p class="subsection">启动时间：
           <span class="particulars">{{payment.updatedAt | updatedAt}}</span>
@@ -76,17 +76,23 @@ export default {
     endText: {
       type: String,
       default: "按摩完成，欢迎继续使用"
-    }
+    },
+    obj: Object
   },
   created() {
-    const obj = JSON.parse(sessionStorage.getItem("_ORDER_"));
-    this.payment = obj;
-    this.endTime = new Date(obj.overTime).getTime();
+    // const obj = JSON.parse(sessionStorage.getItem("_ORDER_"));
+    this.payment = this.obj;
+    this.endTime = new Date(this.obj.overTime).getTime();
     console.log(this.endTime);
+
     // this.endTime = new Date(this.payment.updatedAt).getTime();
     // console.log(this.endTime);
   },
   mounted() {
+    // const obj = JSON.parse(sessionStorage.getItem("_ORDER_"));
+    // this.payment = obj;
+    // this.endTime = new Date(obj.overTime).getTime();
+    // console.log(this.endTime);
     //按摩开始时间
     // this.openingTime();
   },
@@ -270,7 +276,7 @@ export default {
 
   img {
     width: 100%;
-    height :px2rem(340px)
+    height: px2rem(340px);
     vertical-align: middle;
   }
 }

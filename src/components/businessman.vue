@@ -110,19 +110,19 @@ export default {
     };
   },
   created() {
-    this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
+    this.axios.get(this.api+"/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         // console.log(res);
         this.user = res.data.user;
       } else {
-        window.location = "http://shop.doremes.com/wx/login?goback=businessman";
+        window.location = this.api+"/wx/login?goback=businessman";
       }
     });
-    this.axios.get("http://shop.doremes.com/wx/getAllHome").then(res => {
+    this.axios.get(this.api+"/wx/getAllHome").then(res => {
       console.log(res);
       this.allInfo = res.data;
     });
-    this.axios.get("http://shop.doremes.com/wx/getAllMoney").then(res => {
+    this.axios.get(this.api+"/wx/getAllMoney").then(res => {
       console.log(res);
       this.allMoney = res.data;
     });

@@ -21,11 +21,11 @@ export default {
     };
   },
   created() {
-    this.axios.get("http://shop.doremes.com/wx/getUser").then(res => {
+    this.axios.get(this.api+"/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         this.user = res.data.user;
       } else {
-        window.location = "http://shop.doremes.com/wx/login?goback=walletDetail";
+        window.location = this.api+"/wx/login?goback=walletDetail";
       }
     });
     this.axios.get("/api/withdrawList").then(res => {
