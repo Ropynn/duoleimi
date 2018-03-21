@@ -8,7 +8,7 @@
     </div>
     <div class="container">
       <span class="line"></span>
-      <span class="txt">{{home.setMeal}}</span>
+      <span class="txt">套餐选择</span>
       <span class="line"></span>
     </div>
 
@@ -33,25 +33,43 @@
     <!-- </li> -->
     <!-- </ul> -->
 
-    <!-- 店家套餐 -->
-    <ul class="selective-type">
+    <!-- 本地套餐 -->
+    <!-- <ul class="selective-type">
       <li class="pic" v-show="isFirst">
         <img src="../assets/aa.png" alt="">
       </li>
       <li class="set-meal" v-for="item in home.projects" @click="choosePay(item)">
-        <!-- <router-link v-show="flag" class="chaining" to=""> -->
         <router-link class="chaining" to="">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
             <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
-            <!-- <span>1</span> -->
           </div>
           <div class="functions">
             <span class="function">{{item.name}}</span>
           </div>
         </router-link>
       </li>
+    </ul> -->
+
+    <!-- 后台套餐 -->
+    <ul class="selective-type">
+      <li class="pic" v-show="isFirst">
+        <img src="../assets/aa.png" alt="">
+      </li>
+      <li class="set-meal" v-for="(item,index) in home" @click="choosePay(item,index)">
+        <router-link class="chaining" to="">
+          <div class="single">
+            <span class="unitPice">￥{{item.price}}</span>
+            <span class="lengthTime" :time='0+item.time'>{{item.time}}分钟</span>
+          </div>
+          <div class="functions">
+            <span class="function">{{item.tips}}</span>
+          </div>
+        </router-link>
+      </li>
     </ul>
+
+
     <!-- <div class="container"> -->
     <!-- <div class="player">
         <video-player class="video-player vjs-custom-skin" ref="videoPlayer" :playsinline="true" :options="playerOptions" @play="onPlayerPlay($event)"
@@ -116,7 +134,7 @@ export default {
   },
   data() {
     return {
-      home: {},
+      home: [],
       checked: "checked",
       val: "1",
       flag: false,
@@ -164,6 +182,7 @@ export default {
     // const equipmentCode = this.code;
     // alert(equipmentCode);
     // console.log(this.$route.query.code);
+
     //判断是否授权登录
     this.axios.get(this.api + "/wx/getUser?code=" + this.code).then(res => {
       console.log(res);
@@ -176,9 +195,23 @@ export default {
       }
     });
 
-    this.axios.get("/api/home").then(res => {
-      this.home = res.data.data;
-    });
+    this.axios
+      .get(this.api + "/wx/getMoneyPackage?code=" + this.code)
+      .then(res => {
+        console.log("-------------------");
+        console.log(res);
+        console.log("-------------------");
+        this.home = res.data.data;
+
+        //如果没有列表,首单图片隐藏
+        // if (this.home.length < 2) {
+        //   this.isFirst = false;
+        // }
+      });
+
+    // this.axios.get("/api/home").then(res => {
+    //   this.home = res.data.data;
+    // });
 
     this.axios
       .post(this.api + "/wx/getConf", {

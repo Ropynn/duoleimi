@@ -117,6 +117,7 @@ export default {
       this.price = this.$route.params.price;
       this.time = this.$route.params.minutes;
       this.orderId = this.$route.params.orderId;
+      console.log(this.time);
 
       const equipmentCode = this.code || sessionStorage.getItem("_CODE_");
 
