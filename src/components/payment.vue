@@ -86,6 +86,7 @@ export default {
 
     this.payment = this.obj;
     this.endTime = new Date(this.obj.overTime).getTime();
+    console.log(this.endTime);
     // console.log("endTime-----"+this.endTime);
 
     // this.endTime = new Date(this.payment.updatedAt).getTime();

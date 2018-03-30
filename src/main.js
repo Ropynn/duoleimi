@@ -20,6 +20,7 @@ Vue.use(config);
 // import { Cell } from "mint-ui";
 // import { Switch } from "mint-ui";
 // import { Button } from "mint-ui";
+
 import "mint-ui/lib/style.css";
 import { Loadmore } from 'mint-ui';
 Vue.component(Loadmore.name, Loadmore);

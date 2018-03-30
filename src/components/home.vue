@@ -34,7 +34,7 @@
     <!-- </ul> -->
 
     <!-- 本地套餐 -->
-    <!-- <ul class="selective-type">
+    <ul class="selective-type">
       <li class="pic" v-show="isFirst">
         <img src="../assets/aa.png" alt="">
       </li>
@@ -49,10 +49,10 @@
           </div>
         </router-link>
       </li>
-    </ul> -->
+    </ul>
 
     <!-- 后台套餐 -->
-    <ul class="selective-type">
+    <!-- <ul class="selective-type">
       <li class="pic" v-show="isFirst">
         <img src="../assets/aa.png" alt="">
       </li>
@@ -67,8 +67,7 @@
           </div>
         </router-link>
       </li>
-    </ul>
-
+    </ul> -->
 
     <!-- <div class="container"> -->
     <!-- <div class="player">
@@ -195,23 +194,25 @@ export default {
       }
     });
 
-    this.axios
-      .get(this.api + "/wx/getMoneyPackage?code=" + this.code)
-      .then(res => {
-        console.log("-------------------");
-        console.log(res);
-        console.log("-------------------");
-        this.home = res.data.data;
+    //后台获取套餐
+    // this.axios
+    //   .get(this.api + "/wx/getMoneyPackage?code=" + this.code)
+    //   .then(res => {
+    //     console.log("-------------------");
+    //     console.log(res);
+    //     console.log("-------------------");
+    //     this.home = res.data.data;
 
-        //如果没有列表,首单图片隐藏
-        // if (this.home.length < 2) {
-        //   this.isFirst = false;
-        // }
-      });
+    //     //如果没有列表,首单图片隐藏
+    //     // if (this.home.length < 2) {
+    //     //   this.isFirst = false;
+    //     // }
+    //   });
 
-    // this.axios.get("/api/home").then(res => {
-    //   this.home = res.data.data;
-    // });
+    //本地套餐
+    this.axios.get("/api/home").then(res => {
+      this.home = res.data.data;
+    });
 
     this.axios
       .post(this.api + "/wx/getConf", {
@@ -291,18 +292,23 @@ export default {
         this.loading();
         return;
       }
-      if (this.investor == true) {
-        this.$router.push({
-          path: "/mcMove/" + item.price + "/" + item.time + "/" + this.orderId
-        });
-      } else {
-        this.axios
-          .post(this.api + "/wx/getPay", {
-            time: item.time,
-            money: item.price,
-            code: equipmentCode
-          })
-          .then(res => {
+
+      this.axios
+        .post(this.api + "/wx/getPay", {
+          time: item.time,
+          money: item.price,
+          code: equipmentCode
+        })
+        .then(res => {
+          console.log(res);
+          //如果是设备方
+          if (res.data.statu == 2) {
+            this.$router.push({
+              path:
+                "/mcMove/" + item.price + "/" + item.time + "/" + this.orderId
+            });
+          } else if (res.data.statu == 1) {
+            //如果不是设备方
             if (res.data.statu == 1) {
               this.orderId = res.data.order_id;
               wx.chooseWXPay({
@@ -326,8 +332,50 @@ export default {
                 }
               });
             }
-          });
-      }
+          } else {
+            console.log("请求失败");
+            return;
+            console.log(res);
+          }
+        });
+
+      // if (this.investor == true) {
+      //   this.$router.push({
+      //     path: "/mcMove/" + item.price + "/" + item.time + "/" + this.orderId
+      //   });
+      // } else {
+      //   this.axios
+      //     .post(this.api + "/wx/getPay", {
+      //       time: item.time,
+      //       money: item.price,
+      //       code: equipmentCode
+      //     })
+      //     .then(res => {
+      //       if (res.data.statu == 1) {
+      //         this.orderId = res.data.order_id;
+      //         wx.chooseWXPay({
+      //           timestamp: res.data.conf.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+      //           nonceStr: res.data.conf.nonceStr, // 支付签名随机串，不长于 32 位
+      //           package: res.data.conf.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+      //           signType: res.data.conf.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+      //           paySign: res.data.conf.paySign, // 支付签名
+
+      //           // 支付成功后的回调函数
+      //           success: res => {
+      //             this.$router.push({
+      //               path:
+      //                 "/mcMove/" +
+      //                 item.price +
+      //                 "/" +
+      //                 item.time +
+      //                 "/" +
+      //                 this.orderId
+      //             });
+      //           }
+      //         });
+      //       }
+      //     });
+      // }
     }
   },
   components: {

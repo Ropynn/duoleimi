@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import { InfiniteScroll } from "mint-ui";
-import { Toast } from "mint-ui";
-import { Indicator } from "mint-ui";
+// import { InfiniteScroll } from "mint-ui";
+// import { Toast } from "mint-ui";
+// import { Indicator } from "mint-ui";
 import async from "async";
 export default {
   data() {
@@ -28,14 +28,14 @@ export default {
     };
   },
   created() {
-    this.axios.get(this.api+"/wx/getUser").then(res => {
+    this.axios.get(this.api + "/wx/getUser").then(res => {
       if (res.data.statu == 1) {
         this.user = res.data.user;
       } else {
-        window.location = this.api+"/wx/login?goback=order";
+        window.location = this.api + "/wx/login?goback=order";
       }
     }),
-      this.axios.get(this.api+"/wx/getMyOrder").then(res => {
+      this.axios.get(this.api + "/wx/getMyOrder").then(res => {
         // console.log(res);
         if (res.data.statu) {
           this.orderList = res.data.list;
@@ -69,7 +69,7 @@ export default {
       setTimeout(() => {
         this.$refs.myscroller.finishPullToRefresh();
         // Indicator.open();
-      },1000);
+      }, 1000);
     },
     //下拉加载更多
     infinite(done) {
@@ -139,11 +139,27 @@ export default {
   display: none;
 }
 
+._v-container {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: px2rem(80px) !important;
+  left: 0;
+  overflow: hidden;
+}
+
 .listBox {
+  position: relative;
   .content {
     background-color: #ddd;
     padding: px2rem(20px) px2rem(20px);
-    margin-top: px2rem(88px);
+    // margin-top: px2rem(88px);
+  }
+
+  .spinner-holder {
+    position: absolute;
+    top: px2rem(200px);
   }
 
   .noMore {
