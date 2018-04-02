@@ -102,7 +102,7 @@ export default {
     },
     loadTop() {
       setTimeout(() => {
-        this.$router.replace("/unfinishOrder2");
+        this.$router.replace("/unfinishedOrder2");
         this.$refs.loadmore.onTopLoaded();
       }, 1500);
     },

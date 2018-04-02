@@ -38,7 +38,7 @@
       <li class="pic" v-show="isFirst">
         <img src="../assets/aa.png" alt="">
       </li>
-      <li class="set-meal" v-for="item in home.projects" @click="choosePay(item)">
+      <li class="set-meal" v-for="item in home1.projects" @click="choosePay(item)">
         <router-link class="chaining" to="">
           <div class="single">
             <span class="unitPice">￥{{item.price}}</span>
@@ -134,6 +134,20 @@ export default {
   data() {
     return {
       home: [],
+      home1: {
+        projects: [
+          {
+            name: "疏通排毒",
+            price: "48",
+            time: "30"
+          },
+          {
+            name: "塑形美胸",
+            price: "68",
+            time: "60"
+          }
+        ]
+      },
       checked: "checked",
       val: "1",
       flag: false,
@@ -210,9 +224,9 @@ export default {
     //   });
 
     //本地套餐
-    this.axios.get("/api/home").then(res => {
-      this.home = res.data.data;
-    });
+    // this.axios.get("/api/home").then(res => {
+    //   this.home = res.data.data;
+    // });
 
     this.axios
       .post(this.api + "/wx/getConf", {
